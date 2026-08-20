@@ -1,27 +1,22 @@
-# ============================================
-# progress/progress.md
-# ============================================
+# Go Backend Learning — Progress
 
-# Öğrenme İlerlemesi
-
-**Güncel Aşama:** Aşama 1 — Go Ortamı ve Temeller
-
-**Durum:** Henüz Başlanmadı
-
----
+**Son Güncelleme:** 2026-08-20  
+**Güncel Aşama:** Aşama 2 — Variables & Data Types
 
 ## Güncel Konum
 
 ```text
-Go Ortamı ve Temeller  ← GÜNCEL
+Go Ortamı ve Temeller       ✅
         ↓
-Variables & Data Types
+Variables & Data Types      ← GÜNCEL
         ↓
 Control Flow
         ↓
 Functions
         ↓
-Collections
+Arrays & Slices
+        ↓
+Maps
         ↓
 Structs
         ↓
@@ -37,11 +32,7 @@ Packages & Modules
         ↓
 Concurrency
         ↓
-HTTP
-        ↓
-REST API
-        ↓
-Backend Mimarisi
+HTTP / REST API
         ↓
 Database
         ↓
@@ -50,47 +41,45 @@ Testing
 Docker
         ↓
 Kubernetes
-```
 
----
+Tamamlanan Aşama
+Aşama 1 — Go Ortamı ve Temeller ✅
 
-## Tamamlanan Konular
+Bu aşamada Go'nun temel çalışma yapısı öğrenildi.
 
-Henüz tamamlanan konu bulunmuyor.
+Öğrenilen konular:
 
----
+Go Module ve go.mod
+go mod init
+Package mantığı
+package main
+import
+Standard Library
+func main() ve Entry Point
+fmt.Println
+go run
+go build
+go fmt
+Source Code ve Binary farkı
+Package bazlı çalışma
 
-## Şu Anda Öğrenilen
+İlk Go programı oluşturuldu ve hem go run ile çalıştırıldı hem de go build ile executable binary haline getirildi.
 
-### Aşama 1 — Go Ortamı ve Temeller
+Ayrıca kullanılmayan veya eksik import durumlarında Go compiler'ın davranışı gözlemlendi.
 
-Planlanan konular:
+Güncel Aşama
+Aşama 2 — Variables & Data Types 🔄
 
-- Go kurulumu
-- `go version`
-- Go program yapısı
-- `package main`
-- `func main()`
-- `import`
-- `fmt`
-- `go run`
-- `go build`
+Öğrenilecek konular:
 
----
-
-## Güncel Proje
-
-Backend projesi henüz geliştirilmedi.
-
-Go kavramları öğrenildikçe proje aşamalı olarak oluşturulacaktır.
-
-```text
-project/
-└── service-a/
-```
-
----
-
-## Sonraki Adım
-
-**Aşama 1 — Go Ortamı ve Temeller** konusuna başla.
+var
+:=
+const
+string
+int
+float
+bool
+Static Typing
+Type Inference
+Zero Values
+Type Conversion
