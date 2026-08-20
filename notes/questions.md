@@ -55,3 +55,74 @@ Operating System
       ↓
 CPU
 ```
+# Aşama 2 — Variables & Data Types
+
+1. Variable nedir?
+
+2. `var` keyword'ü ne işe yarar?
+
+3. Aşağıdaki üç tanımlama arasındaki fark nedir?
+
+```go
+var age int = 22
+var age = 22
+age := 22
+```
+
+4. `:=` ile `=` arasındaki fark nedir?
+
+5. Declaration, initialization ve assignment kavramları arasındaki fark nedir?
+
+6. `string`, `int`, `float64` ve `bool` hangi tür değerleri tutar?
+
+7. Go'nun statically typed olması ne anlama gelir?
+
+8. Type inference nedir?
+
+9. Aşağıdaki değişkenlerin type'ları nedir?
+
+```go
+name := "Fatih"
+age := 22
+height := 1.73
+isActive := true
+```
+
+10. Zero Value nedir? `string`, `int` ve `bool` için zero value değerleri nelerdir?
+
+11. `const` ile `var` arasındaki temel fark nedir?
+
+12. Aşağıdaki kod neden çalışmaz?
+
+```go
+age := 22
+age = "22"
+```
+
+13. `int` bir değer nasıl `float64` type'ına dönüştürülür?
+
+14. `strconv.Atoi()` ne işe yarar?
+
+15. `strconv.Itoa()` ne işe yarar?
+
+16. `"25"` ile `25` arasındaki fark nedir?
+
+17. `int` ile `int64` aynı type mıdır?
+
+18. `byte` hangi type'ın alias'ıdır?
+
+19. `rune` hangi type'ın alias'ıdır?
+
+20. Aşağıdaki dönüşüm akışını açıklayabilir misin?
+
+```text
+"25"
+  ↓
+strconv.Atoi
+  ↓
+25
+  ↓
+float64(...)
+  ↓
+25.0
+```

@@ -1,16 +1,16 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-20  
-**Güncel Aşama:** Aşama 2 — Variables & Data Types
+**Güncel Aşama:** Aşama 3 — Control Flow
 
 ## Güncel Konum
 
 ```text
 Go Ortamı ve Temeller       ✅
         ↓
-Variables & Data Types      ← GÜNCEL
+Variables & Data Types      ✅
         ↓
-Control Flow
+Control Flow                ← GÜNCEL
         ↓
 Functions
         ↓
@@ -41,45 +41,69 @@ Testing
 Docker
         ↓
 Kubernetes
+```
 
-Tamamlanan Aşama
-Aşama 1 — Go Ortamı ve Temeller ✅
+## Tamamlanan Aşamalar
 
-Bu aşamada Go'nun temel çalışma yapısı öğrenildi.
+### Aşama 1 — Go Ortamı ve Temeller ✅
 
-Öğrenilen konular:
+Öğrenilen temel konular:
 
-Go Module ve go.mod
-go mod init
-Package mantığı
-package main
-import
-Standard Library
-func main() ve Entry Point
-fmt.Println
-go run
-go build
-go fmt
-Source Code ve Binary farkı
-Package bazlı çalışma
+- Go Module ve `go.mod`
+- Package yapısı
+- `package main`
+- `func main()`
+- Standard Library
+- `go run`
+- `go build`
+- `go fmt`
+- Source Code ve Binary
 
-İlk Go programı oluşturuldu ve hem go run ile çalıştırıldı hem de go build ile executable binary haline getirildi.
+### Aşama 2 — Variables & Data Types ✅
 
-Ayrıca kullanılmayan veya eksik import durumlarında Go compiler'ın davranışı gözlemlendi.
+Öğrenilen temel konular:
 
-Güncel Aşama
-Aşama 2 — Variables & Data Types 🔄
+- `var`
+- `:=` ve `=`
+- Declaration, Initialization ve Assignment
+- `string`, `int`, `float64`, `bool`
+- Static Typing
+- Type Inference
+- Zero Values
+- `const`
+- Type Conversion
+- `strconv.Atoi`
+- `strconv.Itoa`
+- Numeric Types
+- `byte` ve `rune`
 
-Öğrenilecek konular:
+### Yapılan Pratik
 
-var
-:=
-const
-string
-int
-float
-bool
-Static Typing
-Type Inference
-Zero Values
-Type Conversion
+`exercises/basics/variables-types/` altında öğrendiğimiz kavramları kullanan küçük bir Go programı oluşturuldu.
+
+Programda:
+
+```text
+string → int
+int → string
+int → float64
+```
+
+dönüşümleri uygulandı ve `%T` ile variable type'ları kontrol edildi.
+
+## Güncel Aşama
+
+### Aşama 3 — Control Flow 🔄
+
+Sıradaki konular:
+
+- Comparison operators
+- Logical operators
+- `if`
+- `else`
+- `else if`
+- `switch`
+- `for`
+- `break`
+- `continue`
+- `range`

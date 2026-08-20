@@ -140,3 +140,150 @@ Module daha üst seviyedeki yapıdır.
 ### 15. Go neden kullanılmayan import'lara izin vermez?
 
 Gereksiz kodu engellemek ve hataların compile aşamasında fark edilmesini sağlamak için kullanılmayan import'ları compiler error olarak değerlendirir.
+
+# Aşama 2 — Variables & Data Types
+
+### 1. Variable nedir?
+
+Program içerisinde bir değeri tutmak için kullanılan isimlendirilmiş yapıdır.
+
+---
+
+### 2. `var` ne işe yarar?
+
+Variable tanımlamak için kullanılır.
+
+```go
+var age int = 22
+```
+
+---
+
+### 3. `:=` ne işe yarar?
+
+Function içerisinde kısa şekilde yeni variable oluşturur ve type inference yapar.
+
+```go
+age := 22
+```
+
+---
+
+### 4. `:=` ile `=` farkı nedir?
+
+```text
+:= → Yeni variable oluşturur.
+=  → Mevcut variable'a değer atar.
+```
+
+---
+
+### 5. Go'daki temel data type'lar nelerdir?
+
+```text
+string
+int
+float64
+bool
+```
+
+---
+
+### 6. Static Typing nedir?
+
+Variable type'larının compile aşamasında belirli olmasıdır.
+
+```go
+age := 22
+age = "22" // Hata
+```
+
+---
+
+### 7. Type Inference nedir?
+
+Compiler'ın verilen değerden type'ı otomatik belirlemesidir.
+
+```go
+age := 22 // int
+```
+
+---
+
+### 8. Zero Value nedir?
+
+Başlangıç değeri verilmeyen variable'ın otomatik aldığı değerdir.
+
+```text
+string  → ""
+int     → 0
+float64 → 0
+bool    → false
+```
+
+---
+
+### 9. `const` ne işe yarar?
+
+Değeri sonradan değiştirilemeyen constant tanımlar.
+
+```go
+const language = "Go"
+```
+
+---
+
+### 10. Type Conversion nedir?
+
+Bir değeri başka bir type olarak kullanmak için yapılan açık dönüşümdür.
+
+```go
+ageFloat := float64(age)
+```
+
+---
+
+### 11. `strconv.Atoi` ne yapar?
+
+String içerisindeki decimal integer değerini `int` olarak parse eder.
+
+```text
+"25" → 25
+```
+
+---
+
+### 12. `strconv.Itoa` ne yapar?
+
+`int` değerini decimal string'e dönüştürür.
+
+```text
+25 → "25"
+```
+
+---
+
+### 13. `byte` hangi type'ın alias'ıdır?
+
+```text
+byte → uint8
+```
+
+---
+
+### 14. `rune` hangi type'ın alias'ıdır?
+
+```text
+rune → int32
+```
+
+---
+
+### 15. `int` ve `int64` aynı type mıdır?
+
+Hayır. İkisi farklı type'lardır ve gerektiğinde explicit conversion yapılmalıdır.
+
+```go
+var number int = 22
+converted := int64(number)
+```
