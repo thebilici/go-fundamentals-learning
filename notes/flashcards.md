@@ -287,3 +287,128 @@ Hayır. İkisi farklı type'lardır ve gerektiğinde explicit conversion yapılm
 var number int = 22
 converted := int64(number)
 ```
+
+# Aşama 3 — Control Flow
+
+### 1. Comparison Operator'lar ne üretir?
+
+`true` veya `false` değerinde bir `bool` sonuç üretir.
+
+---
+
+### 2. `=` ile `==` farkı nedir?
+
+```text
+=  → Değer atar
+== → İki değeri karşılaştırır
+```
+
+---
+
+### 3. Temel Logical Operator'lar nelerdir?
+
+```text
+&& → AND
+|| → OR
+!  → NOT
+```
+
+---
+
+### 4. `if` ne işe yarar?
+
+Bir koşul `true` olduğunda belirli bir kod bloğunu çalıştırır.
+
+---
+
+### 5. `else` ne zaman çalışır?
+
+`if` koşulu `false` olduğunda çalışır.
+
+---
+
+### 6. `else if` neden kullanılır?
+
+Birden fazla koşulu sırayla kontrol etmek için kullanılır.
+
+---
+
+### 7. `switch` ne işe yarar?
+
+Bir değeri birden fazla olasılıkla karşılaştırmayı kolaylaştırır.
+
+---
+
+### 8. Go'nun temel döngüsü nedir?
+
+`for` döngüsüdür.
+
+```go
+for i := 1; i <= 5; i++ {
+	fmt.Println(i)
+}
+```
+
+---
+
+### 9. Go'da `while` var mı?
+
+Hayır. While benzeri kullanım `for` ile yapılır.
+
+```go
+for count <= 5 {
+	count++
+}
+```
+
+---
+
+### 10. `break` ne yapar?
+
+Döngüyü tamamen sonlandırır.
+
+---
+
+### 11. `continue` ne yapar?
+
+Mevcut turu atlar ve sonraki tura geçer.
+
+---
+
+### 12. `break` ve `continue` farkı nedir?
+
+```text
+break    → Döngüyü bitirir
+continue → Sadece mevcut turu atlar
+```
+
+---
+
+### 13. `range` ne işe yarar?
+
+Collection içerisindeki elemanları sırayla dolaşmayı sağlar.
+
+---
+
+### 14. `range` ile hangi değerleri alabiliriz?
+
+Örneğin slice üzerinde:
+
+```go
+for index, value := range languages {
+}
+```
+
+ile index ve value alınabilir.
+
+---
+
+### 15. `_` nedir?
+
+Blank Identifier'dır. Kullanmak istemediğimiz değeri yok saymamızı sağlar.
+
+```go
+for _, value := range languages {
+	fmt.Println(value)
+}
+```

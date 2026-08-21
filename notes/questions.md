@@ -126,3 +126,75 @@ float64(...)
   ↓
 25.0
 ```
+
+# Aşama 3 — Control Flow
+
+1. Control Flow nedir?
+
+2. Comparison operator'ları hangi type'ta sonuç üretir?
+
+3. `=` ile `==` arasındaki fark nedir?
+
+4. `&&`, `||` ve `!` operator'ları ne işe yarar?
+
+5. Aşağıdaki koşul ne zaman `true` olur?
+
+```go
+age >= 18 && isActive
+```
+
+6. `if`, `else if` ve `else` arasındaki fark nedir?
+
+7. `switch` hangi durumlarda `if / else if` yerine tercih edilebilir?
+
+8. `switch` içerisindeki `default` ne zaman çalışır?
+
+9. Go'da temel döngü yapısı nedir?
+
+10. Aşağıdaki döngü kaç kez çalışır?
+
+```go
+for i := 1; i <= 5; i++ {
+	fmt.Println(i)
+}
+```
+
+11. Go'da neden ayrı bir `while` keyword'ü yoktur?
+
+12. `break` ne işe yarar?
+
+13. `continue` ne işe yarar?
+
+14. `break` ile `continue` arasındaki fark nedir?
+
+15. Aşağıdaki kodun çıktısı nedir?
+
+```go
+for i := 1; i <= 5; i++ {
+	if i == 3 {
+		continue
+	}
+
+	fmt.Println(i)
+}
+```
+
+16. `range` ne işe yarar?
+
+17. `range` ile bir slice dolaşılırken `index` ve `value` neyi temsil eder?
+
+18. Blank Identifier `_` neden kullanılır?
+
+19. Aşağıdaki kodda neden `4` yazdırılmaz?
+
+```go
+for i := 1; i <= 5; i++ {
+	if i == 4 {
+		continue
+	}
+
+	fmt.Println(i)
+}
+```
+
+20. `break` kontrolünün `fmt.Println()` öncesinde veya sonrasında olması programın çıktısını nasıl etkiler?

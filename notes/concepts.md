@@ -205,3 +205,108 @@ rune → int32
 ```
 
 `byte` binary/veri işlemlerinde, `rune` ise Unicode karakterlerle çalışırken sık kullanılır.
+# Aşama 3 — Control Flow
+
+## Comparison Operators
+
+İki değeri karşılaştırır ve `bool` sonuç üretir.
+
+```text
+==   Eşit
+!=   Eşit değil
+>    Büyük
+<    Küçük
+>=   Büyük veya eşit
+<=   Küçük veya eşit
+```
+
+## Logical Operators
+
+Birden fazla koşulu birleştirmek için kullanılır.
+
+```text
+&& → AND
+|| → OR
+!  → NOT
+```
+
+## if / else
+
+Bir koşula göre hangi kod bloğunun çalışacağını belirler.
+
+```go
+if age >= 18 {
+	fmt.Println("Reşit")
+} else {
+	fmt.Println("Reşit değil")
+}
+```
+
+Birden fazla koşul için `else if` kullanılabilir.
+
+## switch
+
+Bir değerin farklı olasılıklarını kontrol etmek için kullanılır.
+
+```go
+switch role {
+case "admin":
+	fmt.Println("Admin")
+case "user":
+	fmt.Println("User")
+default:
+	fmt.Println("Bilinmeyen")
+}
+```
+
+## for
+
+Go'daki temel döngü yapısıdır.
+
+```go
+for i := 1; i <= 5; i++ {
+	fmt.Println(i)
+}
+```
+
+Go'da ayrı bir `while` keyword'ü bulunmaz. `for` farklı döngü biçimleri için kullanılır.
+
+## break
+
+İçinde bulunduğu döngüyü sonlandırır.
+
+```go
+if i == 8 {
+	break
+}
+```
+
+## continue
+
+Döngünün mevcut turunun geri kalanını atlayarak sonraki tura geçer.
+
+```go
+if i == 4 {
+	continue
+}
+```
+
+## range
+
+Slice gibi collection'ların elemanlarını dolaşmak için kullanılır.
+
+```go
+for index, value := range languages {
+	fmt.Println(index, value)
+}
+```
+
+## Blank Identifier `_`
+
+Bir fonksiyondan, `range`'den vb. gelen ancak kullanılmayacak bir değeri yok saymak için kullanılır.
+
+```go
+for _, value := range languages {
+	fmt.Println(value)
+}
+```

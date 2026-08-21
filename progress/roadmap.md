@@ -110,32 +110,34 @@ Load Testing
 
 ## Aşama 3 — Control Flow
 
-Öğrenilecek konular:
+**Durum:** ✅ Tamamlandı
 
-- `if`
-- `else`
+Öğrenilen konular:
+
+- Comparison Operators
+- Logical Operators
+- `if / else / else if`
 - `switch`
 - `for`
+- `break`
+- `continue`
 - `range`
-
-**Durum:** Bekliyor
 
 ---
 
 ## Aşama 4 — Functions
 
+**Durum:** 🔄 Güncel Aşama
+
 Öğrenilecek konular:
 
-- Function tanımlama
+- Function
 - Parameters
-- Return values
-- Multiple return values
-- Named returns
-- Variadic functions
-
-**Durum:** Bekliyor
-
----
+- Arguments
+- Return Values
+- Multiple Return Values
+- Named Returns
+- Function Scope
 
 ## Aşama 5 — Arrays & Slices
 
