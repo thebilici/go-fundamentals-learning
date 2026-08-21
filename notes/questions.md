@@ -371,3 +371,73 @@ score, ok = scores["Ali"]
 ```
 
 20. Backend uygulamasında `"değer 0"` ile `"kayıt bulunamadı"` arasındaki farkı nasıl tespit edebiliriz?
+
+# Aşama 7 — Structs
+
+1. Struct nedir ve neden kullanılır?
+
+2. `type User struct` ifadesi ne anlama gelir?
+
+3. Struct içerisindeki `Name`, `Age` gibi değerlere ne ad verilir?
+
+4. Aşağıdaki kodda `User` ve `user` arasındaki fark nedir?
+
+```go
+user := User{
+	Name: "Fatih",
+	Age:  22,
+}
+```
+
+5. Struct field'larına nasıl erişilir?
+
+6. Bir struct field'ının değeri nasıl güncellenir?
+
+7. Struct function'a parameter olarak gönderilebilir mi?
+
+8. Function bir struct return edebilir mi?
+
+9. Aşağıdaki `User` neyi ifade eder?
+
+```go
+func createUser(name string, age int) User
+```
+
+10. Aşağıdaki kodda soldaki `Age` ile sağdaki `age` arasındaki fark nedir?
+
+```go
+User{
+	Age: age,
+}
+```
+
+11. Function parameter'ının adı ile struct field'ının adı aynı olmak zorunda mıdır?
+
+12. Struct içerisinde tanımlanmayan bir field, `User{...}` içerisinde kullanılabilir mi?
+
+13. `[]User` ne anlama gelir?
+
+14. Aşağıdaki kodda `users` ve `user` arasındaki fark nedir?
+
+```go
+for _, user := range users {
+	fmt.Println(user.Name)
+}
+```
+
+15. `range` içerisindeki `user` variable ismini kim belirler?
+
+16. Slice üzerinde `range` kullanıldığında `index` ve `value` neyi temsil eder?
+
+17. Slice'taki `index, value` ile Map'teki `key, value` arasındaki fark nedir?
+
+18. `append()` ile `[]User` içerisine yeni bir User nasıl eklenir?
+
+19. Büyük harfle başlayan struct field ne anlama gelir?
+
+20. Aşağıdaki iki field arasındaki temel fark nedir?
+
+```go
+Age int
+age int
+```

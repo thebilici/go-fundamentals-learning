@@ -235,3 +235,93 @@ kullanılabilir.
 := → Yeni variable tanımlama
 =  → Mevcut variable'a değer atama
 ```
+
+# Aşama 7 — Structs
+
+## 1. `users` ve `user` Farkı
+
+```go
+for _, user := range users {
+}
+```
+
+Burada:
+
+```text
+users → Tüm []User slice'ı
+user  → Her döngüde alınan tek bir User
+```
+
+`user` ismini programcı belirler.
+
+---
+
+## 2. Slice'ta `index, value` Mantığı
+
+```go
+for index, user := range users {
+}
+```
+
+Burada:
+
+```text
+index → User'ın slice içerisindeki konumu
+user  → O index'teki User değeri
+```
+
+Map'teki `key, value` yapısına benzer ancak Slice'ta `index` bir key değildir.
+
+---
+
+## 3. Struct Field ve Function Parameter Farkı
+
+```go
+func createUser(name string, age int) User {
+	return User{
+		Name: name,
+		Age:  age,
+	}
+}
+```
+
+Burada:
+
+```text
+Age → Struct field
+age → Function parameter
+```
+
+İsimlerinin aynı olması zorunlu değildir.
+
+Örneğin:
+
+```go
+Age: userAge
+```
+
+şeklinde de kullanılabilir.
+
+---
+
+## 4. Struct'ta Tanımlanmayan Field Kullanmak
+
+Struct literal içerisindeki sol taraf, struct'ta gerçekten tanımlanmış bir field olmalıdır.
+
+```go
+type User struct {
+	IsActive bool
+}
+```
+
+Bu nedenle:
+
+```go
+User{
+	IsActive: true,
+}
+```
+
+geçerlidir.
+
+Struct'ta bulunmayan bir field adı kullanılırsa compiler error oluşur.

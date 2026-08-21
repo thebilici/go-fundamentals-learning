@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-21  
-**Güncel Aşama:** Aşama 7 — Structs
+**Güncel Aşama:** Aşama 8 — Methods
 
 ## Güncel Konum
 
@@ -18,9 +18,9 @@ Arrays & Slices             ✅
         ↓
 Maps                        ✅
         ↓
-Structs                     ← GÜNCEL
+Structs                     ✅
         ↓
-Methods
+Methods                     ← GÜNCEL
         ↓
 Pointers
         ↓
@@ -61,7 +61,6 @@ Kubernetes
 
 ### Aşama 3 — Control Flow ✅
 
-- Comparison ve Logical Operators
 - `if / else`
 - `switch`
 - `for`
@@ -78,9 +77,7 @@ Kubernetes
 
 ### Aşama 5 — Arrays & Slices ✅
 
-- Arrays
-- Slices
-- Index
+- Arrays ve Slices
 - `append`
 - `len` / `cap`
 - Slicing
@@ -89,28 +86,39 @@ Kubernetes
 ### Aşama 6 — Maps ✅
 
 - Key / Value
-- Eleman okuma
-- Eleman ekleme ve güncelleme
+- Ekleme ve güncelleme
 - `value, ok`
 - `delete`
-- `len`
 - `range`
+
+### Aşama 7 — Structs ✅
+
+- Struct ve Field
+- Struct oluşturma
+- Struct + Function
+- Slice of Structs
+- Exported / Unexported Fields
 
 ### Yapılan Pratik
 
-`exercises/basics/maps/` altında öğrenci not sistemi oluşturularak Map işlemleri uygulandı.
+`exercises/basics/structs/` altında:
+
+- `User` struct oluşturuldu.
+- `createUser()` function'ı yazıldı.
+- `[]User` oluşturuldu.
+- `range` ile kullanıcılar dolaşıldı.
+- Aktif kullanıcılar kontrol edildi.
+- `append()` ve `len()` kullanıldı.
 
 ## Güncel Aşama
 
-### Aşama 7 — Structs 🔄
+### Aşama 8 — Methods 🔄
 
 Sıradaki konular:
 
-- Struct nedir?
-- Field
-- Struct tanımlama
-- Struct oluşturma
-- Field erişimi
-- Field güncelleme
-- Struct + Function
-- Slice of Structs
+- Method nedir?
+- Function ve Method farkı
+- Receiver
+- Value Receiver
+- Struct + Method
+- Method çağırma

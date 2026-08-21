@@ -178,31 +178,33 @@ Load Testing
 
 ## Aşama 7 — Structs
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
-- Struct nedir?
+- Struct
 - Field
-- Struct tanımlama
 - Struct oluşturma
-- Field erişimi
-- Field güncelleme
+- Field erişimi ve güncelleme
 - Struct + Function
 - Slice of Structs
+- `range` ile Struct dolaşma
+- Exported / Unexported Fields
+
 ---
 
 ## Aşama 8 — Methods
 
+**Durum:** 🔄 Güncel Aşama
+
 Öğrenilecek konular:
 
-- Methods
-- Receivers
-- Value receivers
-- Pointer receivers
-
-**Durum:** Bekliyor
-
+- Method nedir?
+- Function ve Method farkı
+- Receiver
+- Value Receiver
+- Struct + Method
+- Method çağırma
 ---
 
 ## Aşama 9 — Pointers

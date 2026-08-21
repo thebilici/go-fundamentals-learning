@@ -622,3 +622,113 @@ scores["Fatih"]
        ↓
        90
 ```
+
+# Aşama 7 — Structs
+
+## Struct
+
+Birbiriyle ilişkili verileri tek bir type altında toplamak için kullanılır.
+
+```go
+type User struct {
+	Name     string
+	Age      int
+	IsActive bool
+}
+```
+
+`User`, bizim oluşturduğumuz yeni bir type'tır.
+
+## Field
+
+Struct içerisindeki değerlere field denir.
+
+```text
+Name     → string
+Age      → int
+IsActive → bool
+```
+
+Field'lara `.` ile erişilir:
+
+```go
+user.Name
+user.Age
+```
+
+## Struct Oluşturma
+
+```go
+user := User{
+	Name:     "Fatih",
+	Age:      22,
+	IsActive: true,
+}
+```
+
+## Struct ve Function
+
+Struct, parameter veya return type olarak kullanılabilir.
+
+```go
+func createUser(name string, age int) User {
+	return User{
+		Name: name,
+		Age:  age,
+	}
+}
+```
+
+Burada:
+
+```text
+Age: age
+ ↑    ↑
+Field Parameter
+```
+
+Field ve parameter birbirinden farklı kavramlardır.
+
+## Slice of Structs
+
+Birden fazla struct değeri Slice içerisinde tutulabilir:
+
+```go
+users := []User{
+	user,
+	user2,
+	user3,
+}
+```
+
+## Struct + range
+
+```go
+for index, user := range users {
+	fmt.Println(index, user.Name)
+}
+```
+
+```text
+users → Tüm Slice
+index → Elemanın index'i
+user  → O turdaki User
+```
+
+`user` ismini programcı belirler.
+
+## Exported / Unexported Field
+
+```go
+Age int
+```
+
+Büyük harfle başladığı için exported'dır.
+
+```go
+age int
+```
+
+Küçük harfle başladığı için unexported'dır.
+
+Bu ayrım özellikle farklı package'lerle çalışırken önemlidir.

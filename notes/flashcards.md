@@ -952,3 +952,235 @@ score, ok := scores["Ahmet"]
 
 score, ok = scores["Ali"]
 ```
+# Aşama 7 — Structs
+
+### 1. Struct nedir?
+
+Birbiriyle ilişkili verileri tek bir type altında toplamamızı sağlayan yapıdır.
+
+```go
+type User struct {
+	Name string
+	Age  int
+}
+```
+
+---
+
+### 2. `type User struct` ne anlama gelir?
+
+`User` adında yeni bir struct type tanımlar.
+
+---
+
+### 3. Field nedir?
+
+Struct içerisinde tanımlanan verilerdir.
+
+```go
+type User struct {
+	Name string
+	Age  int
+}
+```
+
+`Name` ve `Age` field'dır.
+
+---
+
+### 4. Struct'tan bir değer nasıl oluşturulur?
+
+```go
+user := User{
+	Name: "Fatih",
+	Age:  22,
+}
+```
+
+---
+
+### 5. Struct field'ına nasıl erişilir?
+
+`.` kullanılır.
+
+```go
+user.Name
+user.Age
+```
+
+---
+
+### 6. Struct field'ı nasıl güncellenir?
+
+```go
+user.Age = 23
+```
+
+---
+
+### 7. Struct function parameter'ı olabilir mi?
+
+Evet.
+
+```go
+func printUser(user User) {
+	fmt.Println(user.Name)
+}
+```
+
+---
+
+### 8. Function bir struct döndürebilir mi?
+
+Evet.
+
+```go
+func createUser() User {
+	return User{
+		Name: "Fatih",
+		Age:  22,
+	}
+}
+```
+
+---
+
+### 9. `[]User` ne anlama gelir?
+
+`User` değerlerinden oluşan bir Slice anlamına gelir.
+
+```go
+users := []User{
+	user,
+	user2,
+}
+```
+
+---
+
+### 10. `range` ile `[]User` dolaşılırken `user` nedir?
+
+Her döngüde Slice içerisinden alınan tek bir `User` değeridir.
+
+```go
+for _, user := range users {
+	fmt.Println(user.Name)
+}
+```
+
+---
+
+### 11. `range` içindeki `user` ismini Go mu belirler?
+
+Hayır. Variable ismini programcı belirler.
+
+```go
+for _, person := range users {
+	fmt.Println(person.Name)
+}
+```
+
+---
+
+### 12. Slice üzerinde `range` ne döndürür?
+
+```go
+for index, value := range slice
+```
+
+```text
+index → Elemanın index'i
+value → O index'teki değer
+```
+
+---
+
+### 13. Slice'taki `index, value` Map'teki `key, value` ile aynı mıdır?
+
+Hayır.
+
+```text
+Slice → index, value
+Map   → key, value
+```
+
+Index key'e benzer bir rol oynasa da teknik olarak key değildir.
+
+---
+
+### 14. `Age: age` ne anlama gelir?
+
+```go
+return User{
+	Age: age,
+}
+```
+
+```text
+Sol Age  → Struct field
+Sağ age  → Variable / function parameter
+```
+
+---
+
+### 15. Struct literal içinde olmayan bir field adı kullanılabilir mi?
+
+Hayır.
+
+Struct:
+
+```go
+type User struct {
+	IsActive bool
+}
+```
+
+ise:
+
+```go
+User{
+	IsActive: true,
+}
+```
+
+kullanılmalıdır. Struct'ta tanımlanmayan bir field adı compiler error oluşturur.
+
+---
+
+### 16. Büyük harfle başlayan struct field ne anlama gelir?
+
+Exported field'dır.
+
+```go
+Age int
+```
+
+Başka package'lerden erişilebilir.
+
+---
+
+### 17. Küçük harfle başlayan struct field ne anlama gelir?
+
+Unexported field'dır.
+
+```go
+age int
+```
+
+Başka package'lerden doğrudan erişilemez.
+
+---
+
+### 18. Function parameter'ının adı ile struct field'ının adı aynı olmak zorunda mı?
+
+Hayır.
+
+```go
+func createUser(userAge int) User {
+	return User{
+		Age: userAge,
+	}
+}
+```
+
+Field ve parameter birbirinden bağımsızdır.
