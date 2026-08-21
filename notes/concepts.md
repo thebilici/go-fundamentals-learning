@@ -414,3 +414,106 @@ Return
    ↓
 Sonuç
 ```
+# Aşama 5 — Arrays & Slices
+
+## Array
+
+Aynı type'taki birden fazla değeri sabit uzunlukta tutan veri yapısıdır.
+
+```go
+languages := [3]string{"Go", "Python", "Java"}
+```
+
+`[3]string`, 3 elemanlı bir `string` array'idir.
+
+## Index
+
+Array ve Slice elemanlarına konumları üzerinden erişilir.
+
+```go
+languages[0]
+```
+
+Go'da index `0`'dan başlar.
+
+## Slice
+
+Boyutu sabit olmayan, Go'da collection işlemlerinde sık kullanılan yapıdır.
+
+```go
+languages := []string{"Go", "Python", "Java"}
+```
+
+Temel syntax farkı:
+
+```text
+[3]string → Array
+[]string  → Slice
+```
+
+## append
+
+Slice'a eleman eklemek için kullanılır.
+
+```go
+languages = append(languages, "Rust")
+```
+
+`append`, güncellenmiş slice'ı geri döndürdüğü için sonuç tekrar variable'a atanır.
+
+## len
+
+Mevcut eleman sayısını verir.
+
+```go
+len(languages)
+```
+
+## cap
+
+Slice'ın mevcut backing array üzerinde erişebildiği kapasiteyi verir.
+
+```text
+len → Mevcut eleman sayısı
+cap → Mevcut kapasite
+```
+
+## Slicing
+
+Bir slice'ın belirli bir bölümünü almak için kullanılır.
+
+```go
+selected := languages[1:4]
+```
+
+Kural:
+
+```text
+[start:end]
+
+start → dahil
+end   → dahil değil
+```
+
+## range
+
+Slice elemanlarını sırayla dolaşmayı sağlar.
+
+```go
+for index, value := range languages {
+	fmt.Println(index, value)
+}
+```
+
+## Array ve Slice Farkı
+
+```text
+Array
+→ Sabit uzunluk
+→ [3]string
+
+Slice
+→ Esnek uzunluk
+→ []string
+→ append ile büyüyebilir
+```

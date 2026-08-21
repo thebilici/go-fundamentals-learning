@@ -142,36 +142,36 @@ Load Testing
 
 ## Aşama 5 — Arrays & Slices
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
 - Arrays
-- Array Length
 - Index
 - Slices
 - `len`
 - `cap`
 - `append`
-- Slice işlemleri
+- Slicing
 - `range`
 
 ---
 
 ## Aşama 6 — Maps
 
+**Durum:** 🔄 Güncel Aşama
+
 Öğrenilecek konular:
 
+- Map
+- Key / Value
 - Map oluşturma
-- Veri okuma
-- Veri ekleme
-- Veri güncelleme
-- Veri silme
+- Eleman ekleme
+- Eleman güncelleme
+- Eleman okuma
 - Key kontrolü
-- Map üzerinde dolaşma
-
-**Durum:** Bekliyor
-
+- `delete`
+- `range`
 ---
 
 ## Aşama 7 — Structs

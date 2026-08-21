@@ -640,3 +640,161 @@ name, age := getUser()
 ```
 
 `getUser()` tarafından döndürülen değerleri sırasıyla `name` ve `age` variable'larına atar.
+
+# Aşama 5 — Arrays & Slices
+
+### 1. Array nedir?
+
+Sabit sayıda ve aynı type'ta eleman tutan veri yapısıdır.
+
+```go
+languages := [3]string{"Go", "Python", "Java"}
+```
+
+---
+
+### 2. `[3]string` ne anlama gelir?
+
+3 adet `string` eleman tutan Array anlamına gelir.
+
+---
+
+### 3. Slice nedir?
+
+Eleman sayısı sabit olmayan, esnek bir collection yapısıdır.
+
+```go
+languages := []string{"Go", "Python", "Java"}
+```
+
+---
+
+### 4. Array ve Slice syntax farkı nedir?
+
+```text
+[3]string → Array
+[]string  → Slice
+```
+
+---
+
+### 5. Index nedir?
+
+Bir elemanın collection içerisindeki konumudur.
+
+```go
+languages[0]
+```
+
+Go'da index `0`'dan başlar.
+
+---
+
+### 6. `len()` ne işe yarar?
+
+Array veya Slice içerisindeki mevcut eleman sayısını verir.
+
+```go
+len(languages)
+```
+
+---
+
+### 7. `append()` ne işe yarar?
+
+Slice'a yeni eleman eklemek için kullanılır.
+
+```go
+languages = append(languages, "Rust")
+```
+
+---
+
+### 8. Neden `languages = append(...)` yazıyoruz?
+
+`append()` güncellenmiş slice'ı geri döndürür. Bu nedenle sonucu tekrar variable'a atarız.
+
+---
+
+### 9. `cap()` ne gösterir?
+
+Slice'ın mevcut backing array üzerinde erişebildiği kapasiteyi gösterir.
+
+```text
+len → Mevcut eleman sayısı
+cap → Mevcut kapasite
+```
+
+---
+
+### 10. Slicing nedir?
+
+Bir Slice'ın belirli bir bölümünü almaktır.
+
+```go
+selected := languages[1:4]
+```
+
+---
+
+### 11. `[1:4]` hangi index'leri alır?
+
+```text
+1 → dahil
+2 → dahil
+3 → dahil
+4 → dahil değil
+```
+
+---
+
+### 12. `range` ne işe yarar?
+
+Slice içerisindeki elemanları sırayla dolaşmayı sağlar.
+
+```go
+for index, value := range languages {
+	fmt.Println(index, value)
+}
+```
+
+---
+
+### 13. Slice içerisindeki bir eleman nasıl değiştirilir?
+
+Index kullanılarak:
+
+```go
+languages[0] = "Golang"
+```
+
+---
+
+### 14. Array sonradan büyütülebilir mi?
+
+Hayır. Array'in uzunluğu oluşturulduğu anda sabittir.
+
+---
+
+### 15. Slice büyütülebilir mi?
+
+Evet. `append()` kullanılarak yeni elemanlar eklenebilir.
+
+---
+
+### 16. Array ve Slice için aynı variable ismi aynı scope içinde tekrar `:=` ile kullanılabilir mi?
+
+Hayır.
+
+```go
+languages := [3]string{"Go", "Python", "Java"}
+
+languages := []string{"Go", "Python", "Java"} // Hata
+```
+
+Daha açıklayıcı farklı isimler kullanılabilir:
+
+```go
+languages := [3]string{"Go", "Python", "Java"}
+languageSlice := []string{"Go", "Python", "Java"}
+```

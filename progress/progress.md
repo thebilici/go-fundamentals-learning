@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-21  
-**Güncel Aşama:** Aşama 5 — Arrays & Slices
+**Güncel Aşama:** Aşama 6 — Maps
 
 ## Güncel Konum
 
@@ -14,9 +14,9 @@ Control Flow                ✅
         ↓
 Functions                   ✅
         ↓
-Arrays & Slices             ← GÜNCEL
+Arrays & Slices             ✅
         ↓
-Maps
+Maps                        ← GÜNCEL
         ↓
 Structs
         ↓
@@ -50,14 +50,12 @@ Kubernetes
 - Go Module ve `go.mod`
 - Package yapısı
 - `go run`, `go build`, `go fmt`
-- Source Code ve Binary
 
 ### Aşama 2 — Variables & Data Types ✅
 
 - Variables ve Constants
 - Temel Data Type'lar
 - Static Typing ve Type Inference
-- Zero Values
 - Type Conversion
 
 ### Aşama 3 — Control Flow ✅
@@ -71,36 +69,37 @@ Kubernetes
 
 ### Aşama 4 — Functions ✅
 
-- Function tanımlama ve çağırma
 - Parameters ve Arguments
 - Return Values
 - Multiple Return Values
 - Named Returns
 - Function Scope
 
+### Aşama 5 — Arrays & Slices ✅
+
+- Arrays
+- Index
+- Slices
+- `append`
+- `len` ve `cap`
+- Slicing
+- `range`
+
 ### Yapılan Pratik
 
-`exercises/basics/functions/` altında:
-
-- `greet`
-- `add`
-- `checkAge`
-- `getUser`
-
-function'ları oluşturularak function mantığı uygulandı.
+`exercises/basics/arrays-slices/` altında Array ve Slice işlemlerini kullanan bir uygulama oluşturuldu.
 
 ## Güncel Aşama
 
-### Aşama 5 — Arrays & Slices 🔄
+### Aşama 6 — Maps 🔄
 
 Sıradaki konular:
 
-- Array
-- Array Length
-- Index
-- Slice
-- `append`
-- `len`
-- `cap`
-- Slice işlemleri
-- `range`
+- Map nedir?
+- Key / Value
+- Map oluşturma
+- Eleman ekleme ve güncelleme
+- Eleman okuma
+- Key kontrolü
+- `delete`
+- `range` ile Map dolaşma

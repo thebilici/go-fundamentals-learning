@@ -145,3 +145,43 @@ var   → Variable tanımlar
 :=    → Function içinde kısa şekilde variable tanımlar
 const → Constant tanımlar
 ```
+
+# Aşama 5 — Arrays & Slices
+
+## 1. `len` ve `cap` Farkı
+
+Bu aşamada `cap` kavramını anlamakta zorlanıldı.
+
+```text
+len → Slice'ta şu anda bulunan eleman sayısı
+cap → Slice'ın mevcut backing array üzerinde erişebildiği kapasite
+```
+
+Capacity dolduktan sonra `append()` yapılırsa Go daha büyük bir backing array oluşturabilir ve `cap` değeri artabilir.
+
+---
+
+## 2. Array ve Slice İçin Aynı Variable İsmini Kullanmak
+
+Aynı scope içerisinde:
+
+```go
+languages := [3]string{"Go", "Python", "Java"}
+```
+
+tanımlandıktan sonra tekrar:
+
+```go
+languages := []string{"Go", "Python", "Java"}
+```
+
+şeklinde `:=` kullanılamaz.
+
+Bunun yerine:
+
+```go
+languages := [3]string{"Go", "Python", "Java"}
+languageSlice := []string{"Go", "Python", "Java"}
+```
+
+gibi farklı ve açıklayıcı isimler kullanılabilir.

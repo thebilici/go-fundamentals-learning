@@ -254,3 +254,59 @@ name, age := getUser()
 14. Function Scope ne anlama gelir?
 
 15. Bir function içerisinde oluşturulan local variable'a başka bir function doğrudan erişebilir mi?
+
+# Aşama 5 — Arrays & Slices
+
+1. Array nedir?
+
+2. Slice nedir?
+
+3. `[3]string` ile `[]string` arasındaki fark nedir?
+
+4. Go'da index kaçtan başlar?
+
+5. Bir Array veya Slice'ın ilk elemanına nasıl erişilir?
+
+6. `len()` ne işe yarar?
+
+7. `append()` ne işe yarar?
+
+8. Neden aşağıdaki şekilde assignment yapıyoruz?
+
+```go
+languages = append(languages, "Rust")
+```
+
+9. `len` ile `cap` arasındaki fark nedir?
+
+10. Slice'ın capacity değeri dolduğunda yeni bir eleman `append` edilirse ne olabilir?
+Slice'ın capacity değeri dolduğunda `append()` yapılırsa Go daha büyük bir backing array oluşturabilir, mevcut elemanları yeni alana taşıyabilir ve slice'ın capacity değeri artabilir.
+
+11. Slicing nedir?
+
+12. Aşağıdaki kod hangi elemanları alır?
+
+```go
+selected := languages[1:4]
+```
+
+13. Slicing işleminde `start` ve `end` değerlerinden hangisi dahil değildir?
+
+14. `languages[:3]` ne anlama gelir?
+
+15. `languages[2:]` ne anlama gelir?
+
+16. `range` ne işe yarar?
+
+17. `range` kullanırken `index` ve `value` neyi temsil eder?
+
+18. Slice içerisindeki mevcut bir eleman nasıl değiştirilir?
+
+19. Array neden `append()` ile büyütülemez?
+
+20. Aynı scope içerisinde neden iki kez aşağıdaki gibi `:=` kullanamayız?
+
+```go
+languages := [3]string{"Go", "Python", "Java"}
+languages := []string{"Go", "Python", "Java"}
+```
