@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-21  
-**Güncel Aşama:** Aşama 6 — Maps
+**Güncel Aşama:** Aşama 7 — Structs
 
 ## Güncel Konum
 
@@ -16,9 +16,9 @@ Functions                   ✅
         ↓
 Arrays & Slices             ✅
         ↓
-Maps                        ← GÜNCEL
+Maps                        ✅
         ↓
-Structs
+Structs                     ← GÜNCEL
         ↓
 Methods
         ↓
@@ -55,13 +55,14 @@ Kubernetes
 
 - Variables ve Constants
 - Temel Data Type'lar
-- Static Typing ve Type Inference
+- Type Inference
+- Zero Values
 - Type Conversion
 
 ### Aşama 3 — Control Flow ✅
 
 - Comparison ve Logical Operators
-- `if / else / else if`
+- `if / else`
 - `switch`
 - `for`
 - `break / continue`
@@ -78,28 +79,38 @@ Kubernetes
 ### Aşama 5 — Arrays & Slices ✅
 
 - Arrays
-- Index
 - Slices
+- Index
 - `append`
-- `len` ve `cap`
+- `len` / `cap`
 - Slicing
+- `range`
+
+### Aşama 6 — Maps ✅
+
+- Key / Value
+- Eleman okuma
+- Eleman ekleme ve güncelleme
+- `value, ok`
+- `delete`
+- `len`
 - `range`
 
 ### Yapılan Pratik
 
-`exercises/basics/arrays-slices/` altında Array ve Slice işlemlerini kullanan bir uygulama oluşturuldu.
+`exercises/basics/maps/` altında öğrenci not sistemi oluşturularak Map işlemleri uygulandı.
 
 ## Güncel Aşama
 
-### Aşama 6 — Maps 🔄
+### Aşama 7 — Structs 🔄
 
 Sıradaki konular:
 
-- Map nedir?
-- Key / Value
-- Map oluşturma
-- Eleman ekleme ve güncelleme
-- Eleman okuma
-- Key kontrolü
-- `delete`
-- `range` ile Map dolaşma
+- Struct nedir?
+- Field
+- Struct tanımlama
+- Struct oluşturma
+- Field erişimi
+- Field güncelleme
+- Struct + Function
+- Slice of Structs

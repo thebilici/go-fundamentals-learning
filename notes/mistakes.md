@@ -185,3 +185,53 @@ languageSlice := []string{"Go", "Python", "Java"}
 ```
 
 gibi farklı ve açıklayıcı isimler kullanılabilir.
+
+# Aşama 6 — Maps
+
+## 1. `else` Syntax'ı
+
+Go'da `else`, kapanan `}` ile aynı satırda olmalıdır.
+
+Yanlış:
+
+```go
+if ok {
+	fmt.Println(score)
+}
+else {
+	fmt.Println("Bulunamadı")
+}
+```
+
+Doğru:
+
+```go
+if ok {
+	fmt.Println(score)
+} else {
+	fmt.Println("Bulunamadı")
+}
+```
+
+---
+
+## 2. `:=` ve `=` Kullanımı
+
+İlk kontrolde variable'lar oluşturuldu:
+
+```go
+score, ok := scores["Ahmet"]
+```
+
+Aynı variable'ları tekrar kullanırken:
+
+```go
+score, ok = scores["Ali"]
+```
+
+kullanılabilir.
+
+```text
+:= → Yeni variable tanımlama
+=  → Mevcut variable'a değer atama
+```

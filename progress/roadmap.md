@@ -159,33 +159,37 @@ Load Testing
 
 ## Aşama 6 — Maps
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
 - Map
 - Key / Value
-- Map oluşturma
+- Eleman okuma
 - Eleman ekleme
 - Eleman güncelleme
-- Eleman okuma
-- Key kontrolü
+- `value, ok`
+- Zero Value
 - `delete`
+- `len`
 - `range`
+
 ---
 
 ## Aşama 7 — Structs
 
+**Durum:** 🔄 Güncel Aşama
+
 Öğrenilecek konular:
 
+- Struct nedir?
+- Field
 - Struct tanımlama
 - Struct oluşturma
-- Fields
-- Nested structs
-- Composition
-
-**Durum:** Bekliyor
-
+- Field erişimi
+- Field güncelleme
+- Struct + Function
+- Slice of Structs
 ---
 
 ## Aşama 8 — Methods

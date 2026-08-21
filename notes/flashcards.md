@@ -798,3 +798,157 @@ Daha açıklayıcı farklı isimler kullanılabilir:
 languages := [3]string{"Go", "Python", "Java"}
 languageSlice := []string{"Go", "Python", "Java"}
 ```
+
+# Aşama 6 — Maps
+
+### 1. Map nedir?
+
+Key-value mantığıyla veri tutan collection yapısıdır.
+
+```go
+scores := map[string]int{
+	"Fatih": 90,
+}
+```
+
+---
+
+### 2. `map[string]int` ne anlama gelir?
+
+```text
+string → Key type
+int    → Value type
+```
+
+---
+
+### 3. Map'ten bir değer nasıl okunur?
+
+```go
+score := scores["Fatih"]
+```
+
+---
+
+### 4. Map'e yeni eleman nasıl eklenir?
+
+```go
+scores["Ayşe"] = 85
+```
+
+Key yoksa yeni eleman oluşturulur.
+
+---
+
+### 5. Map'teki bir değer nasıl güncellenir?
+
+```go
+scores["Fatih"] = 95
+```
+
+Key zaten varsa value güncellenir.
+
+---
+
+### 6. `value, ok` ne işe yarar?
+
+Key'in Map içerisinde gerçekten bulunup bulunmadığını kontrol eder.
+
+```go
+score, ok := scores["Fatih"]
+```
+
+```text
+score → Value
+ok    → Key bulundu mu?
+```
+
+---
+
+### 7. Key varsa `ok` değeri ne olur?
+
+```text
+true
+```
+
+---
+
+### 8. Key yoksa `ok` değeri ne olur?
+
+```text
+false
+```
+
+Value ise kendi type'ının zero value'sunu alır.
+
+---
+
+### 9. Olmayan bir `int` value'lu key okunursa ne döner?
+
+`int` type'ının zero value'su olan `0` döner.
+
+---
+
+### 10. Map'ten eleman nasıl silinir?
+
+```go
+delete(scores, "Fatih")
+```
+
+---
+
+### 11. `len(map)` ne verir?
+
+Map içerisindeki key-value çifti sayısını verir.
+
+---
+
+### 12. Map nasıl dolaşılır?
+
+`range` ile:
+
+```go
+for name, score := range scores {
+	fmt.Println(name, score)
+}
+```
+
+---
+
+### 13. Map üzerinde `range` kullanırken sıraya güvenebilir miyiz?
+
+Hayır. Map iteration sırasına güvenilmemelidir.
+
+---
+
+### 14. Slice ve Map arasındaki temel erişim farkı nedir?
+
+```text
+Slice
+Index → Value
+
+languages[0]
+
+
+Map
+Key → Value
+
+scores["Fatih"]
+```
+
+---
+
+### 15. `:=` ile `=` farkı nedir?
+
+```text
+:= → Yeni variable tanımlamak için
+=  → Mevcut variable'a yeni değer atamak için
+```
+
+Örneğin:
+
+```go
+score, ok := scores["Ahmet"]
+
+score, ok = scores["Ali"]
+```

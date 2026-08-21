@@ -310,3 +310,64 @@ selected := languages[1:4]
 languages := [3]string{"Go", "Python", "Java"}
 languages := []string{"Go", "Python", "Java"}
 ```
+
+# Aşama 6 — Maps
+
+1. Map nedir?
+
+2. Map ile Slice arasındaki temel erişim farkı nedir?
+
+3. `map[string]int` ifadesindeki `string` ve `int` neyi temsil eder?
+
+4. Aşağıdaki Map'ten `"Fatih"` değerine nasıl erişilir?
+
+```go
+scores := map[string]int{
+	"Fatih": 90,
+}
+```
+
+5. Map'e yeni bir key-value çifti nasıl eklenir?
+
+6. Map'teki mevcut bir value nasıl güncellenir?
+
+7. Olmayan bir key doğrudan okunursa ne olur?
+
+8. `map[string]int` içinde olmayan bir key okunursa neden `0` döner?
+
+9. Aşağıdaki kodda `score` ve `ok` neyi temsil eder?
+
+```go
+score, ok := scores["Fatih"]
+```
+
+10. `ok == false` ne anlama gelir?
+
+11. `value, ok` kontrolüne neden ihtiyaç duyabiliriz?
+
+12. Map'ten bir eleman nasıl silinir?
+
+13. Olmayan bir key için `delete()` çağrılırsa ne olur?
+
+14. `len(scores)` neyi verir?
+
+15. Map içerisindeki tüm key-value çiftleri nasıl dolaşılır?
+
+16. Map üzerinde `range` kullanırken çıktı sırasına güvenebilir miyiz?
+
+17. Aşağıdaki kod ne yapar?
+
+```go
+scores["Mehmet"] = 70
+```
+
+18. `:=` ile `=` arasındaki fark nedir?
+
+19. Neden ikinci kullanımda `=` tercih edilebilir?
+
+```go
+score, ok := scores["Ahmet"]
+score, ok = scores["Ali"]
+```
+
+20. Backend uygulamasında `"değer 0"` ile `"kayıt bulunamadı"` arasındaki farkı nasıl tespit edebiliriz?

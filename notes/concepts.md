@@ -517,3 +517,108 @@ Slice
 → []string
 → append ile büyüyebilir
 ```
+# Aşama 6 — Maps
+
+## Map
+
+Key-value mantığıyla veri tutan collection yapısıdır.
+
+```go
+scores := map[string]int{
+	"Fatih": 90,
+	"Ahmet": 75,
+}
+```
+
+```text
+map[string]int
+     ↓      ↓
+    key    value
+```
+
+## Değer Okuma
+
+Bir value'ya key üzerinden erişilir.
+
+```go
+score := scores["Fatih"]
+```
+
+## Eleman Ekleme ve Güncelleme
+
+Aynı syntax kullanılır:
+
+```go
+scores["Ayşe"] = 85
+```
+
+Key yoksa yeni eleman eklenir, varsa mevcut value güncellenir.
+
+## Key Kontrolü
+
+```go
+score, ok := scores["Fatih"]
+```
+
+```text
+score → Value
+ok    → Key mevcut mu?
+```
+
+Key varsa `ok = true`, yoksa `ok = false` olur.
+
+Bu kullanım **comma ok idiom** olarak bilinir.
+
+## Zero Value
+
+Olmayan bir key doğrudan okunursa value type'ın zero value'su döner.
+
+Örneğin `map[string]int` için:
+
+```go
+scores["Unknown"]
+```
+
+key yoksa `0` döner.
+
+Bu nedenle key'in gerçekten var olup olmadığını anlamak için `value, ok` kullanılabilir.
+
+## delete
+
+Map'ten key-value çiftini siler.
+
+```go
+delete(scores, "Fatih")
+```
+
+## len
+
+Map'teki eleman sayısını verir.
+
+```go
+len(scores)
+```
+
+## range
+
+Map'teki key-value çiftlerini dolaşır.
+
+```go
+for name, score := range scores {
+	fmt.Println(name, score)
+}
+```
+
+Map üzerinde `range` kullanırken belirli bir sıralamaya güvenilmemelidir.
+
+## Temel Map Modeli
+
+```text
+Map
+ ↓
+Key → Value
+
+scores["Fatih"]
+       ↓
+       90
+```
