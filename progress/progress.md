@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-21  
-**Güncel Aşama:** Aşama 4 — Functions
+**Güncel Aşama:** Aşama 5 — Arrays & Slices
 
 ## Güncel Konum
 
@@ -12,9 +12,9 @@ Variables & Data Types      ✅
         ↓
 Control Flow                ✅
         ↓
-Functions                   ← GÜNCEL
+Functions                   ✅
         ↓
-Arrays & Slices
+Arrays & Slices             ← GÜNCEL
         ↓
 Maps
         ↓
@@ -54,46 +54,53 @@ Kubernetes
 
 ### Aşama 2 — Variables & Data Types ✅
 
-- `var`, `:=`, `const`
+- Variables ve Constants
 - Temel Data Type'lar
 - Static Typing ve Type Inference
 - Zero Values
 - Type Conversion
-- `strconv.Atoi` / `strconv.Itoa`
-- Numeric Types
 
 ### Aşama 3 — Control Flow ✅
 
-- Comparison Operators
-- Logical Operators
+- Comparison ve Logical Operators
 - `if / else / else if`
 - `switch`
 - `for`
 - `break / continue`
 - `range`
 
-### Yapılan Pratik
+### Aşama 4 — Functions ✅
 
-`exercises/basics/control-flow/` altında:
-
-- Yaş ve aktiflik kontrolü
-- Role göre `switch`
-- Döngü kontrolü
-- `break` ve `continue`
-- Slice üzerinde `range`
-
-kullanıldı.
-
-## Güncel Aşama
-
-### Aşama 4 — Functions 🔄
-
-Sıradaki konular:
-
-- Function nedir?
-- Parameters
-- Arguments
+- Function tanımlama ve çağırma
+- Parameters ve Arguments
 - Return Values
 - Multiple Return Values
 - Named Returns
 - Function Scope
+
+### Yapılan Pratik
+
+`exercises/basics/functions/` altında:
+
+- `greet`
+- `add`
+- `checkAge`
+- `getUser`
+
+function'ları oluşturularak function mantığı uygulandı.
+
+## Güncel Aşama
+
+### Aşama 5 — Arrays & Slices 🔄
+
+Sıradaki konular:
+
+- Array
+- Array Length
+- Index
+- Slice
+- `append`
+- `len`
+- `cap`
+- Slice işlemleri
+- `range`

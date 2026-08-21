@@ -310,3 +310,107 @@ for _, value := range languages {
 	fmt.Println(value)
 }
 ```
+
+# Aşama 4 — Functions
+
+## Function
+
+Belirli bir işi yapan ve tekrar kullanılabilen kod bloğudur.
+
+```go
+func greet() {
+	fmt.Println("Hello")
+}
+```
+
+## Parameter ve Argument
+
+Parameter, function tanımlanırken belirtilen değişkendir.
+
+Argument ise function çağrılırken gönderilen gerçek değerdir.
+
+```go
+func greet(name string) {
+	fmt.Println(name)
+}
+
+greet("Fatih")
+```
+
+```text
+name    → Parameter
+"Fatih" → Argument
+```
+
+## Return Value
+
+Function yaptığı işlemin sonucunu geri döndürebilir.
+
+```go
+func add(a, b int) int {
+	return a + b
+}
+```
+
+Buradaki son `int`, function'ın return type'ıdır.
+
+## Multiple Return Values
+
+Go function'ları birden fazla değer döndürebilir.
+
+```go
+func getUser() (string, int) {
+	return "Fatih", 22
+}
+```
+
+Dönen değerler sırayla variable'lara atanır:
+
+```go
+name, age := getUser()
+```
+
+```text
+"Fatih" → name
+22      → age
+```
+
+## Named Return Values
+
+Return değerlerine function tanımında isim verilebilir.
+
+```go
+func add(a, b int) (result int) {
+	result = a + b
+	return
+}
+```
+
+## Function Scope
+
+Function içerisinde oluşturulan variable'lar kendi scope'ları içerisinde kullanılabilir.
+
+```go
+func calculate() int {
+	result := 10 + 20
+	return result
+}
+```
+
+Başka bir function `result` değişkenine doğrudan erişemez.
+
+## Temel Function Akışı
+
+```text
+Argument
+   ↓
+Parameter
+   ↓
+Function
+   ↓
+İşlem
+   ↓
+Return
+   ↓
+Sonuç
+```

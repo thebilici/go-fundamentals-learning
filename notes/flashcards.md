@@ -412,3 +412,231 @@ for _, value := range languages {
 	fmt.Println(value)
 }
 ```
+
+# Aşama 4 — Functions
+
+### 1. Function nedir?
+
+Belirli bir işi yapan ve gerektiğinde tekrar çağrılabilen kod bloğudur.
+
+---
+
+### 2. Go'da function hangi keyword ile tanımlanır?
+
+`func` keyword'ü ile.
+
+```go
+func greet() {
+}
+```
+
+---
+
+### 3. Parameter nedir?
+
+Function tanımlanırken belirtilen değişkendir.
+
+```go
+func greet(name string) {
+}
+```
+
+Burada `name` parameter'dır.
+
+---
+
+### 4. Argument nedir?
+
+Function çağrılırken gönderilen gerçek değerdir.
+
+```go
+greet("Fatih")
+```
+
+Burada `"Fatih"` argument'tır.
+
+---
+
+### 5. Parameter ile argument arasındaki fark nedir?
+
+```text
+func greet(name string)
+           ↑
+       Parameter
+
+greet("Fatih")
+       ↑
+    Argument
+```
+
+---
+
+### 6. Return Value nedir?
+
+Function'ın ürettiği sonucu çağrıldığı yere geri göndermesidir.
+
+```go
+func add(a, b int) int {
+	return a + b
+}
+```
+
+---
+
+### 7. Return Type nerede yazılır?
+
+Parameter listesinden sonra yazılır.
+
+```go
+func add(a, b int) int
+                   ↑
+              Return Type
+```
+
+---
+
+### 8. Bir function birden fazla değer döndürebilir mi?
+
+Evet.
+
+```go
+func getUser() (string, int) {
+	return "Fatih", 22
+}
+```
+
+---
+
+### 9. Multiple Return değerleri nasıl alınır?
+
+Sırayla variable'lara atanır.
+
+```go
+name, age := getUser()
+```
+
+```text
+"Fatih" → name
+22      → age
+```
+
+---
+
+### 10. Birden fazla Return Type nasıl belirtilir?
+
+Parantez içerisinde yazılır.
+
+```go
+func example() (string, int, bool) {
+	return "Fatih", 22, true
+}
+```
+
+---
+
+### 11. `_` Multiple Return ile neden kullanılır?
+
+İhtiyacımız olmayan değeri yok saymak için.
+
+```go
+name, _ := getUser()
+```
+
+---
+
+### 12. Named Return nedir?
+
+Return değerine function tanımında isim verilmesidir.
+
+```go
+func add(a, b int) (result int) {
+	result = a + b
+	return
+}
+```
+
+---
+
+### 13. Function Scope nedir?
+
+Function içerisinde oluşturulan local variable'ların yalnızca kendi scope'larında erişilebilir olmasıdır.
+
+---
+
+### 14. `:=` ile oluşturulan şey variable mıdır?
+
+Evet.
+
+```go
+name := "Fatih"
+```
+
+`name` normal bir variable'dır.
+
+---
+
+### 15. `var`, `:=` ve `const` arasındaki temel fark nedir?
+
+```text
+var   → Variable tanımlar
+:=    → Function içinde kısa variable tanımlar
+const → Constant tanımlar
+```
+
+---
+
+### 16. Aynı type'taki parameter'lar kısa nasıl yazılır?
+
+```go
+func add(a, b int) int {
+	return a + b
+}
+```
+
+Hem `a` hem `b`, `int` type'ındadır.
+
+---
+
+### 17. Function sonucu variable'a alınmak zorunda mı?
+
+Hayır.
+
+```go
+fmt.Println(add(5, 10))
+```
+
+şeklinde doğrudan kullanılabilir.
+
+---
+
+### 18. `return` çalıştığında ne olur?
+
+Değer çağıran yere gönderilir ve function'ın çalışması sona erer.
+
+---
+
+### 19. Function'ın temel veri akışı nasıldır?
+
+```text
+Argument
+   ↓
+Parameter
+   ↓
+Function
+   ↓
+İşlem
+   ↓
+Return
+   ↓
+Sonuç
+```
+
+---
+
+### 20. `getUser()` örneğinde aşağıdaki kod ne yapar?
+
+```go
+name, age := getUser()
+```
+
+`getUser()` tarafından döndürülen değerleri sırasıyla `name` ve `age` variable'larına atar.

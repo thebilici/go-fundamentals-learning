@@ -198,3 +198,59 @@ for i := 1; i <= 5; i++ {
 ```
 
 20. `break` kontrolünün `fmt.Println()` öncesinde veya sonrasında olması programın çıktısını nasıl etkiler?
+
+# Aşama 4 — Functions
+
+1. Function nedir ve neden kullanılır?
+
+2. Go'da function hangi keyword ile tanımlanır?
+
+3. Parameter ile argument arasındaki fark nedir?
+
+4. Aşağıdaki kodda parameter ve argument hangisidir?
+
+```go
+func greet(name string) {
+	fmt.Println(name)
+}
+
+greet("Fatih")
+```
+
+5. Return value nedir?
+
+6. Aşağıdaki function'daki son `int` ne anlama gelir?
+
+```go
+func add(a, b int) int {
+	return a + b
+}
+```
+
+7. `return` keyword'ü ne işe yarar?
+
+8. Multiple Return Values nedir?
+
+9. Aşağıdaki function kaç değer döndürür ve type'ları nelerdir?
+
+```go
+func getUser() (string, int) {
+	return "Fatih", 22
+}
+```
+
+10. Aşağıdaki satırda `name` ve `age` hangi değerleri alır?
+
+```go
+name, age := getUser()
+```
+
+11. Bir function üç farklı değer döndürebilir mi?
+
+12. Multiple return kullanırken `_` ne işe yarar?
+
+13. Named Return Value nedir?
+
+14. Function Scope ne anlama gelir?
+
+15. Bir function içerisinde oluşturulan local variable'a başka bir function doğrudan erişebilir mi?

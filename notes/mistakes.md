@@ -86,3 +86,62 @@ go build .
 kullanıldığında package bazlı build yapıldı ve `basics.exe` oluştu.
 
 **Ders:** Go projelerinde sadece dosya bazlı değil, package bazlı düşünmek önemlidir.
+
+# Aşama 4 — Functions
+
+## 1. Multiple Return Values Mantığı
+
+Bir function birden fazla değer döndürebilir:
+
+```go
+func getUser() (string, int) {
+	return "Fatih", 22
+}
+```
+
+Dönen değerler sırayla variable'lara alınır:
+
+```go
+name, age := getUser()
+```
+
+```text
+"Fatih" → name
+22      → age
+```
+
+---
+
+## 2. Multiple Return Type Syntax'ı
+
+Birden fazla değer döndürüldüğünde dönüş tipleri zaten `()` içerisinde belirtilir:
+
+```go
+func example() (string, int, bool) {
+	return "Fatih", 22, true
+}
+```
+
+Burada:
+
+```text
+(string, int, bool)
+```
+
+function'ın return type'larıdır.
+
+---
+
+## 3. `:=` ile Oluşturulan Değer Variable'dır
+
+```go
+name := "Fatih"
+```
+
+Burada `name`, normal bir variable'dır.
+
+```text
+var   → Variable tanımlar
+:=    → Function içinde kısa şekilde variable tanımlar
+const → Constant tanımlar
+```

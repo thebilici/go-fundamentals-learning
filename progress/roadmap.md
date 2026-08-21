@@ -127,31 +127,34 @@ Load Testing
 
 ## Aşama 4 — Functions
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
-- Function
-- Parameters
-- Arguments
+- Function tanımlama ve çağırma
+- Parameters ve Arguments
 - Return Values
 - Multiple Return Values
 - Named Returns
 - Function Scope
 
+---
+
 ## Aşama 5 — Arrays & Slices
+
+**Durum:** 🔄 Güncel Aşama
 
 Öğrenilecek konular:
 
 - Arrays
+- Array Length
+- Index
 - Slices
 - `len`
 - `cap`
 - `append`
-- Slice mantığı
-- Array ve Slice farkı
-
-**Durum:** Bekliyor
+- Slice işlemleri
+- `range`
 
 ---
 
