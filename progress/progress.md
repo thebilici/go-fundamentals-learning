@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-24  
-**Güncel Aşama:** Aşama 11 — Error Handling
+**Güncel Aşama:** Aşama 12 — Packages & Modules
 
 ## Güncel Konum
 
@@ -26,9 +26,9 @@ Pointers                    ✅
         ↓
 Interfaces                  ✅
         ↓
-Error Handling              ← GÜNCEL
+Error Handling              ✅
         ↓
-Packages & Modules
+Packages & Modules          ← GÜNCEL
         ↓
 Concurrency
         ↓
@@ -45,14 +45,6 @@ Kubernetes
 
 ## Tamamlanan Aşamalar
 
-### Aşama 8 — Methods ✅
-
-- Method
-- Receiver
-- Value Receiver
-- Method Parameters
-- Method Return Values
-
 ### Aşama 9 — Pointers ✅
 
 - Memory Address
@@ -65,39 +57,54 @@ Kubernetes
 
 ### Aşama 10 — Interfaces ✅
 
-- Interface tanımlama
+- Interface
 - Method Signature
 - Implicit Implementation
-- Birden fazla method içeren interface
 - Interface Parameter
 - Interface Variable
 - Concrete Type
 - Polymorphism
 
+### Aşama 11 — Error Handling ✅
+
+- `error` type
+- `(value, error)` dönüş yapısı
+- `nil`
+- `err != nil`
+- `errors.New()`
+- `fmt.Errorf()`
+- Error Propagation
+- Error Wrapping
+- `%w`
+- Error Handling vs Propagation
+- Struct Zero Value (`User{}`)
+
 ### Yapılan Pratik
 
-`exercises/basics/interfaces/` altında:
+`exercises/basics/error-handling/` altında:
 
-- `Notifier` interface oluşturuldu.
-- `EmailNotifier` ve `SMSNotifier` oluşturuldu.
-- `send()` method'ları implement edildi.
-- Aynı interface üzerinden farklı concrete type'lar kullanıldı.
-- Interface function parameter olarak kullanıldı.
-- Interface variable oluşturuldu.
-- Polymorphism uygulandı.
+- `validateAge()` oluşturuldu.
+- Yaş doğrulama kuralları yazıldı.
+- `errors.New()` ile error üretildi.
+- `createUser()` içinde `(User, error)` kullanıldı.
+- Error üst function'a propagate edildi.
+- `fmt.Errorf("%w")` ile error wrapping yapıldı.
+- Hata durumunda `User{}` döndürüldü.
 
 ## Güncel Aşama
 
-### Aşama 11 — Error Handling 🔄
+### Aşama 12 — Packages & Modules 🔄
 
 Sıradaki konular:
 
-- `error` nedir?
-- Go'da hata yönetimi mantığı
-- `error` return etmek
-- `nil` kontrolü
-- `if err != nil`
-- `errors.New()`
-- `fmt.Errorf()`
-- Multiple return ile `(value, error)`
-- Error propagation
+- Package nedir?
+- `package main`
+- Custom package oluşturma
+- `import`
+- Exported / Unexported identifiers
+- Package path
+- Module nedir?
+- `go.mod`
+- Module path
+- Package ve Module farkı
+- Bir package'i başka package'dan kullanma

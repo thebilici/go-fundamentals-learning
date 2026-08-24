@@ -246,33 +246,41 @@ Load Testing
 
 ## Aşama 11 — Error Handling
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
-- `error` nedir?
-- `(value, error)` yapısı
+- `error`
+- `(value, error)`
 - `nil`
-- `if err != nil`
+- `err != nil`
 - `errors.New()`
 - `fmt.Errorf()`
 - Error Propagation
-- Hataları üst katmana iletme
+- Error Wrapping
+- `%w`
+- Error Handling vs Propagation
+- Struct Zero Value
+
 ---
 
 ## Aşama 12 — Packages & Modules
 
+**Durum:** 🔄 Güncel Aşama
+
 Öğrenilecek konular:
 
-- Packages
-- Exported identifiers
-- Imports
+- Package nedir?
+- `package main`
+- Custom Package
+- `import`
+- Exported / Unexported Identifiers
+- Package Path
+- Module nedir?
 - `go.mod`
-- `go mod init`
-- Go Modules
-- Package organizasyonu
-
-**Durum:** Bekliyor
+- Module Path
+- Package vs Module
+- Package'ler arası kullanım
 
 ---
 

@@ -1121,3 +1121,232 @@ Function
 ↓
 Concrete type yerine interface'e bağımlı olabilir
 ```
+
+# Aşama 11 — Error Handling
+
+## Error
+
+Go'da hatalar `error` type'ı ile temsil edilir.
+
+Function hem değer hem error döndürebilir:
+
+```go
+func divide(a int, b int) (int, error)
+```
+
+```text
+int   → başarılı işlem sonucu
+error → hata bilgisi
+```
+
+## nil
+
+Error için `nil`, hata olmadığını belirtir.
+
+```text
+err == nil  → hata yok
+err != nil  → hata var
+```
+
+Başarılı işlem:
+
+```go
+return result, nil
+```
+
+## Error Kontrolü
+
+Go'da temel error kontrol pattern'i:
+
+```go
+result, err := someFunction()
+
+if err != nil {
+	// hata var
+	return
+}
+
+// hata yok
+```
+
+## errors.New()
+
+Sabit bir error oluşturur.
+
+```go
+errors.New("cannot divide by zero")
+```
+
+Örnek:
+
+```go
+if b == 0 {
+	return 0, errors.New("cannot divide by zero")
+}
+```
+
+## fmt.Errorf()
+
+Formatlı error oluşturmak için kullanılır.
+
+```go
+fmt.Errorf("cannot multiply %d by %d", a, b)
+```
+
+Değişkenleri error mesajına ekleyebilir.
+
+## Value + Error
+
+Go'da yaygın function dönüşlerinden biri:
+
+```go
+(value, error)
+```
+
+Örneğin:
+
+```go
+func createUser(name string, age int) (User, error)
+```
+
+Başarılı:
+
+```go
+return user, nil
+```
+
+Hatalı:
+
+```go
+return User{}, err
+```
+
+## Zero Value Struct
+
+```go
+User{}
+```
+
+struct'ın field'larının zero value aldığı halidir.
+
+Örneğin:
+
+```go
+type User struct {
+	Name string
+	Age  int
+}
+```
+
+için:
+
+```go
+User{}
+```
+
+yaklaşık olarak:
+
+```go
+User{
+	Name: "",
+	Age:  0,
+}
+```
+
+anlamına gelir.
+
+## Error Propagation
+
+Bir function'ın aldığı error'ı çağıran üst function'a iletmesidir.
+
+```go
+result, err := divide(a, b)
+
+if err != nil {
+	return 0, err
+}
+```
+
+Akış:
+
+```text
+divide()
+   ↓ error
+calculate()
+   ↓ error
+main()
+```
+
+## Error Wrapping
+
+Mevcut error'a ek context ekleyerek yukarı taşımaktır.
+
+```go
+return 0, fmt.Errorf("calculate failed: %w", err)
+```
+
+Buradaki:
+
+```text
+%w
+```
+
+orijinal error'ı wrap eder.
+
+Örnek:
+
+```text
+Orijinal:
+cannot divide by zero
+
+Wrapped:
+calculate failed: cannot divide by zero
+```
+
+## Handle vs Propagate
+
+Error oluştuğunda iki temel seçenek vardır.
+
+### Handle
+
+Hatayı bulunduğun yerde işle:
+
+```go
+if err != nil {
+	fmt.Println("Error:", err)
+	return
+}
+```
+
+### Propagate
+
+Hatayı çağıran function'a ilet:
+
+```go
+if err != nil {
+	return 0, err
+}
+```
+
+veya context ekleyerek:
+
+```go
+if err != nil {
+	return 0, fmt.Errorf("operation failed: %w", err)
+}
+```
+
+## Temel Akış
+
+```text
+Function çağır
+      ↓
+value, err
+      ↓
+err != nil?
+   /       \
+ Evet      Hayır
+  ↓          ↓
+Handle /    value
+Propagate   kullan
+```

@@ -680,3 +680,99 @@ func sendNotification(n Notifier) {
 sendNotification(email)
 sendNotification(sms)
 ```
+# Aşama 11 — Error Handling
+
+1. Go'da `error` nedir?
+
+2. Aşağıdaki function signature ne anlama gelir?
+
+```go
+func divide(a int, b int) (int, error)
+```
+
+3. Error açısından `nil` ne anlama gelir?
+
+4. `err == nil` ile `err != nil` arasındaki fark nedir?
+
+5. Aşağıdaki kod neyi kontrol eder?
+
+```go
+if err != nil {
+	return
+}
+```
+
+6. `errors.New()` ne işe yarar?
+
+7. `fmt.Errorf()` ne işe yarar?
+
+8. `errors.New()` ile `fmt.Errorf()` arasındaki temel fark nedir?
+
+9. Başarılı bir işlemde neden genellikle aşağıdaki gibi `nil` döndürülür?
+
+```go
+return result, nil
+```
+
+10. Aşağıdaki kodda `result` ve `err` neyi temsil eder?
+
+```go
+result, err := divide(10, 2)
+```
+
+11. Error propagation nedir?
+
+12. Aşağıdaki kod ne yapar?
+
+```go
+if err != nil {
+	return 0, err
+}
+```
+
+13. `divide()` → `calculate()` → `main()` zincirinde `divide()` içinde oluşan bir error nasıl `main()`e ulaşabilir?
+
+14. Error handling ile error propagation arasındaki fark nedir?
+
+15. Error wrapping nedir?
+
+16. `%w` ne işe yarar?
+
+```go
+fmt.Errorf("calculate failed: %w", err)
+```
+
+17. Aşağıdaki iki kullanım arasındaki fark nedir?
+
+```go
+return 0, err
+```
+
+```go
+return 0, fmt.Errorf("calculate failed: %w", err)
+```
+
+18. `(User, error)` döndüren bir function hata durumunda neden aşağıdaki gibi dönebilir?
+
+```go
+return User{}, err
+```
+
+19. `User{}` ne anlama gelir?
+
+20. Aşağıdaki kodun error akışını baştan sona açıklayın:
+
+```go
+func createUser(name string, age int) (User, error) {
+	err := validateAge(age)
+
+	if err != nil {
+		return User{}, fmt.Errorf("create user failed: %w", err)
+	}
+
+	return User{
+		Name: name,
+		Age:  age,
+	}, nil
+}
+```

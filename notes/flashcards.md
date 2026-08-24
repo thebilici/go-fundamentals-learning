@@ -1730,3 +1730,222 @@ method'u bulunduğu için.
 ### 17. Interface ile polymorphism arasındaki bağlantı nedir?
 
 Interface ortak davranışı tanımlar; farklı type'lar bu davranışı farklı şekilde implement eder ve aynı interface üzerinden kullanılabilir.
+
+# Aşama 11 — Error Handling
+
+### 1. Go'da `error` nedir?
+
+Bir işlem sırasında oluşan hatayı temsil eden type'dır.
+
+---
+
+### 2. `(int, error)` ne anlama gelir?
+
+Function iki değer döndürür:
+
+```text
+int   → işlem sonucu
+error → hata bilgisi
+```
+
+---
+
+### 3. `nil` error açısından ne anlama gelir?
+
+Hata olmadığını belirtir.
+
+```text
+err == nil → hata yok
+```
+
+---
+
+### 4. `err != nil` ne anlama gelir?
+
+Bir hata oluştuğunu belirtir.
+
+```go
+if err != nil {
+	// hata var
+}
+```
+
+---
+
+### 5. Go'da temel error kontrol pattern'i nedir?
+
+```go
+result, err := someFunction()
+
+if err != nil {
+	return
+}
+```
+
+---
+
+### 6. `errors.New()` ne işe yarar?
+
+Yeni ve sabit mesajlı bir error oluşturur.
+
+```go
+errors.New("cannot divide by zero")
+```
+
+---
+
+### 7. `fmt.Errorf()` ne işe yarar?
+
+Formatlı error mesajı oluşturmaya yarar.
+
+```go
+fmt.Errorf("invalid age: %d", age)
+```
+
+---
+
+### 8. `errors.New()` ile `fmt.Errorf()` arasındaki temel fark nedir?
+
+```text
+errors.New()
+→ Sabit mesaj
+
+fmt.Errorf()
+→ Formatlanabilir/dinamik mesaj
+```
+
+---
+
+### 9. Başarılı bir `(value, error)` dönüşünde genellikle ne döndürülür?
+
+```go
+return value, nil
+```
+
+---
+
+### 10. Hata durumunda neden `User{}` döndürülebilir?
+
+Function `User` döndürmek zorunda olduğu için hata durumunda `User` type'ının zero value hali kullanılabilir.
+
+```go
+return User{}, err
+```
+
+---
+
+### 11. `User{}` ne anlama gelir?
+
+Field'ları zero value olan bir `User` değeridir.
+
+```text
+string → ""
+int    → 0
+bool   → false
+```
+
+---
+
+### 12. Error Propagation nedir?
+
+Bir function'ın aldığı error'ı çağıran üst function'a iletmesidir.
+
+```go
+if err != nil {
+	return 0, err
+}
+```
+
+---
+
+### 13. Aşağıdaki kod ne yapar?
+
+```go
+result, err := divide(a, b)
+
+if err != nil {
+	return 0, err
+}
+```
+
+`divide()` tarafından döndürülen error varsa bunu üst function'a taşır.
+
+---
+
+### 14. Error Wrapping nedir?
+
+Bir error'a ek context ekleyerek orijinal error'ı koruyup yukarı taşımaktır.
+
+```go
+fmt.Errorf("calculate failed: %w", err)
+```
+
+---
+
+### 15. `%w` ne işe yarar?
+
+Mevcut error'ı wrap eder.
+
+```go
+fmt.Errorf("operation failed: %w", err)
+```
+
+---
+
+### 16. `return 0, err` ile `return 0, fmt.Errorf("failed: %w", err)` arasındaki fark nedir?
+
+```text
+return 0, err
+→ Error'ı olduğu gibi taşır.
+
+fmt.Errorf("failed: %w", err)
+→ Error'a context ekleyerek taşır.
+```
+
+---
+
+### 17. Error handling ile error propagation arasındaki fark nedir?
+
+```text
+Handling
+→ Hatayı bulunduğun yerde işle.
+
+Propagation
+→ Hatayı üst function'a gönder.
+```
+
+---
+
+### 18. Aşağıdaki error akışı neyi gösterir?
+
+```text
+divide()
+   ↓
+calculate()
+   ↓
+main()
+```
+
+Alt function'da oluşan error'ın üst function'lara taşınmasını, yani error propagation'ı gösterir.
+
+---
+
+### 19. `validateAge()` başarılı olduğunda neden `nil` döndürür?
+
+Çünkü herhangi bir hata oluşmamıştır.
+
+```go
+return nil
+```
+
+---
+
+### 20. Go'da neden error kontrolü sık sık açık şekilde yazılır?
+
+Go'da error'lar genellikle return value olarak taşınır ve çağıran kod tarafından açıkça kontrol edilir.
+
+```go
+if err != nil {
+	// error işle
+}
+```

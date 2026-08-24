@@ -569,3 +569,160 @@ Concrete type → Admin
 ```
 
 Aynı interface variable farklı zamanlarda farklı concrete type'ları tutabilir.
+
+# Aşama 11 — Error Handling
+
+## 1. `nil` Mantığını Karıştırmak
+
+Başta `nil` kavramı net değildi.
+
+Error açısından:
+
+```text
+err == nil
+→ hata yok
+
+err != nil
+→ hata var
+```
+
+Örneğin:
+
+```go
+return a / b, nil
+```
+
+işlemin başarılı olduğunu belirtir.
+
+---
+
+## 2. `err != nil` Hatayı Döndürmez
+
+Başta:
+
+```go
+if err != nil
+```
+
+ifadesinin hatayı döndürdüğü düşünüldü.
+
+Aslında sadece hata olup olmadığını kontrol eder.
+
+```go
+if err != nil {
+	fmt.Println(err)
+}
+```
+
+Burada:
+
+```text
+err != nil       → hata var mı kontrolü
+fmt.Println(err) → hatayı yazdırır
+```
+
+---
+
+## 3. Error Propagation Mantığı
+
+Başta hatanın function'lar arasında nasıl ilerlediği karıştırıldı.
+
+```text
+main()
+  ↓
+calculate()
+  ↓
+divide()
+```
+
+`divide()` hata oluşturur:
+
+```go
+return 0, errors.New("cannot divide by zero")
+```
+
+`calculate()` hatayı alır ve yukarı taşır:
+
+```go
+if err != nil {
+	return 0, err
+}
+```
+
+`main()` hatayı işler.
+
+```text
+divide()    → error oluşturur
+calculate() → error'ı propagate eder
+main()      → error'ı handle eder
+```
+
+---
+
+## 4. `:=` ve `=` Scope Farkı
+
+`calculate()` içinde:
+
+```go
+result, err = divide(a, b)
+```
+
+kullanıldı.
+
+Ancak `result` ve `err`, `calculate()` scope'unda henüz oluşturulmamıştı.
+
+Doğrusu:
+
+```go
+result, err := divide(a, b)
+```
+
+Temel kural:
+
+```text
+Variable bu scope'ta ilk kez oluşturuluyor → :=
+
+Variable aynı scope'ta zaten mevcut → =
+```
+
+Aynı variable isimlerinin başka bir function'da bulunması önemli değildir çünkü function'ların scope'ları ayrıdır.
+
+---
+
+## 5. `User{}` Mantığını Karıştırmak
+
+Hata durumunda:
+
+```go
+return User{}, err
+```
+
+kullanımındaki `User{}` başlangıçta net değildi.
+
+`User{}`, struct'ın zero value'larla oluşturulmuş halidir.
+
+```go
+type User struct {
+	Name string
+	Age  int
+}
+```
+
+için:
+
+```go
+User{}
+```
+
+yaklaşık olarak:
+
+```go
+User{
+	Name: "",
+	Age:  0,
+}
+```
+
+anlamına gelir.
+
+Hata bulunduğu için gerçek bir `User` oluşturmak yerine boş/default `User` değeri ile error birlikte döndürülür.
