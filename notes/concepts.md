@@ -979,3 +979,145 @@ Pointer Receiver
 → Orijinal değere pointer üzerinden erişebilir
 → Struct'ı değiştirebilir
 ```
+# Aşama 10 — Interfaces
+
+## Interface
+
+Interface, bir type'ın sahip olması gereken method'ları tanımlar.
+
+```go
+type Notifier interface {
+	send() string
+}
+```
+
+Interface method'un nasıl çalışacağını değil, hangi method'un bulunması gerektiğini belirtir.
+
+## Interface Implementation
+
+Bir type, interface'in istediği bütün method'lara sahipse o interface'i implement eder.
+
+```go
+type Notifier interface {
+	send() string
+}
+
+func (e EmailNotifier) send() string {
+	return e.Address + " adresine mail gönderildi"
+}
+```
+
+Burada `EmailNotifier`, `Notifier` interface'ini implement eder.
+
+## Implicit Implementation
+
+Go'da:
+
+```text
+implements Notifier
+```
+
+gibi bir ifade yazılmaz.
+
+Method signature'ları eşleştiğinde implementation otomatik gerçekleşir.
+
+## Method Signature
+
+Interface'in istediği method ile type'ın method'u uyumlu olmalıdır.
+
+```go
+send() string
+```
+
+Interface birden fazla method içeriyorsa type bütün method'ları karşılamalıdır.
+
+```go
+type Greeter interface {
+	greet() string
+	getName() string
+}
+```
+
+## Interface Parameter
+
+Interface function parameter type'ı olarak kullanılabilir.
+
+```go
+func sendNotification(n Notifier) {
+	fmt.Println(n.send())
+}
+```
+
+Bu function `Notifier` interface'ini implement eden farklı type'ları kabul edebilir.
+
+```go
+sendNotification(email)
+sendNotification(sms)
+```
+
+## Interface Variable
+
+Interface normal variable type'ı olarak kullanılabilir.
+
+```go
+var notifier Notifier
+```
+
+Interface'i implement eden değerler atanabilir:
+
+```go
+notifier = email
+notifier = sms
+```
+
+## Concrete Type
+
+Interface variable'ın içerisinde bulunan gerçek type'tır.
+
+Örneğin:
+
+```go
+var notifier Notifier
+notifier = email
+```
+
+Burada:
+
+```text
+Variable type → Notifier
+Concrete type → EmailNotifier
+```
+
+## Polymorphism
+
+Farklı concrete type'ların ortak bir interface üzerinden kullanılabilmesidir.
+
+```text
+EmailNotifier ──┐
+                ├── Notifier
+SMSNotifier ────┘
+```
+
+Aynı çağrı:
+
+```go
+notifier.send()
+```
+
+concrete type'a göre farklı implementation çalıştırabilir.
+
+## Temel Mantık
+
+```text
+Interface
+↓
+Davranışı tanımlar
+
+Concrete Type
+↓
+Gerekli method'ları sağlar
+
+Function
+↓
+Concrete type yerine interface'e bağımlı olabilir
+```

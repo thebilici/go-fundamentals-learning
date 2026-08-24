@@ -477,3 +477,95 @@ user := User{
 ```
 
 kullanılmalıdır.
+
+# Aşama 10 — Interfaces
+
+## 1. Interface Parameter Mantığını Karıştırmak
+
+Başta:
+
+```go
+func printGreeting(g Greeter) {
+	fmt.Println(g.greet())
+}
+```
+
+yapısındaki:
+
+```go
+g Greeter
+```
+
+kısmı karıştırıldı.
+
+Burada:
+
+```text
+g       → Parameter adı
+Greeter → Parameter type'ı
+```
+
+Function belirli bir `User` veya `Admin` istemez.
+
+`Greeter` interface'ini implement eden herhangi bir değer kabul edebilir.
+
+```go
+printGreeting(user)
+printGreeting(admin)
+```
+
+---
+
+## 2. Interface ile Tek Function Kullanma Mantığı
+
+Başta farklı type'lar için ayrı function gerektiği düşünüldü:
+
+```go
+func printUserGreeting(user User)
+func printAdminGreeting(admin Admin)
+```
+
+Interface sayesinde ortak davranış üzerinden tek function kullanılabilir:
+
+```go
+func printGreeting(g Greeter)
+```
+
+```text
+User  → greet() string ──┐
+                         ├── Greeter → printGreeting()
+Admin → greet() string ──┘
+```
+
+Bu kullanım polymorphism örneğidir.
+
+---
+
+## 3. Interface Variable Mantığını Karıştırmak
+
+Şu kullanım başlangıçta net değildi:
+
+```go
+var greeter Greeter
+```
+
+Interface normal bir variable type'ı olarak kullanılabilir.
+
+```go
+greeter = user
+greeter = admin
+```
+
+Atanan concrete type'ın `Greeter` interface'ini implement etmesi gerekir.
+
+```text
+Variable type → Greeter
+
+greeter = user
+Concrete type → User
+
+greeter = admin
+Concrete type → Admin
+```
+
+Aynı interface variable farklı zamanlarda farklı concrete type'ları tutabilir.

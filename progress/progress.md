@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-24  
-**Güncel Aşama:** Aşama 10 — Interfaces
+**Güncel Aşama:** Aşama 11 — Error Handling
 
 ## Güncel Konum
 
@@ -24,9 +24,9 @@ Methods                     ✅
         ↓
 Pointers                    ✅
         ↓
-Interfaces                  ← GÜNCEL
+Interfaces                  ✅
         ↓
-Error Handling
+Error Handling              ← GÜNCEL
         ↓
 Packages & Modules
         ↓
@@ -45,58 +45,6 @@ Kubernetes
 
 ## Tamamlanan Aşamalar
 
-### Aşama 1 — Go Ortamı ve Temeller ✅
-
-- Go Module ve `go.mod`
-- Package yapısı
-- `go run`, `go build`, `go fmt`
-
-### Aşama 2 — Variables & Data Types ✅
-
-- Variables ve Constants
-- Temel Data Type'lar
-- Type Inference
-- Zero Values
-- Type Conversion
-
-### Aşama 3 — Control Flow ✅
-
-- `if / else`
-- `switch`
-- `for`
-- `break / continue`
-- `range`
-
-### Aşama 4 — Functions ✅
-
-- Parameters ve Arguments
-- Return Values
-- Multiple Return Values
-- Function Scope
-
-### Aşama 5 — Arrays & Slices ✅
-
-- Arrays ve Slices
-- `append`
-- `len` / `cap`
-- Slicing
-- `range`
-
-### Aşama 6 — Maps ✅
-
-- Key / Value
-- Ekleme ve güncelleme
-- `value, ok`
-- `delete`
-- `range`
-
-### Aşama 7 — Structs ✅
-
-- Struct ve Fields
-- Struct + Function
-- Slice of Structs
-- Exported / Unexported Fields
-
 ### Aşama 8 — Methods ✅
 
 - Method
@@ -108,35 +56,48 @@ Kubernetes
 ### Aşama 9 — Pointers ✅
 
 - Memory Address
-- `&` Operator
-- `*` Operator
+- `&` ve `*`
 - Dereferencing
 - Pointer Types
 - Pointer + Function
 - Pointer Receiver
 - Value Receiver vs Pointer Receiver
 
+### Aşama 10 — Interfaces ✅
+
+- Interface tanımlama
+- Method Signature
+- Implicit Implementation
+- Birden fazla method içeren interface
+- Interface Parameter
+- Interface Variable
+- Concrete Type
+- Polymorphism
+
 ### Yapılan Pratik
 
-`exercises/basics/pointers/` altında:
+`exercises/basics/interfaces/` altında:
 
-- Variable address'i alındı.
-- Pointer oluşturuldu.
-- Dereferencing yapıldı.
-- Pointer üzerinden orijinal değer değiştirildi.
-- Pointer function parameter olarak kullanıldı.
-- `User` üzerinde pointer receiver ile field değiştirildi.
+- `Notifier` interface oluşturuldu.
+- `EmailNotifier` ve `SMSNotifier` oluşturuldu.
+- `send()` method'ları implement edildi.
+- Aynı interface üzerinden farklı concrete type'lar kullanıldı.
+- Interface function parameter olarak kullanıldı.
+- Interface variable oluşturuldu.
+- Polymorphism uygulandı.
 
 ## Güncel Aşama
 
-### Aşama 10 — Interfaces 🔄
+### Aşama 11 — Error Handling 🔄
 
 Sıradaki konular:
 
-- Interface nedir?
-- Interface tanımlama
-- Method Set
-- Interface'i implement etmek
-- Implicit Implementation
-- Interface'i function parameter olarak kullanmak
-- Birden fazla struct + aynı interface
+- `error` nedir?
+- Go'da hata yönetimi mantığı
+- `error` return etmek
+- `nil` kontrolü
+- `if err != nil`
+- `errors.New()`
+- `fmt.Errorf()`
+- Multiple return ile `(value, error)`
+- Error propagation

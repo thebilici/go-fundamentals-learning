@@ -1531,3 +1531,202 @@ Go, struct pointer'larında field erişimi sırasında gerekli dereference işle
 → Pointer Receiver
 → Orijinal struct üzerinde değişiklik yapabilir
 ```
+
+# Aşama 10 — Interfaces
+
+### 1. Interface nedir?
+
+Bir type'ın sahip olması gereken method'ları tanımlayan yapıdır.
+
+```go
+type Notifier interface {
+	send() string
+}
+```
+
+---
+
+### 2. Interface method'un nasıl çalışacağını belirler mi?
+
+Hayır. Sadece hangi method'ların bulunması gerektiğini belirtir.
+
+---
+
+### 3. Bir type interface'i nasıl implement eder?
+
+Interface'in istediği bütün method'lara doğru signature ile sahip olarak.
+
+```go
+func (e EmailNotifier) send() string {
+	return "Mail gönderildi"
+}
+```
+
+---
+
+### 4. Implicit Implementation nedir?
+
+Go'da `implements` gibi bir keyword kullanmadan, gerekli method'lara sahip olan type'ın interface'i otomatik olarak implement etmesidir.
+
+---
+
+### 5. Interface birden fazla method içerebilir mi?
+
+Evet.
+
+```go
+type Greeter interface {
+	greet() string
+	getName() string
+}
+```
+
+Type'ın interface'i implement etmesi için bütün method'lara sahip olması gerekir.
+
+---
+
+### 6. Method Signature neden önemlidir?
+
+Interface'in istediği method ile concrete type'ın method signature'ı uyumlu olmalıdır.
+
+```text
+Interface: send() string
+Type:      send() string
+
+→ Uyumlu ✅
+```
+
+---
+
+### 7. Interface function parameter olarak kullanılabilir mi?
+
+Evet.
+
+```go
+func sendNotification(n Notifier) {
+	fmt.Println(n.send())
+}
+```
+
+---
+
+### 8. Interface parameter kullanmanın avantajı nedir?
+
+Function'ın belirli bir concrete type yerine aynı davranışı sağlayan farklı type'larla çalışabilmesini sağlar.
+
+```go
+sendNotification(email)
+sendNotification(sms)
+```
+
+---
+
+### 9. Interface variable olarak kullanılabilir mi?
+
+Evet.
+
+```go
+var notifier Notifier
+```
+
+---
+
+### 10. Interface variable'a ne atanabilir?
+
+Interface'i implement eden değerler atanabilir.
+
+```go
+notifier = email
+notifier = sms
+```
+
+---
+
+### 11. Concrete Type nedir?
+
+Interface içerisinde bulunan gerçek type'dır.
+
+```go
+var notifier Notifier
+notifier = email
+```
+
+```text
+Interface type → Notifier
+Concrete type  → EmailNotifier
+```
+
+---
+
+### 12. Polymorphism nedir?
+
+Farklı concrete type'ların ortak bir interface üzerinden kullanılabilmesidir.
+
+```text
+EmailNotifier ──┐
+                ├── Notifier
+SMSNotifier ────┘
+```
+
+---
+
+### 13. `n.send()` çağrısında hangi `send()` çalışır?
+
+`n` içerisinde bulunan concrete type'ın `send()` implementation'ı çalışır.
+
+```text
+n = EmailNotifier
+→ EmailNotifier.send()
+
+n = SMSNotifier
+→ SMSNotifier.send()
+```
+
+---
+
+### 14. Interface kullanırken concrete type önemli midir?
+
+Interface açısından asıl önemli olan concrete type'ın gerekli method'ları sağlayıp sağlamadığıdır.
+
+```text
+"Hangi type'sın?"
+yerine
+"Gerekli davranışlara sahip misin?"
+```
+
+---
+
+### 15. Interface neden farklı type'lar için ayrı function yazma ihtiyacını azaltabilir?
+
+Çünkü aynı davranışı sağlayan farklı type'lar ortak interface üzerinden tek function'a gönderilebilir.
+
+```go
+func sendNotification(n Notifier)
+```
+
+yerine ayrı ayrı:
+
+```go
+func sendEmailNotification(e EmailNotifier)
+func sendSMSNotification(s SMSNotifier)
+```
+
+yazmak gerekmeyebilir.
+
+---
+
+### 16. `EmailNotifier` ve `SMSNotifier` neden aynı `Notifier` interface'ini implement edebilir?
+
+İkisinde de interface'in istediği:
+
+```go
+send() string
+```
+
+method'u bulunduğu için.
+
+---
+
+### 17. Interface ile polymorphism arasındaki bağlantı nedir?
+
+Interface ortak davranışı tanımlar; farklı type'lar bu davranışı farklı şekilde implement eder ve aynı interface üzerinden kullanılabilir.

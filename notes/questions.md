@@ -594,3 +594,89 @@ func (u *User) changeName(newName string) {
 ```go
 u.Name
 ```
+
+# Aşama 10 — Interfaces
+
+1. Interface nedir?
+
+2. Interface içerisinde method'un gövdesi neden yazılmaz?
+
+3. Aşağıdaki interface bir type'dan ne ister?
+
+```go
+type Notifier interface {
+	send() string
+}
+```
+
+4. Implicit Implementation nedir?
+
+5. Go'da neden `implements Notifier` gibi bir ifade yazmamıza gerek yoktur?
+
+6. Bir type'ın `Notifier` interface'ini implement etmesi için ne gerekir?
+
+7. Interface birden fazla method içeriyorsa concrete type kaç tanesini implement etmek zorundadır?
+
+8. Method signature'larının interface ile uyumlu olması neden önemlidir?
+
+9. Aşağıdaki function'daki `n` ve `Notifier` neyi temsil eder?
+
+```go
+func sendNotification(n Notifier) {
+	fmt.Println(n.send())
+}
+```
+
+10. Neden aşağıdaki iki çağrı aynı function ile çalışabilir?
+
+```go
+sendNotification(email)
+sendNotification(sms)
+```
+
+11. Interface'i function parameter type'ı olarak kullanmanın avantajı nedir?
+
+12. Aşağıdaki kod ne oluşturur?
+
+```go
+var notifier Notifier
+```
+
+13. Neden aynı variable'a aşağıdaki iki değer de atanabilir?
+
+```go
+notifier = email
+notifier = sms
+```
+
+14. Interface variable ile concrete type arasındaki fark nedir?
+
+15. Aşağıdaki durumda interface type ve concrete type nedir?
+
+```go
+var notifier Notifier
+notifier = email
+```
+
+16. Polymorphism nedir?
+
+17. `notifier.send()` çağrıldığında hangi `send()` method'unun çalışacağı nasıl belirlenir?
+
+18. `EmailNotifier` gerekli bütün method'lara sahipken `SMSNotifier` bir method'u eksik bırakırsa ne olur?
+
+19. Interface kullanmak neden `EmailNotifier`, `SMSNotifier` gibi concrete type'lara olan bağımlılığı azaltabilir?
+
+20. Aşağıdaki yapının interface + polymorphism açısından çalışma mantığını açıklayın:
+
+```go
+type Notifier interface {
+	send() string
+}
+
+func sendNotification(n Notifier) {
+	fmt.Println(n.send())
+}
+
+sendNotification(email)
+sendNotification(sms)
+```

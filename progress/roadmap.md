@@ -229,33 +229,35 @@ Load Testing
 
 ## Aşama 10 — Interfaces
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
-- Interface nedir?
-- Interface tanımlama
-- Method Set
-- Interface implementasyonu
+- Interface
+- Method Signature
 - Implicit Implementation
-- Interface'i function parameter olarak kullanma
-- Birden fazla struct ile aynı interface'i kullanma
+- Interface Parameter
+- Interface Variable
+- Concrete Type
+- Polymorphism
+- Birden fazla method içeren interface
 
 ---
 
 ## Aşama 11 — Error Handling
 
+**Durum:** 🔄 Güncel Aşama
+
 Öğrenilecek konular:
 
-- `error`
-- `errors.New`
-- `fmt.Errorf`
-- Error propagation
-- Error wrapping
-- Custom errors
-
-**Durum:** Bekliyor
-
+- `error` nedir?
+- `(value, error)` yapısı
+- `nil`
+- `if err != nil`
+- `errors.New()`
+- `fmt.Errorf()`
+- Error Propagation
+- Hataları üst katmana iletme
 ---
 
 ## Aşama 12 — Packages & Modules
