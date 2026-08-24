@@ -1350,3 +1350,274 @@ err != nil?
 Handle /    value
 Propagate   kullan
 ```
+# Aşama 12 — Packages & Modules
+
+## Package
+
+Package, birbiriyle ilişkili Go kodlarını gruplamak için kullanılır.
+
+```go
+package user
+```
+
+Bir package birden fazla `.go` dosyasından oluşabilir.
+
+```text
+user/
+├── user.go
+└── validation.go
+```
+
+Her iki dosyada da:
+
+```go
+package user
+```
+
+bulunuyorsa aynı package'ın parçalarıdır.
+
+## package main
+
+Çalıştırılabilir Go programının ana package'ıdır.
+
+```go
+package main
+
+func main() {
+}
+```
+
+Programın entry point'i:
+
+```go
+func main()
+```
+
+function'ıdır.
+
+Dosyanın adının `main.go` olması zorunlu değildir.
+
+## Custom Package
+
+Kendi package'larımız oluşturulabilir.
+
+```go
+package mathutil
+
+func Add(a, b int) int {
+	return a + b
+}
+```
+
+Başka package'lardan kullanılmak için import edilir.
+
+## Exported Identifier
+
+Büyük harfle başlayan identifier başka package'lardan erişilebilir.
+
+```go
+Add
+User
+CreateUser
+IsPositive
+```
+
+## Unexported Identifier
+
+Küçük harfle başlayan identifier package dışından erişilemez.
+
+```go
+add
+user
+createUser
+isPositive
+```
+
+Temel kural:
+
+```text
+Aynı package
+→ Exported + Unexported kullanılabilir
+
+Başka package
+→ Exported kullanılabilir
+```
+
+## Module
+
+Module, Go projesinin üst seviyedeki kimliğidir.
+
+`go.mod` içerisinde tanımlanır:
+
+```go
+module github.com/thebilici/go-backend-learning
+```
+
+Bir module birden fazla package içerebilir.
+
+## Module vs Package
+
+```text
+Module
+→ Projenin ana kimliği / dependency sınırı
+
+Package
+→ Kodları organize eden birim
+
+.go file
+→ Package içerisindeki kaynak kod dosyası
+```
+
+İlişki:
+
+```text
+Module
+└── Package
+    ├── file.go
+    └── file.go
+```
+
+## Module Path
+
+`go.mod` içerisindeki:
+
+```go
+module github.com/thebilici/go-backend-learning
+```
+
+değeri module path'tir.
+
+```text
+github.com/thebilici/go-backend-learning
+```
+
+## Package Path
+
+Package'ın module içerisindeki klasör yoludur.
+
+Örneğin:
+
+```text
+exercises/basics/packages/user
+```
+
+## Import Path
+
+Bir package'ın tam import adresidir.
+
+```text
+Module Path
++
+Package Path
+=
+Import Path
+```
+
+Örnek:
+
+```text
+github.com/thebilici/go-backend-learning
++
+exercises/basics/packages/user
+
+=
+
+github.com/thebilici/go-backend-learning/exercises/basics/packages/user
+```
+
+## Package Kullanımı
+
+Import edilen package'ın exported identifier'ları package adı üzerinden kullanılır:
+
+```go
+user.CreateUser()
+```
+
+```go
+mathutil.Add()
+```
+
+Standard library'de de aynı mantık vardır:
+
+```go
+fmt.Println()
+```
+
+```text
+fmt     → package
+Println → exported function
+```
+
+## Import Alias
+
+Import edilen package'a farklı bir isim verilebilir.
+
+```go
+import mathpkg "github.com/example/project/mathutil"
+```
+
+Sonra:
+
+```go
+mathpkg.Add(5, 6)
+```
+
+şeklinde kullanılır.
+
+## go.mod
+
+Module bilgisini ve dependency tanımlarını tutar.
+
+Örneğin:
+
+```go
+module github.com/thebilici/go-backend-learning
+
+go 1.26.5
+```
+
+## go mod init
+
+Yeni module başlatır.
+
+```bash
+go mod init github.com/example/project
+```
+
+Temel olarak `go.mod` oluşturur ve module path'i tanımlar.
+
+## go mod tidy
+
+Kod tarafından kullanılan dependency'leri analiz ederek module dependency bilgilerini düzenler.
+
+```text
+Eksik dependency
+→ eklenebilir
+
+Artık kullanılmayan dependency
+→ kaldırılabilir
+```
+
+## go.sum
+
+External dependency'lere ait checksum bilgilerini tutar.
+
+Dependency bütünlüğünün doğrulanmasına yardımcı olur.
+
+## Temel Mimari
+
+```text
+go.mod
+   ↓
+Module
+   ↓
+Packages
+   ↓
+Go Files
+   ↓
+Types / Functions
+   ↓
+Exported olanlar
+   ↓
+Başka package'lardan kullanılabilir
+```

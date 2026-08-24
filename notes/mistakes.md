@@ -726,3 +726,146 @@ User{
 anlamına gelir.
 
 Hata bulunduğu için gerçek bir `User` oluşturmak yerine boş/default `User` değeri ile error birlikte döndürülür.
+
+# Aşama 12 — Packages & Modules
+
+## 1. `main.go` ile `func main()` Farkı
+
+Başta programın `main.go` dosyasından başladığı düşünüldü.
+
+Asıl entry point:
+
+```go
+func main()
+```
+
+function'ıdır.
+
+Executable Go programında:
+
+```go
+package main
+
+func main() {
+}
+```
+
+yapısı önemlidir.
+
+Dosyanın adının mutlaka `main.go` olması gerekmez.
+
+---
+
+## 2. Import Path'i Module Sanmak
+
+Şu yolun tamamının module olduğu düşünüldü:
+
+```text
+github.com/thebilici/go-backend-learning/exercises/basics/packages/user
+```
+
+Aslında:
+
+```text
+github.com/thebilici/go-backend-learning
+→ Module Path
+
+exercises/basics/packages/user
+→ Package Path
+```
+
+Birleşince:
+
+```text
+github.com/thebilici/go-backend-learning/exercises/basics/packages/user
+→ Import Path
+```
+
+Temel kural:
+
+```text
+Module Path + Package Path = Import Path
+```
+
+---
+
+## 3. Package Adı ile Variable Adını Çakıştırmak
+
+İlk exercise'da:
+
+```go
+user := user.CreateUser("Fatih", 22)
+```
+
+kullanıldı.
+
+Burada:
+
+```text
+user → package
+user → variable
+```
+
+aynı isim kullanıldığı için sonraki kullanımlarda package adı shadow edilir ve karışıklık oluşur.
+
+Daha açık kullanım:
+
+```go
+createdUser := user.CreateUser("Fatih", 22)
+```
+
+veya import alias:
+
+```go
+import userpkg "example.com/project/user"
+
+user := userpkg.CreateUser("Fatih", 22)
+```
+
+---
+
+## 4. Function Parameter Yazım Sırasını Karıştırmak
+
+İlk olarak:
+
+```go
+func CreateUser(string Name, int Age) User
+```
+
+şeklinde yazıldı.
+
+Go'da parameter sırası:
+
+```text
+parameterName type
+```
+
+şeklindedir.
+
+Doğrusu:
+
+```go
+func CreateUser(name string, age int) User
+```
+
+---
+
+## 5. Package ile Dosyayı Aynı Şey Sanmamak
+
+Bir package yalnızca tek `.go` dosyasından oluşmak zorunda değildir.
+
+```text
+mathutil/
+├── math.go
+└── validation.go
+```
+
+İkisinde de:
+
+```go
+package mathutil
+```
+
+varsa aynı package'ın parçalarıdır.
+
+Bu nedenle aynı package içerisindeki type ve function'lar farklı dosyalarda olsalar bile birlikte kullanılabilir.

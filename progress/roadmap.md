@@ -266,34 +266,46 @@ Load Testing
 
 ## Aşama 12 — Packages & Modules
 
+**Durum:** ✅ Tamamlandı
+
+Öğrenilen konular:
+
+- Package
+- `package main`
+- `func main()` ve Entry Point
+- Custom Package
+- Bir package içerisinde birden fazla `.go` dosyası
+- Exported / Unexported Identifiers
+- Module
+- Module Path
+- Package Path
+- Import Path
+- Import Alias
+- `go.mod`
+- `go mod init`
+- `go mod tidy`
+- `go.sum`
+
+---
+
+## Aşama 13 — Concurrency
+
 **Durum:** 🔄 Güncel Aşama
 
 Öğrenilecek konular:
 
-- Package nedir?
-- `package main`
-- Custom Package
-- `import`
-- Exported / Unexported Identifiers
-- Package Path
-- Module nedir?
-- `go.mod`
-- Module Path
-- Package vs Module
-- Package'ler arası kullanım
-
----
-
-## Aşama 13 — Generics
-
-Öğrenilecek konular:
-
-- Type parameters
-- Constraints
-- Generic functions
-- Generic data structures
-
-**Durum:** Bekliyor
+- Concurrency nedir?
+- Sequential vs Concurrent
+- Goroutine
+- `go` keyword
+- `time.Sleep()`
+- `sync.WaitGroup`
+- Channel
+- Channel Send / Receive
+- Unbuffered Channel
+- Buffered Channel
+- Goroutine'ler arası iletişim
+- Temel concurrency problemleri
 
 ---
 

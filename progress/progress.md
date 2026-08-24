@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-24  
-**Güncel Aşama:** Aşama 12 — Packages & Modules
+**Güncel Aşama:** Aşama 13 — Concurrency
 
 ## Güncel Konum
 
@@ -28,9 +28,9 @@ Interfaces                  ✅
         ↓
 Error Handling              ✅
         ↓
-Packages & Modules          ← GÜNCEL
+Packages & Modules          ✅
         ↓
-Concurrency
+Concurrency                 ← GÜNCEL
         ↓
 HTTP / REST API
         ↓
@@ -43,17 +43,7 @@ Docker
 Kubernetes
 ```
 
-## Tamamlanan Aşamalar
-
-### Aşama 9 — Pointers ✅
-
-- Memory Address
-- `&` ve `*`
-- Dereferencing
-- Pointer Types
-- Pointer + Function
-- Pointer Receiver
-- Value Receiver vs Pointer Receiver
+## Tamamlanan Son Aşamalar
 
 ### Aşama 10 — Interfaces ✅
 
@@ -67,44 +57,69 @@ Kubernetes
 
 ### Aşama 11 — Error Handling ✅
 
-- `error` type
-- `(value, error)` dönüş yapısı
+- `error`
 - `nil`
 - `err != nil`
 - `errors.New()`
 - `fmt.Errorf()`
+- `(value, error)`
 - Error Propagation
 - Error Wrapping
 - `%w`
-- Error Handling vs Propagation
-- Struct Zero Value (`User{}`)
+- Struct Zero Value
+
+### Aşama 12 — Packages & Modules ✅
+
+- Package
+- `package main`
+- `func main()` ve entry point
+- Custom Package
+- Aynı package içerisinde birden fazla `.go` dosyası
+- Exported / Unexported Identifiers
+- Module
+- Module Path
+- Package Path
+- Import Path
+- Import Alias
+- `go.mod`
+- `go mod init`
+- `go mod tidy`
+- `go.sum`
 
 ### Yapılan Pratik
 
-`exercises/basics/error-handling/` altında:
+`exercises/basics/packages/` altında:
 
-- `validateAge()` oluşturuldu.
-- Yaş doğrulama kuralları yazıldı.
-- `errors.New()` ile error üretildi.
-- `createUser()` içinde `(User, error)` kullanıldı.
-- Error üst function'a propagate edildi.
-- `fmt.Errorf("%w")` ile error wrapping yapıldı.
-- Hata durumunda `User{}` döndürüldü.
+- `user` package oluşturuldu.
+- `User` struct oluşturuldu.
+- `CreateUser()` ve `GetName()` yazıldı.
+- `validation.go` ile aynı package farklı dosyalara bölündü.
+- `IsAdult()` eklendi.
+- Package başka bir `main` package'dan import edildi.
+
+`exercises/basics/packages-final/` altında:
+
+- `mathutil` package oluşturuldu.
+- `math.go` ve `validation.go` aynı package altında kullanıldı.
+- `Add()` oluşturuldu.
+- `Multiply()` oluşturuldu.
+- `IsPositive()` oluşturuldu.
+- Import alias (`mathpkg`) kullanıldı.
 
 ## Güncel Aşama
 
-### Aşama 12 — Packages & Modules 🔄
+### Aşama 13 — Concurrency 🔄
 
 Sıradaki konular:
 
-- Package nedir?
-- `package main`
-- Custom package oluşturma
-- `import`
-- Exported / Unexported identifiers
-- Package path
-- Module nedir?
-- `go.mod`
-- Module path
-- Package ve Module farkı
-- Bir package'i başka package'dan kullanma
+- Concurrency nedir?
+- Sequential vs Concurrent çalışma
+- Goroutine
+- `go` keyword
+- `time.Sleep()` ile ilk goroutine gözlemi
+- `sync.WaitGroup`
+- Channel
+- Channel send / receive
+- Buffered / Unbuffered Channel
+- Goroutine'ler arası iletişim
+- Temel concurrency problemleri

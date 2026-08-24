@@ -1949,3 +1949,272 @@ if err != nil {
 	// error işle
 }
 ```
+# Aşama 12 — Packages & Modules
+
+### 1. Package nedir?
+
+Birbiriyle ilişkili Go kodlarını gruplamak için kullanılan yapıdır.
+
+---
+
+### 2. `package main` ne anlama gelir?
+
+Çalıştırılabilir Go programının ana package'ıdır.
+
+---
+
+### 3. Go programının entry point'i nedir?
+
+```go
+func main()
+```
+
+---
+
+### 4. Dosyanın adının `main.go` olması zorunlu mudur?
+
+Hayır. Önemli olan executable program için `package main` içerisinde `func main()` bulunmasıdır.
+
+---
+
+### 5. Bir package birden fazla `.go` dosyasından oluşabilir mi?
+
+Evet.
+
+```text
+user/
+├── user.go
+└── validation.go
+```
+
+İki dosyada da:
+
+```go
+package user
+```
+
+varsa aynı package'ın parçalarıdır.
+
+---
+
+### 6. Exported identifier nedir?
+
+Başka package'lardan erişilebilen identifier'dır.
+
+Büyük harfle başlar.
+
+```go
+CreateUser
+User
+Add
+```
+
+---
+
+### 7. Unexported identifier nedir?
+
+Package dışından doğrudan erişilemeyen identifier'dır.
+
+Küçük harfle başlar.
+
+```go
+createUser
+user
+add
+```
+
+---
+
+### 8. Go'da `public` ve `private` keyword'leri var mı?
+
+Hayır.
+
+Export durumu identifier'ın ilk harfinin büyük veya küçük olmasıyla belirlenir.
+
+---
+
+### 9. Module nedir?
+
+Go projesinin üst seviyedeki kimliği ve dependency yönetim sınırıdır.
+
+---
+
+### 10. Module path nerede tanımlanır?
+
+`go.mod` dosyasında.
+
+```go
+module github.com/thebilici/go-backend-learning
+```
+
+---
+
+### 11. Package ile Module arasındaki fark nedir?
+
+```text
+Module
+→ Projenin üst seviyedeki kimliği
+
+Package
+→ Module içerisindeki kod grubu
+```
+
+---
+
+### 12. Module, Package ve File ilişkisi nasıldır?
+
+```text
+Module
+└── Package
+    ├── file.go
+    └── file.go
+```
+
+---
+
+### 13. Package path nedir?
+
+Package'ın module içerisindeki klasör yoludur.
+
+```text
+exercises/basics/packages/user
+```
+
+---
+
+### 14. Import path nasıl oluşur?
+
+```text
+Module Path + Package Path = Import Path
+```
+
+---
+
+### 15. Aşağıdakilerden hangisi module path'tir?
+
+```text
+github.com/thebilici/go-backend-learning
+```
+
+`go.mod` içerisindeki `module` değeridir.
+
+---
+
+### 16. Aşağıdakinin tamamı nedir?
+
+```go
+"github.com/thebilici/go-backend-learning/exercises/basics/packages/user"
+```
+
+Package'ın import path'idir.
+
+---
+
+### 17. `user.CreateUser()` ifadesinde `user` nedir?
+
+Package adıdır.
+
+```text
+user.CreateUser()
+ ↑       ↑
+package  exported function
+```
+
+---
+
+### 18. `fmt.Println()` ile `user.CreateUser()` arasında package kullanımı açısından fark var mı?
+
+Temel mantık aynıdır.
+
+```text
+fmt.Println()
+↓
+fmt package
+
+user.CreateUser()
+↓
+user package
+```
+
+---
+
+### 19. Import alias nedir?
+
+Import edilen package'a farklı bir isim vermektir.
+
+```go
+import mathpkg "example.com/project/mathutil"
+```
+
+Kullanım:
+
+```go
+mathpkg.Add(5, 6)
+```
+
+---
+
+### 20. `go mod init` ne yapar?
+
+Yeni bir Go module başlatır ve `go.mod` oluşturur.
+
+---
+
+### 21. `go mod tidy` ne yapar?
+
+Kodun dependency kullanımını analiz ederek module dependency bilgilerini düzenler.
+
+---
+
+### 22. `go.sum` ne işe yarar?
+
+External dependency'lerin checksum bilgilerini tutar ve dependency bütünlüğünün doğrulanmasına yardımcı olur.
+
+---
+
+### 23. Her package için ayrı `go.mod` gerekir mi?
+
+Hayır.
+
+Aynı module içerisindeki package'lar module kökündeki `go.mod` dosyasını kullanabilir.
+
+---
+
+### 24. Aynı package içerisindeki farklı `.go` dosyaları birbirlerinin type ve function'larını kullanabilir mi?
+
+Evet.
+
+Örneğin:
+
+```text
+mathutil/
+├── math.go
+│   └── Add()
+│
+└── validation.go
+    └── IsPositive()
+```
+
+İkisi de:
+
+```go
+package mathutil
+```
+
+ise aynı package'ın parçalarıdır.
+
+---
+
+### 25. Packages & Modules için temel zihinsel model nedir?
+
+```text
+go.mod
+   ↓
+Module
+   ↓
+Packages
+   ↓
+.go Files
+   ↓
+Functions / Types
+```

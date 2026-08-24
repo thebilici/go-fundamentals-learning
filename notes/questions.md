@@ -776,3 +776,112 @@ func createUser(name string, age int) (User, error) {
 	}, nil
 }
 ```
+# Aşama 12 — Packages & Modules
+
+1. Package nedir?
+
+2. `package main` ne anlama gelir?
+
+3. Go programının gerçek entry point'i nedir?
+
+4. Dosyanın adının mutlaka `main.go` olması gerekir mi?
+
+5. Bir package birden fazla `.go` dosyasından oluşabilir mi?
+
+6. Aşağıdaki iki dosya neden aynı package'ın parçasıdır?
+
+```text
+user/
+├── user.go        → package user
+└── validation.go  → package user
+```
+
+7. Exported identifier nedir?
+
+8. Unexported identifier nedir?
+
+9. `CreateUser()` başka bir package'dan kullanılabilirken `createUser()` neden kullanılamaz?
+
+10. Go'da `public` / `private` yerine hangi mekanizma kullanılır?
+
+11. Module nedir?
+
+12. Package ile Module arasındaki fark nedir?
+
+13. `go.mod` dosyasının görevi nedir?
+
+14. Aşağıdaki satır neyi tanımlar?
+
+```go
+module github.com/thebilici/go-backend-learning
+```
+
+15. Module path nedir?
+
+16. Package path nedir?
+
+17. Import path nasıl oluşturulur?
+
+18. Aşağıdaki yapıda module path, package path ve import path'i ayrı ayrı belirtin:
+
+```text
+Module:
+github.com/thebilici/go-backend-learning
+
+Package klasörü:
+exercises/basics/packages/user
+```
+
+19. Aşağıdaki import'un tamamı module path midir? Değilse nedir?
+
+```go
+import "github.com/thebilici/go-backend-learning/exercises/basics/packages/user"
+```
+
+20. `user.CreateUser()` ifadesindeki `user` ve `CreateUser` neyi temsil eder?
+
+21. `fmt.Println()` ile kendi oluşturduğumuz `mathutil.Add()` arasında package kullanımı açısından nasıl bir benzerlik vardır?
+
+22. Import alias nedir?
+
+23. Aşağıdaki kodda `mathpkg` neyi temsil eder?
+
+```go
+import mathpkg "github.com/example/project/mathutil"
+```
+
+24. `go mod init` ne işe yarar?
+
+25. `go mod tidy` ne işe yarar?
+
+26. `go.sum` ne işe yarar?
+
+27. Aynı module içerisindeki her package için ayrı `go.mod` oluşturmak gerekir mi?
+
+28. Aşağıdaki yapıyı Module → Package → File açısından açıklayın:
+
+```text
+go-backend-learning/
+│
+├── go.mod
+│
+└── mathutil/
+    ├── math.go
+    └── validation.go
+```
+
+29. `math.go` içerisindeki bir type neden `validation.go` içerisinde ayrıca import edilmeden kullanılabilir?
+
+30. Aşağıdaki zinciri kendi cümlelerinizle açıklayın:
+
+```text
+Module Path
+      +
+Package Path
+      ↓
+Import Path
+      ↓
+import
+      ↓
+package.Function()
+```
