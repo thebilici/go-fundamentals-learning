@@ -325,3 +325,46 @@ User{
 geçerlidir.
 
 Struct'ta bulunmayan bir field adı kullanılırsa compiler error oluşur.
+
+# Aşama 8 — Methods
+
+## 1. Type, Variable ve Method Bağlantısı
+
+```go
+user := User{
+	Name: "Fatih",
+	Age:  22,
+}
+```
+
+Burada `User` type'ı variable'a atanmaz.
+
+`User` type'ından bir değer oluşturulur ve bu değer `user` variable'ında tutulur.
+
+```text
+User → Type
+user → User type'ındaki variable
+```
+
+Method:
+
+```go
+func (u User) greet() {
+	fmt.Println(u.Name)
+}
+```
+
+Receiver type `User` olduğu için:
+
+```go
+user.greet()
+```
+
+şeklinde çağrılabilir.
+
+```text
+user'ın type'ı → User
+greet receiver → User
+                 ↓
+              Uyumlu
+```

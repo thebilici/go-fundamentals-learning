@@ -441,3 +441,73 @@ for _, user := range users {
 Age int
 age int
 ```
+
+# Aşama 8 — Methods
+
+1. Method nedir?
+
+2. Function ile Method arasındaki temel fark nedir?
+
+3. Receiver nedir?
+
+4. Aşağıdaki kodda `u` ve `User` neyi temsil eder?
+
+```go
+func (u User) getName() string
+```
+
+5. Receiver variable'ın ismini kim belirler?
+
+6. Neden aşağıdaki şekilde method çağırabiliriz?
+
+```go
+user.getName()
+```
+
+7. Method parameter alabilir mi?
+
+8. Aşağıdaki kodda receiver ve parameter hangileridir?
+
+```go
+func (u User) canAccess(minAge int) bool
+```
+
+9. Method bir değer return edebilir mi?
+
+10. Aşağıdaki method ne döndürür?
+
+```go
+func (u User) isAdult() bool {
+	return u.Age >= 18
+}
+```
+
+11. `user.greet("Hello")` içerisindeki `"Hello"` nedir?
+
+12. Value Receiver nedir?
+
+13. Aşağıdaki receiver neden Value Receiver'dır?
+
+```go
+(u User)
+```
+
+14. Value Receiver içerisinde `u.Name` değiştirilirse orijinal `user.Name` neden değişmez?
+
+15. Orijinal struct üzerinde kalıcı değişiklik yapmak istediğimizde hangi receiver türünü kullanabiliriz?
+
+16. Method içerisinde struct field'larına nasıl erişilir?
+
+17. `User` type'ına ait bir method neden `Product` type'ındaki bir variable üzerinden doğrudan çağrılamaz?
+
+18. Aşağıdaki iki kullanım arasındaki fark nedir?
+
+```go
+printUser(user)
+
+user.printUser()
+```
+
+19. Receiver ile normal function parameter'ı aynı şey midir?
+
+20. Method kullanmanın struct + function kullanımına göre sağladığı temel avantaj nedir?

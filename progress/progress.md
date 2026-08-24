@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
-**Son Güncelleme:** 2026-08-21  
-**Güncel Aşama:** Aşama 8 — Methods
+**Son Güncelleme:** 2026-08-24  
+**Güncel Aşama:** Aşama 9 — Pointers
 
 ## Güncel Konum
 
@@ -20,9 +20,9 @@ Maps                        ✅
         ↓
 Structs                     ✅
         ↓
-Methods                     ← GÜNCEL
+Methods                     ✅
         ↓
-Pointers
+Pointers                    ← GÜNCEL
         ↓
 Interfaces
         ↓
@@ -72,7 +72,6 @@ Kubernetes
 - Parameters ve Arguments
 - Return Values
 - Multiple Return Values
-- Named Returns
 - Function Scope
 
 ### Aşama 5 — Arrays & Slices ✅
@@ -93,32 +92,43 @@ Kubernetes
 
 ### Aşama 7 — Structs ✅
 
-- Struct ve Field
-- Struct oluşturma
+- Struct ve Fields
 - Struct + Function
 - Slice of Structs
 - Exported / Unexported Fields
 
+### Aşama 8 — Methods ✅
+
+- Method
+- Function vs Method
+- Receiver
+- Value Receiver
+- Method Parameters
+- Method Return Values
+- Struct + Method
+
 ### Yapılan Pratik
 
-`exercises/basics/structs/` altında:
+`exercises/basics/methods/` altında:
 
-- `User` struct oluşturuldu.
-- `createUser()` function'ı yazıldı.
-- `[]User` oluşturuldu.
-- `range` ile kullanıcılar dolaşıldı.
-- Aktif kullanıcılar kontrol edildi.
-- `append()` ve `len()` kullanıldı.
+- `getName()`
+- `isAdult()`
+- `canAccess()`
+- `greet()`
+
+method'ları oluşturuldu.
 
 ## Güncel Aşama
 
-### Aşama 8 — Methods 🔄
+### Aşama 9 — Pointers 🔄
 
 Sıradaki konular:
 
-- Method nedir?
-- Function ve Method farkı
-- Receiver
-- Value Receiver
-- Struct + Method
-- Method çağırma
+- Pointer nedir?
+- Memory Address
+- `&` operator
+- `*` operator
+- Dereferencing
+- Pointer + Function
+- Pointer Receiver
+- Value Receiver vs Pointer Receiver

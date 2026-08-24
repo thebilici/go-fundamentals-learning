@@ -1184,3 +1184,167 @@ func createUser(userAge int) User {
 ```
 
 Field ve parameter birbirinden bağımsızdır.
+
+# Aşama 8 — Methods
+
+### 1. Method nedir?
+
+Belirli bir type ile ilişkilendirilmiş function'dır.
+
+```go
+func (u User) getName() string {
+	return u.Name
+}
+```
+
+---
+
+### 2. Function ve Method arasındaki temel fark nedir?
+
+```text
+Function → getName(user)
+Method   → user.getName()
+```
+
+Method belirli bir type ile ilişkilidir.
+
+---
+
+### 3. Receiver nedir?
+
+Method'un hangi type üzerinde çalışacağını belirtir.
+
+```go
+func (u User) getName() string
+```
+
+---
+
+### 4. `(u User)` içerisindeki `u` nedir?
+
+Receiver variable'dır.
+
+İsmini programcı belirler.
+
+---
+
+### 5. `(u User)` içerisindeki `User` nedir?
+
+Receiver type'dır.
+
+Method'un `User` type'ıyla ilişkili olduğunu belirtir.
+
+---
+
+### 6. Neden `user.getName()` çağırabiliriz?
+
+Çünkü `user` değişkeninin type'ı `User`, `getName()` method'unun receiver type'ı da `User`'dır.
+
+---
+
+### 7. Method parameter alabilir mi?
+
+Evet.
+
+```go
+func (u User) canAccess(minAge int) bool {
+	return u.Age >= minAge
+}
+```
+
+---
+
+### 8. Receiver ile parameter aynı şey midir?
+
+Hayır.
+
+```go
+func (u User) canAccess(minAge int)
+```
+
+```text
+u      → Receiver
+minAge → Parameter
+```
+
+---
+
+### 9. Method değer return edebilir mi?
+
+Evet.
+
+```go
+func (u User) isAdult() bool {
+	return u.Age >= 18
+}
+```
+
+---
+
+### 10. Value Receiver nedir?
+
+Receiver'ın değer type'ı ile tanımlanmasıdır.
+
+```go
+func (u User) getName()
+```
+
+Buradaki `(u User)` value receiver'dır.
+
+---
+
+### 11. Value Receiver ile struct değiştirilirse orijinal değer değişir mi?
+
+Genellikle hayır. Method receiver'ın aldığı değer üzerinde çalışır.
+
+Orijinal struct'ı değiştirmek için pointer receiver kullanılabilir.
+
+---
+
+### 12. Method içerisinde struct field'ına nasıl erişilir?
+
+Receiver üzerinden:
+
+```go
+func (u User) getName() string {
+	return u.Name
+}
+```
+
+---
+
+### 13. `user.greet("Hello")` içerisindeki `"Hello"` nedir?
+
+Method'a gönderilen argument'tır.
+
+```go
+func (u User) greet(message string)
+```
+
+Buradaki `message` ise parameter'dır.
+
+---
+
+### 14. Method neden kullanılır?
+
+Bir type'a ait davranışları o type ile ilişkilendirmek için.
+
+Örneğin:
+
+```go
+user.isAdult()
+user.getName()
+user.canAccess(18)
+```
+
+---
+
+### 15. `User` type'ına ait method başka bir type üzerinden çağrılabilir mi?
+
+Doğrudan hayır.
+
+```text
+Receiver type → User
+```
+
+ise method `User` type'ıyla ilişkilidir.

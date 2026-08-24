@@ -195,32 +195,34 @@ Load Testing
 
 ## Aşama 8 — Methods
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
-- Method nedir?
+- Method
 - Function ve Method farkı
 - Receiver
 - Value Receiver
+- Method Parameters
+- Method Return Values
 - Struct + Method
-- Method çağırma
+
 ---
 
 ## Aşama 9 — Pointers
 
+**Durum:** 🔄 Güncel Aşama
+
 Öğrenilecek konular:
 
-- Memory address
-- `&`
-- `*`
-- Pointer değişkenleri
-- Pointer parameters
-- Pointer receivers
-- Value ve pointer davranışı
-
-**Durum:** Bekliyor
-
+- Pointer nedir?
+- Memory Address
+- `&` operator
+- `*` operator
+- Dereferencing
+- Pointer + Function
+- Pointer Receiver
+- Value Receiver vs Pointer Receiver
 ---
 
 ## Aşama 10 — Interfaces

@@ -732,3 +732,106 @@ age int
 Küçük harfle başladığı için unexported'dır.
 
 Bu ayrım özellikle farklı package'lerle çalışırken önemlidir.
+
+# Aşama 8 — Methods
+
+## Method
+
+Belirli bir type ile ilişkilendirilmiş function'dır.
+
+```go
+func (u User) getName() string {
+	return u.Name
+}
+```
+
+Method, ilgili type'tan oluşturulan değer üzerinden çağrılır:
+
+```go
+user.getName()
+```
+
+## Receiver
+
+Method'un hangi type ile ilişkili olduğunu belirtir.
+
+```go
+func (u User) getName() string
+```
+
+```text
+u    → Receiver variable
+User → Receiver type
+```
+
+`u` ismini programcı belirler.
+
+## Function ve Method Farkı
+
+```text
+Function:
+getName(user)
+
+Method:
+user.getName()
+```
+
+Method bir davranışı belirli bir type ile ilişkilendirir.
+
+## Method Parameter
+
+Method receiver dışında parameter da alabilir:
+
+```go
+func (u User) canAccess(minAge int) bool {
+	return u.Age >= minAge
+}
+```
+
+Burada:
+
+```text
+u      → Receiver
+minAge → Parameter
+```
+
+## Method Return Value
+
+Normal function gibi değer döndürebilir:
+
+```go
+func (u User) isAdult() bool {
+	return u.Age >= 18
+}
+```
+
+## Value Receiver
+
+```go
+func (u User) getName()
+```
+
+`(u User)` bir value receiver'dır.
+
+Value receiver ile method, `User` değerinin bilgilerini okuyabilir ve işlemler gerçekleştirebilir.
+
+Orijinal struct üzerinde kalıcı değişiklik yapmak için pointer receiver kullanılabilir.
+
+## Method Çağırma
+
+Bir variable'ın type'ı receiver type ile uyumluysa ilgili method çağrılabilir:
+
+```go
+user := User{
+	Name: "Fatih",
+}
+
+user.getName()
+```
+
+```text
+user type → User
+receiver  → User
+
+Bu nedenle user.getName() kullanılabilir.
+```
