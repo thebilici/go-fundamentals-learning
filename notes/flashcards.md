@@ -1348,3 +1348,186 @@ Receiver type → User
 ```
 
 ise method `User` type'ıyla ilişkilidir.
+
+# Aşama 9 — Pointers
+
+### 1. Pointer nedir?
+
+Başka bir variable'ın memory address'ini tutan değerdir.
+
+```go
+age := 22
+pointer := &age
+```
+
+---
+
+### 2. `&` operator ne işe yarar?
+
+Variable'ın memory address'ini alır.
+
+```go
+&age
+```
+
+---
+
+### 3. `*` operator pointer ile kullanıldığında ne işe yarar?
+
+Pointer'ın gösterdiği address'teki değere erişir.
+
+```go
+*pointer
+```
+
+Bu işleme dereferencing denir.
+
+---
+
+### 4. `pointer` ile `*pointer` arasındaki fark nedir?
+
+```text
+pointer  → Memory address
+*pointer → O address'teki value
+```
+
+---
+
+### 5. `*pointer = 25` ne yapar?
+
+Pointer'ın gösterdiği address'teki değeri değiştirir.
+
+```go
+age := 22
+pointer := &age
+
+*pointer = 25
+```
+
+Sonuç:
+
+```text
+age → 25
+```
+
+---
+
+### 6. `*int` ne anlama gelir?
+
+Bir `int` değerine işaret eden pointer type'dır.
+
+```text
+int  → normal int value
+*int → int pointer
+```
+
+---
+
+### 7. `*User` ne anlama gelir?
+
+Bir `User` değerine işaret eden pointer type'dır.
+
+---
+
+### 8. Aşağıdaki kod ne yapar?
+
+```go
+value := *pointer
+```
+
+Pointer'ın o anda gösterdiği değeri `value` variable'ına kopyalar.
+
+---
+
+### 9. Neden `value := *pointer` sonrasında pointer değişince `value` otomatik değişmez?
+
+Çünkü `value`, pointer değildir. Değerin ayrı bir kopyasını tutar.
+
+---
+
+### 10. Normal parameter ile pointer parameter arasındaki fark nedir?
+
+```go
+func changeAge(age int)
+```
+
+değer alır.
+
+```go
+func changeAge(age *int)
+```
+
+int pointer alır ve orijinal değere erişebilir.
+
+---
+
+### 11. Pointer bekleyen function nasıl çağrılır?
+
+```go
+changeAge(&age)
+```
+
+`&age` ile `age` variable'ının address'i gönderilir.
+
+---
+
+### 12. Aşağıdaki function neden orijinal `age` değerini değiştirebilir?
+
+```go
+func changeAge(age *int) {
+	*age = 30
+}
+```
+
+Çünkü pointer üzerinden `age` variable'ının bulunduğu address'teki değer değiştirilir.
+
+---
+
+### 13. Value Receiver nedir?
+
+```go
+func (u User) getName()
+```
+
+`User` value receiver'dır.
+
+---
+
+### 14. Pointer Receiver nedir?
+
+```go
+func (u *User) changeName()
+```
+
+Receiver bir `User` pointer'ıdır.
+
+---
+
+### 15. Pointer Receiver neden kullanılır?
+
+Method'un orijinal struct üzerinde değişiklik yapabilmesini sağlar.
+
+```go
+func (u *User) changeName(name string) {
+	u.Name = name
+}
+```
+
+---
+
+### 16. `u.Name` yazarken neden `(*u).Name` yazmak zorunda değiliz?
+
+Go, struct pointer'larında field erişimi sırasında gerekli dereference işlemini otomatik yapabilir.
+
+---
+
+### 17. Value Receiver ve Pointer Receiver arasındaki temel fark nedir?
+
+```text
+(u User)
+→ Value Receiver
+
+(u *User)
+→ Pointer Receiver
+→ Orijinal struct üzerinde değişiklik yapabilir
+```

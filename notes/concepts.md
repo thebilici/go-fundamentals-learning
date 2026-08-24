@@ -835,3 +835,147 @@ receiver  → User
 
 Bu nedenle user.getName() kullanılabilir.
 ```
+
+# Aşama 9 — Pointers
+
+## Pointer
+
+Pointer, başka bir variable'ın memory address'ini tutar.
+
+```go
+age := 22
+agePointer := &age
+```
+
+```text
+age        → 22
+agePointer → age'in address'i
+```
+
+## Memory Address
+
+Bir variable'ın bellekte bulunduğu konumu ifade eder.
+
+```go
+fmt.Println(&age)
+```
+
+## `&` Operator
+
+Variable'ın memory address'ini verir.
+
+```go
+&age
+```
+
+```text
+age  → Value
+&age → Address
+```
+
+## `*` Operator ve Dereferencing
+
+Pointer'ın gösterdiği address'teki value'ya erişir.
+
+```go
+*agePointer
+```
+
+Bu işleme **dereferencing** denir.
+
+```text
+agePointer  → Address
+*agePointer → Value
+```
+
+## Pointer ile Değer Değiştirme
+
+```go
+*agePointer = 25
+```
+
+Pointer'ın gösterdiği address'teki değer değiştirilir. Böylece orijinal variable da değişir.
+
+## Value Kopyası
+
+```go
+agePointerValue := *agePointer
+```
+
+Burada pointer'ın gösterdiği değer normal bir variable'a kopyalanır.
+
+Daha sonra:
+
+```go
+*agePointer = 25
+```
+
+yapılması `agePointerValue` değerini değiştirmez.
+
+## Pointer Type
+
+```text
+int   → int value
+*int  → int değerine işaret eden pointer
+
+User  → User value
+*User → User değerine işaret eden pointer
+```
+
+## Pointer Parameter
+
+Function'a address göndererek orijinal değer üzerinde işlem yapılabilir.
+
+```go
+func changeAge(age *int) {
+	*age = 30
+}
+```
+
+Çağırma:
+
+```go
+changeAge(&age)
+```
+
+## Pointer Receiver
+
+Struct üzerinde kalıcı değişiklik yapmak için kullanılabilir.
+
+```go
+func (u *User) changeName(newName string) {
+	u.Name = newName
+}
+```
+
+Burada:
+
+```text
+u     → Receiver variable
+*User → Pointer receiver type
+```
+
+## Value Receiver vs Pointer Receiver
+
+```go
+func (u User) method()
+```
+
+Value receiver'dır.
+
+```go
+func (u *User) method()
+```
+
+Pointer receiver'dır.
+
+Temel fark:
+
+```text
+Value Receiver
+→ Değer üzerinde çalışır
+
+Pointer Receiver
+→ Orijinal değere pointer üzerinden erişebilir
+→ Struct'ı değiştirebilir
+```

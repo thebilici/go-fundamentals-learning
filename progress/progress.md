@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-24  
-**Güncel Aşama:** Aşama 9 — Pointers
+**Güncel Aşama:** Aşama 10 — Interfaces
 
 ## Güncel Konum
 
@@ -22,9 +22,9 @@ Structs                     ✅
         ↓
 Methods                     ✅
         ↓
-Pointers                    ← GÜNCEL
+Pointers                    ✅
         ↓
-Interfaces
+Interfaces                  ← GÜNCEL
         ↓
 Error Handling
         ↓
@@ -100,35 +100,43 @@ Kubernetes
 ### Aşama 8 — Methods ✅
 
 - Method
-- Function vs Method
 - Receiver
 - Value Receiver
 - Method Parameters
 - Method Return Values
-- Struct + Method
 
-### Yapılan Pratik
+### Aşama 9 — Pointers ✅
 
-`exercises/basics/methods/` altında:
-
-- `getName()`
-- `isAdult()`
-- `canAccess()`
-- `greet()`
-
-method'ları oluşturuldu.
-
-## Güncel Aşama
-
-### Aşama 9 — Pointers 🔄
-
-Sıradaki konular:
-
-- Pointer nedir?
 - Memory Address
-- `&` operator
-- `*` operator
+- `&` Operator
+- `*` Operator
 - Dereferencing
+- Pointer Types
 - Pointer + Function
 - Pointer Receiver
 - Value Receiver vs Pointer Receiver
+
+### Yapılan Pratik
+
+`exercises/basics/pointers/` altında:
+
+- Variable address'i alındı.
+- Pointer oluşturuldu.
+- Dereferencing yapıldı.
+- Pointer üzerinden orijinal değer değiştirildi.
+- Pointer function parameter olarak kullanıldı.
+- `User` üzerinde pointer receiver ile field değiştirildi.
+
+## Güncel Aşama
+
+### Aşama 10 — Interfaces 🔄
+
+Sıradaki konular:
+
+- Interface nedir?
+- Interface tanımlama
+- Method Set
+- Interface'i implement etmek
+- Implicit Implementation
+- Interface'i function parameter olarak kullanmak
+- Birden fazla struct + aynı interface

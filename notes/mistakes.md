@@ -368,3 +368,112 @@ greet receiver → User
                  ↓
               Uyumlu
 ```
+
+# Aşama 9 — Pointers
+
+## 1. Pointer'dan Alınan Değer ile Pointer'ı Karıştırmak
+
+Başta:
+
+```go
+agePointerValue := *agePointer
+agePointerValue = 25
+```
+
+ile orijinal `age` değerinin değişeceği düşünüldü.
+
+Ancak:
+
+```go
+agePointerValue := *agePointer
+```
+
+pointer'ın gösterdiği değeri ayrı bir variable'a kopyalar.
+
+```text
+agePointer      → Address
+*agePointer     → Address'teki değer
+agePointerValue → Değerin ayrı kopyası
+```
+
+Orijinal değeri değiştirmek için:
+
+```go
+*agePointer = 25
+```
+
+kullanılmalıdır.
+
+---
+
+## 2. Struct Field İsimlerinde Büyük/Küçük Harf
+
+Struct başlangıçta:
+
+```go
+type User struct {
+	name string
+	age  int
+}
+```
+
+şeklinde tanımlanıp oluşturulurken:
+
+```go
+User{
+	Name: "Fatih",
+	Age:  22,
+}
+```
+
+kullanıldı.
+
+Go case-sensitive olduğu için:
+
+```text
+name != Name
+age  != Age
+```
+
+Field isimleri struct tanımıyla aynı olmalıdır.
+
+Örneğin:
+
+```go
+type User struct {
+	Name string
+	Age  int
+}
+```
+
+ve:
+
+```go
+user := User{
+	Name: "Fatih",
+	Age:  22,
+}
+```
+
+---
+
+## 3. Struct Variable Oluşturma Syntax'ı
+
+Başlangıçta:
+
+```go
+user:User{
+```
+
+yazıldı.
+
+Yeni variable oluştururken:
+
+```go
+user := User{
+	Name: "Fatih",
+	Age:  22,
+}
+```
+
+kullanılmalıdır.

@@ -211,32 +211,35 @@ Load Testing
 
 ## Aşama 9 — Pointers
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
-- Pointer nedir?
+- Pointer
 - Memory Address
-- `&` operator
-- `*` operator
+- `&` Operator
+- `*` Operator
 - Dereferencing
+- Pointer Types
 - Pointer + Function
 - Pointer Receiver
 - Value Receiver vs Pointer Receiver
+
 ---
 
 ## Aşama 10 — Interfaces
 
+**Durum:** 🔄 Güncel Aşama
+
 Öğrenilecek konular:
 
+- Interface nedir?
 - Interface tanımlama
-- Implicit implementation
-- Interface values
-- Type assertions
-- Type switches
-- Interface kullanım amaçları
-
-**Durum:** Bekliyor
+- Method Set
+- Interface implementasyonu
+- Implicit Implementation
+- Interface'i function parameter olarak kullanma
+- Birden fazla struct ile aynı interface'i kullanma
 
 ---
 

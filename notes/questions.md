@@ -511,3 +511,86 @@ user.printUser()
 19. Receiver ile normal function parameter'ı aynı şey midir?
 
 20. Method kullanmanın struct + function kullanımına göre sağladığı temel avantaj nedir?
+
+# Aşama 9 — Pointers
+
+1. Pointer nedir?
+
+2. Memory address nedir?
+
+3. `&` operator ne işe yarar?
+
+4. Aşağıdaki kodda `agePointer` ne tutar?
+
+```go
+age := 22
+agePointer := &age
+```
+
+5. `agePointer` ile `*agePointer` arasındaki fark nedir?
+
+6. Dereferencing nedir?
+
+7. Aşağıdaki kod ne yapar?
+
+```go
+*agePointer = 25
+```
+
+8. `*int` ne anlama gelir?
+
+9. `*User` ne anlama gelir?
+
+10. Aşağıdaki kodda `agePointerValue` pointer mıdır?
+
+```go
+agePointerValue := *agePointer
+```
+
+11. `agePointerValue := *agePointer` yapıldıktan sonra `*agePointer` değiştirilirse neden `agePointerValue` değişmez?
+
+12. Aşağıdaki iki function arasındaki fark nedir?
+
+```go
+func changeAge(age int)
+
+func changeAge(age *int)
+```
+
+13. Pointer parameter alan function'a neden `&age` göndeririz?
+
+14. Aşağıdaki function neden orijinal değeri değiştirebilir?
+
+```go
+func changeAge(age *int) {
+	*age = 30
+}
+```
+
+15. Value Receiver nedir?
+
+16. Pointer Receiver nedir?
+
+17. Aşağıdaki iki receiver arasındaki fark nedir?
+
+```go
+(u User)
+
+(u *User)
+```
+
+18. Struct üzerinde kalıcı değişiklik yapmak için hangisi kullanılabilir?
+
+19. Aşağıdaki method neden orijinal `user.Name` değerini değiştirebilir?
+
+```go
+func (u *User) changeName(newName string) {
+	u.Name = newName
+}
+```
+
+20. `u` bir `*User` olmasına rağmen neden field'a şu şekilde erişebiliriz?
+
+```go
+u.Name
+```
