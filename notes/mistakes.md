@@ -869,3 +869,228 @@ package mathutil
 varsa aynı package'ın parçalarıdır.
 
 Bu nedenle aynı package içerisindeki type ve function'lar farklı dosyalarda olsalar bile birlikte kullanılabilir.
+# Aşama 13 — Concurrency
+
+## 1. Goroutine'i Ayrı Bir Function Türü Sanmak
+
+Başta goroutine'in ayrı bir function türü olup olmadığı karıştırıldı.
+
+Aslında normal bir function:
+
+```go
+func sendMessage(ch chan string) {
+	ch <- "Hello"
+}
+```
+
+normal şekilde çağrılabilir:
+
+```go
+sendMessage(ch)
+```
+
+veya `go` keyword'ü ile yeni bir goroutine içerisinde başlatılabilir:
+
+```go
+go sendMessage(ch)
+```
+
+Temel fark:
+
+```text
+sendMessage(ch)
+→ Normal function çağrısı
+
+go sendMessage(ch)
+→ Function çağrısını yeni goroutine olarak başlat
+```
+
+---
+
+## 2. `wg.Wait()` Konumunu Karıştırmak
+
+`wg.Wait()` her yere yazılamaz.
+
+Yanlış:
+
+```go
+wg.Add(2)
+
+wg.Wait()
+
+go task1(&wg)
+go task2(&wg)
+```
+
+Burada counter `2` olur ancak `Done()` yapacak goroutine'ler henüz başlatılmamıştır.
+
+Doğru:
+
+```go
+wg.Add(2)
+
+go task1(&wg)
+go task2(&wg)
+
+wg.Wait()
+```
+
+Temel sıra:
+
+```text
+Add
+↓
+Goroutine'leri başlat
+↓
+Wait
+```
+
+---
+
+## 3. `Done()` Konumunun Önemsiz Olduğunu Düşünmek
+
+`Done()` goroutine'in işi tamamlandığında çalışmalıdır.
+
+Yanlış mantık:
+
+```go
+func task(wg *sync.WaitGroup) {
+	wg.Done()
+
+	// işlemler...
+}
+```
+
+Burada WaitGroup'a iş tamamlanmadan "tamamlandı" bilgisi verilmiş olur.
+
+Tercih edilen kullanım:
+
+```go
+func task(wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	// işlemler...
+}
+```
+
+---
+
+## 4. Unbuffered Channel'ı Veri Saklayan Kutu Gibi Düşünmek
+
+Başta:
+
+```go
+ch := make(chan string)
+
+ch <- "Hello"
+```
+
+işleminin `"Hello"` değerini channel içerisine bırakıp doğrudan devam ettiği düşünülebilir.
+
+Unbuffered channel'da send ve receive birbirleriyle senkronize olur.
+
+```text
+Sender
+   │
+   │ "Hello"
+   ▼
+Channel
+   │
+   ▼
+Receiver
+```
+
+Gönderici ve alıcının eşleşmesi gerekir.
+
+Bu yüzden:
+
+```go
+go sendMessage(ch)
+
+message := <-ch
+```
+
+çalışır.
+
+Bir goroutine gönderirken main goroutine alabilir.
+
+---
+
+## 5. Aynı Goroutine'de Unbuffered Send ve Receive Yapmak
+
+Şu kullanım problem oluşturabilir:
+
+```go
+ch := make(chan string)
+
+ch <- "Hello"
+
+message := <-ch
+```
+
+`main`, send sırasında receiver bekler.
+
+Ancak receiver bir sonraki satırda olduğu için oraya ulaşamaz.
+
+```text
+Send
+ ↓
+Receiver bekleniyor
+ ↓
+Aynı goroutine ilerleyemiyor
+ ↓
+Receive satırına ulaşılamıyor
+ ↓
+Deadlock
+```
+
+Çözüm olarak send farklı bir goroutine'den yapılabilir:
+
+```go
+go func() {
+	ch <- "Hello"
+}()
+
+message := <-ch
+```
+
+---
+
+## 6. `close()` İşlemini Çok Erken Yapmamak
+
+Channel, sender'lar hâlâ veri gönderecekken kapatılmamalıdır.
+
+Yanlış mantık:
+
+```go
+go worker(ch)
+
+close(ch)
+```
+
+Worker daha sonra:
+
+```go
+ch <- result
+```
+
+yaparsa kapalı channel'a send yapılmış olur ve runtime panic oluşabilir.
+
+Birden fazla worker olduğunda güvenli pattern:
+
+```go
+go func() {
+	wg.Wait()
+	close(ch)
+}()
+```
+
+Yani:
+
+```text
+Tüm sender'lar tamamlandı
+↓
+Artık yeni veri gelmeyecek
+↓
+Channel kapatılabilir
+```

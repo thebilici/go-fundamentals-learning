@@ -1,7 +1,9 @@
 # Go Backend Learning — Progress
 
-**Son Güncelleme:** 2026-08-24  
-**Güncel Aşama:** Aşama 13 — Concurrency
+**Son Güncelleme:** 2026-08-25  
+**Güncel Aşama:** Aşama 14 — Generics
+
+---
 
 ## Güncel Konum
 
@@ -30,36 +32,45 @@ Error Handling              ✅
         ↓
 Packages & Modules          ✅
         ↓
-Concurrency                 ← GÜNCEL
+Concurrency                 ✅
         ↓
-HTTP / REST API
+Generics                    ← GÜNCEL
+        ↓
+Context
+        ↓
+HTTP
+        ↓
+REST API
+        ↓
+Backend Mimarisi
         ↓
 Database
         ↓
 Testing
         ↓
+Configuration
+        ↓
+Logging
+        ↓
 Docker
         ↓
+Docker Compose
+        ↓
 Kubernetes
+        ↓
+Observability
+        ↓
+Load Testing
 ```
 
+---
+
 ## Tamamlanan Son Aşamalar
-
-### Aşama 10 — Interfaces ✅
-
-- Interface
-- Method Signature
-- Implicit Implementation
-- Interface Parameter
-- Interface Variable
-- Concrete Type
-- Polymorphism
 
 ### Aşama 11 — Error Handling ✅
 
 - `error`
 - `nil`
-- `err != nil`
 - `errors.New()`
 - `fmt.Errorf()`
 - `(value, error)`
@@ -72,10 +83,9 @@ Kubernetes
 
 - Package
 - `package main`
-- `func main()` ve entry point
+- `func main()` ve Entry Point
 - Custom Package
-- Aynı package içerisinde birden fazla `.go` dosyası
-- Exported / Unexported Identifiers
+- Exported / Unexported
 - Module
 - Module Path
 - Package Path
@@ -86,40 +96,85 @@ Kubernetes
 - `go mod tidy`
 - `go.sum`
 
-### Yapılan Pratik
+### Aşama 13 — Concurrency ✅
 
-`exercises/basics/packages/` altında:
+- Sequential vs Concurrent
+- Concurrency vs Parallelism
+- Goroutine
+- `go` keyword
+- Main Goroutine
+- `sync.WaitGroup`
+- `Add()`
+- `Done()`
+- `Wait()`
+- Channel
+- Channel Send / Receive
+- Unbuffered Channel
+- Buffered Channel
+- `len()` / `cap()`
+- Channel ile sonuç döndürme
+- `close()`
+- Channel üzerinde `range`
+- WaitGroup + Channel
+- Deadlock
+- Race Condition
+- Race Detector
+- `sync.Mutex`
+- `Lock()` / `Unlock()`
 
-- `user` package oluşturuldu.
-- `User` struct oluşturuldu.
-- `CreateUser()` ve `GetName()` yazıldı.
-- `validation.go` ile aynı package farklı dosyalara bölündü.
-- `IsAdult()` eklendi.
-- Package başka bir `main` package'dan import edildi.
+### Concurrency Pratiği
 
-`exercises/basics/packages-final/` altında:
+`exercises/basics/concurrency/` altında concurrent square calculator geliştirildi.
 
-- `mathutil` package oluşturuldu.
-- `math.go` ve `validation.go` aynı package altında kullanıldı.
-- `Add()` oluşturuldu.
-- `Multiply()` oluşturuldu.
-- `IsPositive()` oluşturuldu.
-- Import alias (`mathpkg`) kullanıldı.
+```text
+3 Goroutine
+     ↓
+CalculateSquare()
+     ↓
+results Channel
+     ↓
+WaitGroup
+     ↓
+close(results)
+     ↓
+range
+```
+
+Uygulanan kavramlar:
+
+- Birden fazla goroutine
+- WaitGroup
+- Buffered Channel
+- Channel üzerinden sonuç gönderme
+- `close()`
+- `range`
+
+---
 
 ## Güncel Aşama
 
-### Aşama 13 — Concurrency 🔄
+### Aşama 14 — Generics 🔄
 
 Sıradaki konular:
 
-- Concurrency nedir?
-- Sequential vs Concurrent çalışma
-- Goroutine
-- `go` keyword
-- `time.Sleep()` ile ilk goroutine gözlemi
-- `sync.WaitGroup`
-- Channel
-- Channel send / receive
-- Buffered / Unbuffered Channel
-- Goroutine'ler arası iletişim
-- Temel concurrency problemleri
+```text
+Generics nedir?
+        ↓
+Type Parameters
+        ↓
+Type Arguments
+        ↓
+Type Constraints
+        ↓
+any
+        ↓
+comparable
+        ↓
+Generic Functions
+        ↓
+Generic Types
+        ↓
+Generic Structs
+```
+
+Bu aşamada Go'da farklı veri tipleriyle çalışabilen, tekrar kullanılabilir ve type-safe kod yazmayı öğreneceğiz.

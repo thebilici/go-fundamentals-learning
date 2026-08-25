@@ -885,3 +885,175 @@ import
       ↓
 package.Function()
 ```
+# Aşama 13 — Concurrency
+
+1. Concurrency nedir?
+
+2. Sequential çalışma ile concurrent çalışma arasındaki fark nedir?
+
+3. Concurrency ile parallelism arasındaki fark nedir?
+
+4. Goroutine nedir?
+
+5. Normal function çağrısı ile aşağıdaki çağrı arasındaki fark nedir?
+
+```go
+go task()
+```
+
+6. `main()` function'ı da bir goroutine içerisinde mi çalışır?
+
+7. Main goroutine diğer goroutine'ler tamamlanmadan biterse ne olur?
+
+8. `sync.WaitGroup` ne işe yarar?
+
+9. Aşağıdaki kod ne anlama gelir?
+
+```go
+wg.Add(3)
+```
+
+10. `wg.Done()` ne yapar?
+
+11. Neden aşağıdaki kullanım tercih edilir?
+
+```go
+defer wg.Done()
+```
+
+12. `wg.Wait()` ne yapar ve nereye yazıldığı neden önemlidir?
+
+13. Channel nedir?
+
+14. Aşağıdaki kod ne oluşturur?
+
+```go
+ch := make(chan string)
+```
+
+15. Channel'a veri nasıl gönderilir?
+
+16. Channel'dan veri nasıl alınır?
+
+17. Aşağıdaki iki işlemi açıklayın:
+
+```go
+ch <- "Hello"
+
+message := <-ch
+```
+
+18. Unbuffered channel nedir?
+
+19. Unbuffered channel'da sender neden receiver'ı bekleyebilir?
+
+20. Aşağıdaki kod neden deadlock oluşturabilir?
+
+```go
+ch := make(chan string)
+
+ch <- "Hello"
+
+message := <-ch
+```
+
+21. Buffered channel nedir?
+
+22. Aşağıdaki `3` ne anlama gelir?
+
+```go
+ch := make(chan int, 3)
+```
+
+23. `len(ch)` ile `cap(ch)` arasındaki fark nedir?
+
+24. Buffered channel tamamen dolduğunda yeni bir send yapılırsa ne olabilir?
+
+25. Bir goroutine'in hesapladığı sonucu `main` goroutine'e nasıl gönderebiliriz?
+
+26. Neden aşağıdaki kullanım yapılamaz?
+
+```go
+result := go calculate()
+```
+
+27. Birden fazla goroutine aynı channel'a veri gönderebilir mi?
+
+28. Birden fazla goroutine aynı channel'a sonuç gönderdiğinde sonuçların geliş sırasına güvenebilir miyiz?
+
+29. `close(ch)` ne anlama gelir?
+
+30. Channel neden genellikle tüm sender'lar tamamlandıktan sonra kapatılır?
+
+31. Kapalı channel'a send yapılırsa ne olur?
+
+32. `for value := range ch` ne işe yarar?
+
+33. `range` ile okunan channel hiç kapatılmazsa ne tür bir problem oluşabilir?
+
+34. Aşağıdaki pattern'i açıklayın:
+
+```go
+go func() {
+	wg.Wait()
+	close(ch)
+}()
+
+for result := range ch {
+	fmt.Println(result)
+}
+```
+
+35. Race condition nedir?
+
+36. `counter++` işlemini iki goroutine'in aynı anda yapması neden problem oluşturabilir?
+
+37. Go race detector nasıl çalıştırılır?
+
+```bash
+go run -race .
+```
+
+38. `sync.Mutex` ne işe yarar?
+
+39. `Lock()` ve `Unlock()` ne işe yarar?
+
+40. WaitGroup, Channel ve Mutex arasındaki temel görev farklarını açıklayın.
+
+```text
+WaitGroup → ?
+Channel   → ?
+Mutex     → ?
+```
+
+41. Aşağıdaki kodu baştan sona açıklayın:
+
+```go
+func calculateSquare(a int, results chan int, wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	results <- a * a
+}
+```
+
+42. Aşağıdaki concurrency akışını kendi cümlelerinizle açıklayın:
+
+```text
+main
+ ↓
+wg.Add(3)
+ ↓
+3 goroutine başlat
+ ↓
+hesaplamalar
+ ↓
+results channel
+ ↓
+wg.Done()
+ ↓
+wg.Wait()
+ ↓
+close(results)
+ ↓
+range tamamlanır
+```

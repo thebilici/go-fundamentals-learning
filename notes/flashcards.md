@@ -2218,3 +2218,382 @@ Packages
    ↓
 Functions / Types
 ```
+# Aşama 13 — Concurrency
+
+### 1. Concurrency nedir?
+
+Birden fazla işin aynı zaman aralığında ilerleyebilmesidir.
+
+---
+
+### 2. Concurrency ile Parallelism aynı şey midir?
+
+Hayır.
+
+```text
+Concurrency
+→ İşlerin aynı zaman aralığında ilerlemesi
+
+Parallelism
+→ İşlerin gerçekten aynı anda çalışması
+```
+
+---
+
+### 3. Goroutine nedir?
+
+Go runtime tarafından yönetilen hafif bir concurrent execution unit'tir.
+
+---
+
+### 4. Bir function nasıl goroutine olarak başlatılır?
+
+```go
+go task()
+```
+
+---
+
+### 5. Normal function çağrısı ile goroutine çağrısı arasındaki fark nedir?
+
+```go
+task()
+```
+
+Normal çağrıdır ve çağıran execution flow function'ın tamamlanmasını bekler.
+
+```go
+go task()
+```
+
+Function yeni bir goroutine olarak başlatılır ve çağıran goroutine kendi akışına devam edebilir.
+
+---
+
+### 6. `main()` de bir goroutine içerisinde mi çalışır?
+
+Evet. Buna main goroutine denir.
+
+---
+
+### 7. Main goroutine biterse ne olur?
+
+Program sona erer. Diğer goroutine'lerin tamamlanması otomatik olarak beklenmez.
+
+---
+
+### 8. `sync.WaitGroup` ne işe yarar?
+
+Bir grup goroutine'in tamamlanmasını beklemek için kullanılır.
+
+---
+
+### 9. `wg.Add(3)` ne anlama gelir?
+
+WaitGroup counter'ını 3 artırır.
+
+```text
+3 işin tamamlanmasını bekliyorum.
+```
+
+---
+
+### 10. `wg.Done()` ne yapar?
+
+WaitGroup counter'ını 1 azaltır.
+
+```text
+3 → 2 → 1 → 0
+```
+
+---
+
+### 11. Neden `defer wg.Done()` kullanılır?
+
+Function tamamlanırken `Done()` çağrısının çalışmasını sağlamak için kullanılır.
+
+```go
+func worker(wg *sync.WaitGroup) {
+	defer wg.Done()
+
+	// işlemler
+}
+```
+
+---
+
+### 12. `wg.Wait()` ne yapar?
+
+WaitGroup counter `0` olana kadar bulunduğu goroutine'i bekletir.
+
+---
+
+### 13. WaitGroup temel sıralaması nasıldır?
+
+```text
+Add
+↓
+Goroutine'leri başlat
+↓
+Done
+↓
+Wait
+↓
+Counter = 0
+↓
+Devam
+```
+
+---
+
+### 14. Channel nedir?
+
+Goroutine'ler arasında typed veri iletişimi sağlayan yapıdır.
+
+---
+
+### 15. String channel nasıl oluşturulur?
+
+```go
+ch := make(chan string)
+```
+
+---
+
+### 16. Channel'a veri nasıl gönderilir?
+
+```go
+ch <- value
+```
+
+Örneğin:
+
+```go
+ch <- "Hello"
+```
+
+---
+
+### 17. Channel'dan veri nasıl alınır?
+
+```go
+value := <-ch
+```
+
+---
+
+### 18. Unbuffered channel nasıl oluşturulur?
+
+```go
+ch := make(chan string)
+```
+
+---
+
+### 19. Unbuffered channel'ın temel özelliği nedir?
+
+Send ve receive işlemleri birbirleriyle senkronize olur.
+
+```text
+Sender ←→ Receiver
+```
+
+Gönderici ve alıcı gerektiğinde birbirlerini bekler.
+
+---
+
+### 20. Buffered channel nasıl oluşturulur?
+
+```go
+ch := make(chan string, 3)
+```
+
+Buradaki `3` buffer kapasitesidir.
+
+---
+
+### 21. `len(ch)` ne verir?
+
+Buffered channel içerisinde şu anda bekleyen değer sayısını verir.
+
+---
+
+### 22. `cap(ch)` ne verir?
+
+Channel'ın buffer kapasitesini verir.
+
+---
+
+### 23. Buffered channel dolarsa ne olur?
+
+Yeni send işlemi buffer'da yer açılana kadar bekleyebilir.
+
+---
+
+### 24. Goroutine'in ürettiği sonuç main'e nasıl gönderilebilir?
+
+Channel kullanılabilir.
+
+```go
+func calculate(ch chan int) {
+	ch <- 30
+}
+```
+
+Main:
+
+```go
+go calculate(ch)
+
+result := <-ch
+```
+
+---
+
+### 25. `close(ch)` ne anlama gelir?
+
+Channel'a artık yeni değer gönderilmeyeceğini belirtir.
+
+---
+
+### 26. Kapalı channel'a veri gönderilebilir mi?
+
+Hayır.
+
+```go
+close(ch)
+ch <- 10
+```
+
+runtime panic oluşturur.
+
+---
+
+### 27. Channel'ı genellikle kim kapatır?
+
+Artık veri gönderilmeyeceğini bilen sender tarafı.
+
+---
+
+### 28. Channel `range` ile nasıl okunur?
+
+```go
+for value := range ch {
+	fmt.Println(value)
+}
+```
+
+---
+
+### 29. `range ch` ne zaman sona erer?
+
+Channel kapandığında ve okunacak değer kalmadığında.
+
+---
+
+### 30. Channel hiç kapatılmazsa `range` ne yapabilir?
+
+Yeni değer beklemeye devam edebilir ve uygun bir sender kalmadıysa program deadlock durumuna girebilir.
+
+---
+
+### 31. Deadlock nedir?
+
+Goroutine'lerin ilerleyemeyecek şekilde birbirlerini veya gerçekleşmeyecek işlemleri beklediği durumdur.
+
+---
+
+### 32. Race Condition nedir?
+
+Birden fazla goroutine aynı shared data'ya eşzamanlı ve uygun senkronizasyon olmadan eriştiğinde oluşabilen problemdir.
+
+---
+
+### 33. Go'da race condition nasıl kontrol edilebilir?
+
+```bash
+go run -race .
+```
+
+---
+
+### 34. Mutex ne işe yarar?
+
+Shared data'ya erişimi senkronize etmek için kullanılır.
+
+---
+
+### 35. Mutex ile kritik bölge nasıl korunur?
+
+```go
+mu.Lock()
+
+counter++
+
+mu.Unlock()
+```
+
+---
+
+### 36. WaitGroup ile Channel arasındaki temel fark nedir?
+
+```text
+WaitGroup
+→ İşlerin tamamlanmasını bekler.
+
+Channel
+→ Goroutine'ler arasında veri/işaret iletir.
+```
+
+---
+
+### 37. Mutex ile Channel arasındaki temel fark nedir?
+
+```text
+Mutex
+→ Shared state erişimini korur.
+
+Channel
+→ Goroutine'ler arasında veri iletişimi sağlar.
+```
+
+---
+
+### 38. Bu kod ne yapar?
+
+```go
+go CalculateSquare(4, results, &wg)
+```
+
+`CalculateSquare()` function'ını yeni bir goroutine olarak başlatır ve `results` channel'ı ile `wg` WaitGroup'unun adresini function'a gönderir.
+
+---
+
+### 39. Bu kod ne yapar?
+
+```go
+results <- a * a
+```
+
+`a` değerinin karesini hesaplayıp `results` channel'ına gönderir.
+
+---
+
+### 40. Concurrency için temel zihinsel model nedir?
+
+```text
+Goroutine
+→ Concurrent işi çalıştır
+
+WaitGroup
+→ İşlerin bitmesini takip et
+
+Channel
+→ Goroutine'ler arasında veri taşı
+
+close + range
+→ Channel yaşam döngüsünü yönet
+
+Mutex
+→ Shared data erişimini koru
+```

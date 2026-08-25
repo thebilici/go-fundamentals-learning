@@ -531,7 +531,7 @@ scores := map[string]int{
 ```
 
 ```text
-map[string]int
+map[intstring]
      ↓      ↓
     key    value
 ```
@@ -1620,4 +1620,443 @@ Types / Functions
 Exported olanlar
    ↓
 Başka package'lardan kullanılabilir
+```
+# Aşama 13 — Concurrency
+
+## Concurrency
+
+Concurrency, birden fazla işin aynı zaman aralığında ilerleyebilmesidir.
+
+```text
+Sequential:
+
+Task A → biter → Task B → biter → Task C
+
+
+Concurrent:
+
+Task A ─────────→
+Task B    ─────────→
+Task C       ─────────→
+```
+
+Concurrency ile parallelism aynı şey değildir.
+
+```text
+Concurrency
+→ Birden fazla işin ilerleyişini aynı zaman aralığında yönetmek
+
+Parallelism
+→ Birden fazla işi gerçekten aynı anda çalıştırmak
+```
+
+## Goroutine
+
+Goroutine, Go runtime tarafından yönetilen hafif bir concurrent execution unit'tir.
+
+Normal function çağrısı:
+
+```go
+task()
+```
+
+Goroutine olarak:
+
+```go
+go task()
+```
+
+`go` keyword'ü function çağrısını yeni bir goroutine olarak başlatır.
+
+`main()` de main goroutine içerisinde çalışır.
+
+## Main Goroutine
+
+Programın `main()` function'ını çalıştıran goroutine'dir.
+
+Main goroutine bittiğinde program sona erer.
+
+Bu nedenle diğer goroutine'lerin tamamlanması gerekiyorsa senkronizasyon sağlanmalıdır.
+
+## sync.WaitGroup
+
+Birden fazla goroutine'in tamamlanmasını beklemek için kullanılır.
+
+```go
+var wg sync.WaitGroup
+```
+
+### Add
+
+Beklenen iş sayısını artırır.
+
+```go
+wg.Add(3)
+```
+
+```text
+counter = 3
+```
+
+### Done
+
+Bir işin tamamlandığını bildirir.
+
+```go
+wg.Done()
+```
+
+Counter'ı bir azaltır.
+
+```text
+3 → 2 → 1 → 0
+```
+
+Genellikle:
+
+```go
+defer wg.Done()
+```
+
+şeklinde kullanılır.
+
+### Wait
+
+Counter `0` olana kadar bulunduğu goroutine'i bekletir.
+
+```go
+wg.Wait()
+```
+
+Temel model:
+
+```text
+Add()
+ ↓
+Goroutine'leri başlat
+ ↓
+Done()
+ ↓
+Counter azalır
+ ↓
+Wait()
+ ↓
+Counter = 0
+ ↓
+Devam et
+```
+
+## Channel
+
+Channel, goroutine'ler arasında typed veri iletişimi sağlar.
+
+String channel:
+
+```go
+ch := make(chan string)
+```
+
+Integer channel:
+
+```go
+ch := make(chan int)
+```
+
+## Channel Send
+
+Channel'a veri göndermek:
+
+```go
+ch <- value
+```
+
+Örnek:
+
+```go
+ch <- "Hello"
+```
+
+## Channel Receive
+
+Channel'dan veri almak:
+
+```go
+value := <-ch
+```
+
+Örnek:
+
+```go
+message := <-ch
+```
+
+Temel model:
+
+```text
+Goroutine A
+
+value
+  │
+  ▼
+Channel
+  │
+  ▼
+
+Goroutine B
+```
+
+## Unbuffered Channel
+
+Buffer kapasitesi olmayan channel'dır.
+
+```go
+ch := make(chan string)
+```
+
+Send ve receive birbirleriyle senkronize olur.
+
+```text
+Sender ←→ Receiver
+```
+
+Receiver hazır değilse sender bekleyebilir.
+
+Sender hazır değilse receiver bekleyebilir.
+
+## Buffered Channel
+
+Belirli kapasitede buffer içeren channel'dır.
+
+```go
+ch := make(chan string, 3)
+```
+
+Örneğin:
+
+```text
+Capacity = 3
+
+[ A ][ B ][ boş ]
+```
+
+Buffer dolu olmadığı sürece send işlemi doğrudan bir receiver beklemeden ilerleyebilir.
+
+Buffer dolduğunda yeni send işlemi yer açılana kadar bekleyebilir.
+
+## Channel len ve cap
+
+```go
+len(ch)
+```
+
+Buffer içerisinde şu anda bulunan değer sayısını verir.
+
+```go
+cap(ch)
+```
+
+Channel buffer kapasitesini verir.
+
+Örneğin:
+
+```text
+[ A ][ B ][ boş ]
+
+len = 2
+cap = 3
+```
+
+## Channel ile Goroutine Sonucu Alma
+
+Goroutine'in hesapladığı sonuç channel üzerinden başka bir goroutine'e gönderilebilir.
+
+```go
+func calculate(a, b int, ch chan int) {
+	result := a + b
+	ch <- result
+}
+```
+
+Main:
+
+```go
+go calculate(10, 20, ch)
+
+result := <-ch
+```
+
+Akış:
+
+```text
+calculate goroutine
+       ↓
+      30
+       ↓
+    Channel
+       ↓
+main goroutine
+       ↓
+    result
+```
+
+## close
+
+Channel'a artık yeni değer gönderilmeyeceğini belirtir.
+
+```go
+close(ch)
+```
+
+Kapalı channel'a tekrar veri göndermek runtime panic oluşturur.
+
+Channel genellikle veri gönderen tarafın işi tamamlandığında kapatılır.
+
+## range ile Channel Okuma
+
+Channel'dan değerleri okumak için:
+
+```go
+for value := range ch {
+	fmt.Println(value)
+}
+```
+
+`range`, channel kapanana ve mevcut değerler tüketilene kadar okumaya devam eder.
+
+## WaitGroup + Channel + close
+
+Birden fazla sender olduğunda:
+
+```go
+wg.Add(3)
+
+go worker(...)
+go worker(...)
+go worker(...)
+```
+
+Worker'ların tamamlanması beklenebilir:
+
+```go
+go func() {
+	wg.Wait()
+	close(ch)
+}()
+```
+
+Receiver:
+
+```go
+for result := range ch {
+	fmt.Println(result)
+}
+```
+
+Temel akış:
+
+```text
+Workers
+   ↓
+Channel
+   ↓
+Receiver
+
+Workers tamamlandı
+   ↓
+WaitGroup = 0
+   ↓
+close(channel)
+   ↓
+range tamamlanır
+```
+
+## Deadlock
+
+Goroutine'lerin birbirlerini beklediği ve hiçbirinin ilerleyemediği durumdur.
+
+Örneğin unbuffered channel:
+
+```go
+ch := make(chan string)
+
+ch <- "Hello"
+
+message := <-ch
+```
+
+Aynı goroutine send sırasında receiver beklediği için sonraki receive satırına ulaşamaz.
+
+Bu deadlock oluşturabilir.
+
+## Race Condition
+
+Birden fazla goroutine aynı shared data üzerinde eşzamanlı ve uygun senkronizasyon olmadan işlem yaptığında oluşabilir.
+
+Örneğin:
+
+```go
+counter++
+```
+
+iki goroutine tarafından aynı anda çalıştırılırsa beklenmeyen sonuçlar oluşabilir.
+
+Race detector:
+
+```bash
+go run -race .
+```
+
+## Mutex
+
+Shared data'ya erişimi senkronize etmek için kullanılır.
+
+```go
+var mu sync.Mutex
+```
+
+Kritik bölgeyi kilitlemek:
+
+```go
+mu.Lock()
+
+counter++
+
+mu.Unlock()
+```
+
+Bu sayede aynı kritik bölgeye aynı anda bir goroutine'in girmesi sağlanabilir.
+
+## WaitGroup vs Channel vs Mutex
+
+```text
+WaitGroup
+→ İşlerin tamamlanmasını beklemek
+
+Channel
+→ Goroutine'ler arasında veri/işaret iletmek
+
+Mutex
+→ Shared data'ya erişimi korumak
+```
+
+## Temel Concurrency Modeli
+
+```text
+                Goroutines
+               /    |     \
+              /     |      \
+             ↓      ↓       ↓
+           Worker Worker  Worker
+              \     |      /
+               \    |     /
+                    ↓
+                 Channel
+                    ↓
+                 Receiver
+
+WaitGroup
+→ Worker yaşam döngüsünü takip edebilir
+
+Mutex
+→ Shared state varsa erişimi koruyabilir
 ```
