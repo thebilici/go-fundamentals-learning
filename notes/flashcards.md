@@ -2597,3 +2597,352 @@ close + range
 Mutex
 → Shared data erişimini koru
 ```
+# Aşama 15 — Generics Flashcards
+
+## 1. Generics nedir?
+
+**Cevap:**  
+Aynı kodun farklı veri tipleriyle type-safe şekilde çalışmasını sağlar.
+
+---
+
+## 2. Type Parameter nedir?
+
+**Cevap:**  
+Generic yapı içerisinde kullanılacak tipi temsil eder.
+
+```go
+func Print[T any](value T)
+```
+
+Burada `T` Type Parameter'dır.
+
+---
+
+## 3. Type Argument nedir?
+
+**Cevap:**  
+Generic yapı kullanılırken Type Parameter yerine verilen gerçek tiptir.
+
+```go
+Response[string]
+```
+
+Burada `string` Type Argument'tır.
+
+---
+
+## 4. Type Constraint nedir?
+
+**Cevap:**  
+Type Parameter'ın hangi tipleri kabul edebileceğini belirler.
+
+```go
+[T int | float64]
+```
+
+Burada `T`, `int` veya `float64` olabilir.
+
+---
+
+## 5. `[T any]` ne anlama gelir?
+
+**Cevap:**  
+`T` herhangi bir Go tipi olabilir.
+
+```go
+func Print[T any](value T)
+```
+
+---
+
+## 6. `[T comparable]` ne anlama gelir?
+
+**Cevap:**  
+`T`, `==` ve `!=` operatörleriyle karşılaştırılabilen bir tip olmalıdır.
+
+---
+
+## 7. `any` ve `comparable` arasındaki fark nedir?
+
+**Cevap:**
+
+```text
+any
+→ Herhangi bir tip
+
+comparable
+→ == ve != ile karşılaştırılabilen tip
+```
+
+---
+
+## 8. `[]T` ne anlama gelir?
+
+**Cevap:**  
+Elemanları `T` tipinde olan bir slice anlamına gelir.
+
+```go
+func GetFirst[T any](arr []T) T {
+	return arr[0]
+}
+```
+
+---
+
+## 9. `map[K]V` ne anlama gelir?
+
+**Cevap:**
+
+```text
+K → Key tipi
+V → Value tipi
+```
+
+Örneğin:
+
+```go
+map[string]int
+```
+
+için:
+
+```text
+K = string
+V = int
+```
+
+---
+
+## 10. Generic map yapısında `K` neden genellikle `comparable` olur?
+
+**Cevap:**  
+Go'da map key'lerinin karşılaştırılabilir olması gerektiği için.
+
+```go
+[K comparable, V any]
+```
+
+---
+
+## 11. Bir generic yapıda birden fazla Type Parameter kullanılabilir mi?
+
+**Cevap:**  
+Evet.
+
+```go
+func PrintPair[K any, V any](key K, value V) {
+	fmt.Println(key, value)
+}
+```
+
+Burada `K` ve `V` iki farklı Type Parameter'dır.
+
+---
+
+## 12. Generic Struct nedir?
+
+**Cevap:**  
+Field tiplerinin Type Parameter kullanılarak belirlenebildiği struct'tır.
+
+```go
+type Response[T any] struct {
+	Data    T
+	Success bool
+}
+```
+
+Örneğin:
+
+```go
+Response[string]
+Response[int]
+```
+
+şeklinde farklı tiplerle kullanılabilir.
+
+---
+
+## 13. Custom Constraint nedir?
+
+**Cevap:**  
+Kabul edilecek tiplerin interface içerisinde tanımlandığı özel constraint'tir.
+
+```go
+type Number interface {
+	int | float64
+}
+```
+
+Daha sonra:
+
+```go
+func Sum[T Number](a T, b T) T {
+	return a + b
+}
+```
+
+şeklinde kullanılabilir.
+
+---
+
+## 14. `(V, bool)` ne anlama gelir?
+
+**Cevap:**
+
+```text
+V
+→ Bulunan değerin tipi
+
+bool
+→ Değer bulundu mu?
+```
+
+Örneğin:
+
+```go
+score, exists := GetValue(students, "Fatih")
+```
+
+sonucu:
+
+```text
+score  → 100
+exists → true
+```
+
+olabilir.
+
+---
+
+## 15. Aşağıdaki function nasıl okunur?
+
+```go
+func GetValue[K comparable, V any](data map[K]V, key K) (V, bool)
+```
+
+**Cevap:**
+
+```text
+K comparable
+→ Key'in tipi
+
+V any
+→ Value'nun tipi
+
+data map[K]V
+→ K key ve V value tutan map
+
+key K
+→ Aranacak key
+
+(V, bool)
+→ Bulunan value ve bulunup bulunmadığı
+```
+
+---
+
+## 16. `map[string]int` generic olarak nasıl düşünülebilir?
+
+**Cevap:**
+
+Normal:
+
+```go
+map[string]int
+```
+
+Generic:
+
+```go
+map[K]V
+```
+
+Burada:
+
+```text
+K = string
+V = int
+```
+
+---
+
+## 17. `contains[T comparable]` neden `any` kullanmaz?
+
+**Cevap:**  
+Çünkü function içerisinde:
+
+```go
+item == target
+```
+
+karşılaştırması yapılır.
+
+Bu nedenle `T` karşılaştırılabilir olmalıdır.
+
+```go
+func Contains[T comparable](arr []T, target T) bool {
+	for _, item := range arr {
+		if item == target {
+			return true
+		}
+	}
+
+	return false
+}
+```
+
+---
+
+## 18. Generic function çağrısında Go tipi kendisi anlayabilir mi?
+
+**Cevap:**  
+Evet. Buna Type Inference denir.
+
+```go
+Sum(10, 20)
+```
+
+çağrısında Go:
+
+```text
+T = int
+```
+
+olduğunu otomatik anlayabilir.
+
+---
+
+## 19. `K` ve `V` özel Go keyword'leri midir?
+
+**Cevap:**  
+Hayır.
+
+Bunlar Type Parameter isimleridir.
+
+Genellikle:
+
+```text
+T → Type
+K → Key
+V → Value
+```
+
+isimlendirmeleri kullanılır.
+
+---
+
+## 20. Generics'in temel amacı nedir?
+
+**Cevap:**  
+Aynı algoritmayı veya veri yapısını farklı tipler için tekrar tekrar yazmadan, type-safe ve yeniden kullanılabilir şekilde kullanabilmektir.
+
+```text
+Aynı mantık
+    +
+Farklı veri tipleri
+    +
+Type Safety
+    ↓
+Generics
+```

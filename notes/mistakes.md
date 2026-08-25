@@ -1094,3 +1094,151 @@ Artık yeni veri gelmeyecek
 ↓
 Channel kapatılabilir
 ```
+
+# Aşama 15 — Generics Mistakes
+
+## 1. `float` Tipini Kullanmak
+
+**Hata:**
+
+```go
+type Number interface {
+	int | float
+}
+```
+
+Go'da `float` isminde built-in bir tip yoktur.
+
+**Doğrusu:**
+
+```go
+type Number interface {
+	int | float64
+}
+```
+
+Gerekirse `float32` da ayrıca eklenebilir.
+
+---
+
+## 2. `(V, bool)` Yapısını Karıştırmak
+
+**Karıştırılan yapı:**
+
+```go
+func GetValue[K comparable, V any](data map[K]V, key K) (V, bool)
+```
+
+Burada:
+
+```text
+key K
+→ Aranacak key
+
+V
+→ Bulunan value
+
+bool
+→ Value bulundu mu?
+```
+
+Örneğin:
+
+```go
+value, exists := data[key]
+```
+
+`key` bulunursa:
+
+```text
+value  → bulunan değer
+exists → true
+```
+
+bulunmazsa:
+
+```text
+value  → V'nin zero value'su
+exists → false
+```
+
+---
+
+## 3. `K` ve `V` Mantığını Karıştırmak
+
+Generic map:
+
+```go
+map[K]V
+```
+
+şeklinde düşünülür.
+
+```text
+K → Key tipi
+V → Value tipi
+```
+
+Örneğin:
+
+```go
+map[string]int
+```
+
+için:
+
+```text
+K = string
+V = int
+```
+
+---
+
+## 4. Generic Yapıyı Gereğinden Karmaşık Düşünmek
+
+Normal yapı:
+
+```go
+map[string]int
+```
+
+Generic hale getirildiğinde temel olarak:
+
+```go
+map[K]V
+```
+
+olur.
+
+Yani:
+
+```text
+string → K
+int    → V
+```
+
+Generic yapının temel amacı sabit tiplerin yerine Type Parameter kullanabilmektir.
+
+---
+
+## 5. Function İsmini Değiştirip Eski İsmi Çağırmak
+
+**Hata:**
+
+```go
+score, exists := GetScore(students, "Fatih")
+```
+
+Function:
+
+```go
+func GetValue[K comparable, V any](...)
+```
+
+olarak değiştirilmişse çağrı da değiştirilmelidir.
+
+**Doğrusu:**
+
+```go
+score, exists := GetValue(students, "Fatih")
+```

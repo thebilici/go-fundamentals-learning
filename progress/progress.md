@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
 **Son Güncelleme:** 2026-08-25  
-**Güncel Aşama:** Aşama 14 — Generics
+**Güncel Aşama:** Aşama 16 — Context
 
 ---
 
@@ -34,9 +34,11 @@ Packages & Modules          ✅
         ↓
 Concurrency                 ✅
         ↓
-Generics                    ← GÜNCEL
+Channels                    ✅
         ↓
-Context
+Generics                    ✅
+        ↓
+Context                     ← GÜNCEL
         ↓
 HTTP
         ↓
@@ -67,114 +69,119 @@ Load Testing
 
 ## Tamamlanan Son Aşamalar
 
-### Aşama 11 — Error Handling ✅
-
-- `error`
-- `nil`
-- `errors.New()`
-- `fmt.Errorf()`
-- `(value, error)`
-- Error Propagation
-- Error Wrapping
-- `%w`
-- Struct Zero Value
-
-### Aşama 12 — Packages & Modules ✅
-
-- Package
-- `package main`
-- `func main()` ve Entry Point
-- Custom Package
-- Exported / Unexported
-- Module
-- Module Path
-- Package Path
-- Import Path
-- Import Alias
-- `go.mod`
-- `go mod init`
-- `go mod tidy`
-- `go.sum`
-
 ### Aşama 13 — Concurrency ✅
 
 - Sequential vs Concurrent
 - Concurrency vs Parallelism
 - Goroutine
 - `go` keyword
-- Main Goroutine
 - `sync.WaitGroup`
 - `Add()`
 - `Done()`
 - `Wait()`
-- Channel
-- Channel Send / Receive
-- Unbuffered Channel
-- Buffered Channel
-- `len()` / `cap()`
-- Channel ile sonuç döndürme
-- `close()`
-- Channel üzerinde `range`
-- WaitGroup + Channel
-- Deadlock
 - Race Condition
 - Race Detector
 - `sync.Mutex`
 - `Lock()` / `Unlock()`
 
-### Concurrency Pratiği
+### Aşama 14 — Channels ✅
 
-`exercises/basics/concurrency/` altında concurrent square calculator geliştirildi.
+- Channel
+- Channel Send / Receive
+- Unbuffered Channel
+- Buffered Channel
+- `len()` / `cap()`
+- Goroutine'ler arası iletişim
+- Channel ile sonuç döndürme
+- `close()`
+- Channel üzerinde `range`
+- WaitGroup + Channel
+
+### Aşama 15 — Generics ✅
+
+- Generics
+- Type Parameters
+- Type Arguments
+- Type Constraints
+- `any`
+- `comparable`
+- Generic Functions
+- Birden fazla Type Parameter
+- Generic Structs
+- Custom Constraints
+- Generic Slice
+- Generic Map
+- Type Inference
+
+### Generics Pratiği
+
+Generic function ve veri yapıları oluşturuldu:
 
 ```text
-3 Goroutine
-     ↓
-CalculateSquare()
-     ↓
-results Channel
-     ↓
-WaitGroup
-     ↓
-close(results)
-     ↓
-range
+GetFirst[T any]
+        ↓
+Generic Slice
+
+Contains[T comparable]
+        ↓
+Generic karşılaştırma
+
+Response[T any]
+        ↓
+Generic Struct
+
+Number Constraint
+        ↓
+Generic Sum
+
+GetValue[K comparable, V any]
+        ↓
+Generic Map
 ```
 
-Uygulanan kavramlar:
+Özellikle:
 
-- Birden fazla goroutine
-- WaitGroup
-- Buffered Channel
-- Channel üzerinden sonuç gönderme
-- `close()`
-- `range`
+```go
+func GetValue[K comparable, V any](data map[K]V, key K) (V, bool)
+```
+
+üzerinden:
+
+```text
+K → Key tipi
+V → Value tipi
+```
+
+mantığı uygulandı.
 
 ---
 
 ## Güncel Aşama
 
-### Aşama 14 — Generics 🔄
+### Aşama 16 — Context 🔄
 
 Sıradaki konular:
 
 ```text
-Generics nedir?
+Context nedir?
         ↓
-Type Parameters
+context.Context
         ↓
-Type Arguments
+context.Background()
         ↓
-Type Constraints
+Cancellation
         ↓
-any
+context.WithCancel()
         ↓
-comparable
+Timeout
         ↓
-Generic Functions
+context.WithTimeout()
         ↓
-Generic Types
+Deadline
         ↓
-Generic Structs
+Context Propagation
+        ↓
+Request Lifecycle
 ```
 
-Bu aşamada Go'da farklı veri tipleriyle çalışabilen, tekrar kullanılabilir ve type-safe kod yazmayı öğreneceğiz.
+Bu aşamada uzun süren işlemleri iptal etme, timeout belirleme ve ileride HTTP request lifecycle'ını yönetmek için kullanılan Go `context` yapısını öğreneceğiz.

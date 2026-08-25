@@ -2060,3 +2060,321 @@ WaitGroup
 Mutex
 → Shared state varsa erişimi koruyabilir
 ```
+
+# Aşama 15 — Generics
+
+## Generics
+
+Generics, aynı kodun farklı veri tipleriyle type-safe şekilde çalışmasını sağlar.
+
+Örneğin farklı tipler için ayrı function yazmak yerine:
+
+```go
+func Add[T int | float64](a T, b T) T {
+	return a + b
+}
+```
+
+kullanılabilir.
+
+---
+
+## Type Parameter
+
+Generic yapı içerisinde kullanılacak tipi temsil eder.
+
+```go
+func PrintValue[T any](value T)
+```
+
+Burada:
+
+```text
+T → Type Parameter
+```
+
+---
+
+## Type Argument
+
+Generic yapı kullanılırken verilen gerçek tiptir.
+
+```go
+Response[string]
+Response[int]
+```
+
+Burada:
+
+```text
+string → Type Argument
+int    → Type Argument
+```
+
+---
+
+## Type Constraint
+
+Type Parameter'ın hangi tipleri kabul edebileceğini belirler.
+
+```go
+[T int | float64]
+```
+
+Burada `T` yalnızca:
+
+```text
+int
+veya
+float64
+```
+
+olabilir.
+
+---
+
+## any
+
+`any`, herhangi bir Go tipini kabul eder.
+
+```go
+func GetFirst[T any](arr []T) T {
+	return arr[0]
+}
+```
+
+Burada `T`:
+
+```text
+int
+string
+bool
+float64
+struct
+...
+```
+
+gibi farklı tipler olabilir.
+
+---
+
+## comparable
+
+`comparable`, `==` ve `!=` ile karşılaştırılabilen tipleri kabul eder.
+
+```go
+func IsEqual[T comparable](a T, b T) bool {
+	return a == b
+}
+```
+
+`==` karşılaştırması yapıldığı için `comparable` kullanılır.
+
+---
+
+## Generic Slice
+
+```go
+[]T
+```
+
+`T` tipinde elemanlardan oluşan slice anlamına gelir.
+
+```go
+func GetFirst[T any](arr []T) T {
+	return arr[0]
+}
+```
+
+Örneğin:
+
+```text
+[]int    → T = int
+[]string → T = string
+```
+
+---
+
+## Birden Fazla Type Parameter
+
+Generic yapılarda birden fazla type parameter kullanılabilir.
+
+```go
+func PrintPair[K any, V any](key K, value V) {
+	fmt.Println(key, value)
+}
+```
+
+Burada:
+
+```text
+K → Birinci tip
+V → İkinci tip
+```
+
+---
+
+## Generic Struct
+
+Struct'lar generic olarak tanımlanabilir.
+
+```go
+type Response[T any] struct {
+	Data    T
+	Success bool
+}
+```
+
+Kullanım:
+
+```go
+Response[string]{
+	Data: "Fatih",
+}
+
+Response[int]{
+	Data: 100,
+}
+```
+
+Aynı struct farklı veri tipleriyle kullanılabilir.
+
+---
+
+## Custom Constraint
+
+Constraint'ler interface kullanılarak ayrı tanımlanabilir.
+
+```go
+type Number interface {
+	int | float64
+}
+```
+
+Daha sonra:
+
+```go
+func Sum[T Number](a T, b T) T {
+	return a + b
+}
+```
+
+kullanılabilir.
+
+---
+
+## Generic Map
+
+Normal map:
+
+```go
+map[string]int
+```
+
+şu anlama gelir:
+
+```text
+string → Key tipi
+int    → Value tipi
+```
+
+Generic karşılığı:
+
+```go
+map[K]V
+```
+
+Burada:
+
+```text
+K → Key tipi
+V → Value tipi
+```
+
+Örneğin:
+
+```go
+func GetValue[K comparable, V any](data map[K]V, key K) (V, bool) {
+	value, exists := data[key]
+	return value, exists
+}
+```
+
+`map[string]int` gönderildiğinde:
+
+```text
+K = string
+V = int
+```
+
+olur.
+
+`map[int]string` gönderildiğinde:
+
+```text
+K = int
+V = string
+```
+
+olur.
+
+---
+
+## `(V, bool)` Mantığı
+
+```go
+func GetValue[K comparable, V any](data map[K]V, key K) (V, bool)
+```
+
+şöyle okunur:
+
+```text
+key K
+→ K tipinde bir key al
+
+V
+→ Bulunan değeri V tipinde döndür
+
+bool
+→ Değer bulundu mu bilgisini döndür
+```
+
+Örneğin:
+
+```go
+score, exists := GetValue(students, "Fatih")
+```
+
+sonucu:
+
+```text
+score  → 100
+exists → true
+```
+
+olabilir.
+
+---
+
+## Temel Generics Mantığı
+
+```text
+Normal:
+
+map[string]int
+
+string → Key
+int    → Value
+
+
+Generic:
+
+map[K]V
+
+K → Key tipi
+V → Value tipi
+```
+
+Generics'in temel amacı:
+
+> Aynı algoritmayı veya veri yapısını farklı tipler için tekrar kod yazmadan, type-safe şekilde kullanabilmektir.

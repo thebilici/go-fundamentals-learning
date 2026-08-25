@@ -34,9 +34,9 @@ Packages & Modules          ✅
         ↓
 Concurrency                 ✅
         ↓
-Generics                    ← GÜNCEL
+Generics                    ✅
         ↓
-Context
+Context                     ← GÜNCEL
         ↓
 HTTP
         ↓
@@ -510,14 +510,13 @@ CalculateSquare(6)
 
 ---
 
-## Aşama 14 — Generics
+## Aşama 15 — Generics
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
 - Generics nedir?
-- Generics neden kullanılır?
 - Type Parameters
 - Type Arguments
 - Type Constraints
@@ -525,53 +524,35 @@ CalculateSquare(6)
 - `comparable`
 - Generic Functions
 - Birden fazla Type Parameter
-- Generic Types
+- Generic Slices
+- Generic Maps
 - Generic Structs
-- Generic collections temel mantığı
-- Interface constraints
-- Generics ne zaman kullanılmalı?
-- Generics ne zaman kullanılmamalı?
-
+- Custom Constraints
+- Type Inference
+- `K` / `V` mantığı
 ---
 
-## Aşama 15 — Context
+## Aşama 16 — Context
 
-**Durum:** ⏳ Bekliyor
+**Durum:** 🔄 Güncel Aşama
 
 Öğrenilecek konular:
 
 - `context` package
 - `context.Context`
 - `context.Background()`
-- `context.TODO()`
 - Cancellation
-- Timeout
-- Deadline
 - `context.WithCancel()`
+- Timeout
 - `context.WithTimeout()`
+- Deadline
 - `context.WithDeadline()`
-- `cancel()`
 - `ctx.Done()`
-- Context propagation
+- `ctx.Err()`
+- Context Propagation
+- Request Lifecycle
 - Goroutine + Context
-- Request lifecycle
-- HTTP request'lerinde Context kullanımı
-- Context'in backend uygulamalarındaki amacı
-
-Temel hedef:
-
-```text
-Request başladı
-      ↓
-Context oluşturuldu
-      ↓
-Service / Database işlemleri
-      ↓
-Timeout / Cancel
-      ↓
-Alt işlemleri durdur
-```
-
+- Context ne zaman kullanılmalı?
 ---
 
 # Go Backend

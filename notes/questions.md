@@ -1057,3 +1057,193 @@ close(results)
  ↓
 range tamamlanır
 ```
+# Aşama 15 — Generics Review Questions
+
+## Temel Kavramlar
+
+1. Generics nedir ve hangi problemi çözmek için kullanılır?
+
+2. Type Parameter nedir?
+
+3. Type Argument nedir?
+
+4. Type Parameter ile Type Argument arasındaki fark nedir?
+
+5. Type Constraint nedir?
+
+6. `[T any]` ne anlama gelir?
+
+7. `[T comparable]` ne anlama gelir?
+
+8. `any` ile `comparable` arasındaki fark nedir?
+
+---
+
+## Generic Functions
+
+9. Aşağıdaki kodda `T` neyi temsil eder?
+
+```go
+func GetFirst[T any](arr []T) T
+```
+
+10. `[]T` ne anlama gelir?
+
+11. Aşağıdaki çağrıda `T` hangi tip olur?
+
+```go
+GetFirst([]string{"Go", "Java"})
+```
+
+12. Aşağıdaki generic function neden `comparable` kullanmalıdır?
+
+```go
+func Contains[T comparable](arr []T, target T) bool
+```
+
+13. Bir generic function birden fazla Type Parameter kullanabilir mi?
+
+14. Type Inference nedir?
+
+15. Aşağıdaki çağrıda Go `T` tipini nasıl belirler?
+
+```go
+Sum(10, 20)
+```
+
+---
+
+## K ve V Mantığı
+
+16. Aşağıdaki yapıda `K` ve `V` neyi temsil eder?
+
+```go
+map[K]V
+```
+
+17. Generic map yapılarında `K` neden genellikle `comparable` constraint'ine sahiptir?
+
+18. Aşağıdaki function'ı kendi cümlelerinle açıkla:
+
+```go
+func GetValue[K comparable, V any](data map[K]V, key K) (V, bool)
+```
+
+19. Yukarıdaki function'daki `(V, bool)` neden iki değer döndürür?
+
+20. Aşağıdaki map `GetValue()` function'ına gönderildiğinde `K` ve `V` hangi tip olur?
+
+```go
+students := map[string]int{
+	"Fatih": 100,
+}
+```
+
+21. Aşağıdaki map gönderildiğinde `K` ve `V` hangi tip olur?
+
+```go
+users := map[int]string{
+	1: "Fatih",
+}
+```
+
+22. `K`, `V` ve `T` Go'nun özel keyword'leri midir?
+
+---
+
+## Generic Struct
+
+23. Generic Struct nedir?
+
+24. Aşağıdaki struct'ta `T` neyi temsil eder?
+
+```go
+type Response[T any] struct {
+	Data    T
+	Success bool
+}
+```
+
+25. Aşağıdaki iki kullanım arasındaki fark nedir?
+
+```go
+Response[string]
+Response[int]
+```
+
+26. `Response[string]` kullanıldığında `Data` field'ının tipi ne olur?
+
+27. `Response[int]` kullanıldığında `Data` field'ının tipi ne olur?
+
+---
+
+## Custom Constraints
+
+28. Custom Constraint nedir?
+
+29. Aşağıdaki constraint ne anlama gelir?
+
+```go
+type Number interface {
+	int | float64
+}
+```
+
+30. Aşağıdaki function neden hem `int` hem de `float64` ile çalışabilir?
+
+```go
+func Sum[T Number](a T, b T) T {
+	return a + b
+}
+```
+
+---
+
+## Kod Okuma
+
+31. Aşağıdaki function'ı satır satır açıkla:
+
+```go
+func GetValue[K comparable, V any](data map[K]V, key K) (V, bool) {
+	value, exists := data[key]
+	return value, exists
+}
+```
+
+32. Aşağıdaki çağrıda:
+
+```go
+score, exists := GetValue(students, "Fatih")
+```
+
+`score` neyi temsil eder?
+
+33. Aynı çağrıda `exists` neyi temsil eder?
+
+34. Aranan key map içerisinde bulunmazsa `V` için ne döner?
+
+35. Aranan key map içerisinde bulunmazsa `bool` değeri ne olur?
+
+---
+
+## Genel Anlama
+
+36. Normal:
+
+```go
+map[string]int
+```
+
+yapısı generic olarak nasıl ifade edilebilir?
+
+37. `any` kullanmak yerine neden bazen daha dar bir constraint kullanmak gerekir?
+
+38. `==` kullanan generic bir function'da neden doğrudan `any` kullanamayabiliriz?
+
+39. Generics'in type safety açısından avantajı nedir?
+
+40. Generics hangi durumda gereksiz olabilir?
+
+41. Aynı işlemi yalnızca tek bir veri tipi üzerinde yapıyorsak Generics kullanmak mantıklı mıdır?
+
+42. Generics'in temel amacını kendi cümlelerinle açıkla.
