@@ -2946,3 +2946,314 @@ Type Safety
     ↓
 Generics
 ```
+# Aşama 16 — Context Flashcards
+
+## 1. Context nedir?
+
+**Cevap:**  
+Bir işlemin yaşam döngüsünü yönetmek için kullanılan Go yapısıdır.
+
+Temel olarak cancellation, timeout, deadline ve propagation için kullanılır.
+
+---
+
+## 2. `context.Context` nedir?
+
+**Cevap:**  
+`context` package içerisinde bulunan bir interface'tir.
+
+```go
+func worker(ctx context.Context)
+```
+
+Burada:
+
+```text
+ctx              → Parameter adı
+context.Context  → Parameter'ın tipi
+```
+
+---
+
+## 3. `context.Background()` ne işe yarar?
+
+**Cevap:**  
+Başlangıç context'i oluşturur.
+
+```go
+ctx := context.Background()
+```
+
+Başlangıçta timeout, deadline veya cancellation içermez.
+
+---
+
+## 4. `context.WithCancel()` ne işe yarar?
+
+**Cevap:**  
+Manuel olarak iptal edilebilen yeni bir context oluşturur.
+
+```go
+ctx, cancel := context.WithCancel(ctx)
+```
+
+---
+
+## 5. `context.WithCancel()` hangi değerleri döndürür?
+
+**Cevap:**
+
+```text
+ctx
+→ İptal edilebilir yeni context
+
+cancel
+→ Context'i iptal eden function
+```
+
+---
+
+## 6. `cancel()` ne yapar?
+
+**Cevap:**  
+Context'e iptal sinyali verir.
+
+```go
+cancel()
+```
+
+Bu durumda `ctx.Done()` hazır hale gelir.
+
+---
+
+## 7. `ctx.Done()` nedir?
+
+**Cevap:**  
+Context sona erdiğinde sinyal veren bir channel'dır.
+
+```go
+<-ctx.Done()
+```
+
+---
+
+## 8. `ctx.Done()` genellikle nasıl kullanılır?
+
+**Cevap:**
+
+```go
+select {
+case <-ctx.Done():
+	return
+
+default:
+	// çalışmaya devam et
+}
+```
+
+---
+
+## 9. `ctx.Err()` ne işe yarar?
+
+**Cevap:**  
+Context'in neden sona erdiğini gösterir.
+
+```go
+ctx.Err()
+```
+
+Örneğin:
+
+```text
+context canceled
+```
+
+veya:
+
+```text
+context deadline exceeded
+```
+
+---
+
+## 10. `context.WithTimeout()` ne işe yarar?
+
+**Cevap:**  
+Belirlenen süre dolduğunda otomatik sona eren context oluşturur.
+
+```go
+ctx, cancel := context.WithTimeout(
+	context.Background(),
+	3*time.Second,
+)
+```
+
+---
+
+## 11. `WithCancel()` ile `WithTimeout()` arasındaki fark nedir?
+
+**Cevap:**
+
+```text
+WithCancel
+→ cancel() ile manuel iptal
+
+WithTimeout
+→ Belirlenen süre dolunca otomatik sona erme
+```
+
+---
+
+## 12. `context.WithDeadline()` ne işe yarar?
+
+**Cevap:**  
+Context'in belirli bir zamana kadar çalışmasını sağlar.
+
+```go
+deadline := time.Now().Add(5 * time.Second)
+
+ctx, cancel := context.WithDeadline(
+	context.Background(),
+	deadline,
+)
+```
+
+---
+
+## 13. Timeout ile Deadline arasındaki fark nedir?
+
+**Cevap:**
+
+```text
+Timeout
+→ "3 saniye çalış"
+
+Deadline
+→ "Şu zamana kadar çalış"
+```
+
+---
+
+## 14. `defer cancel()` neden kullanılır?
+
+**Cevap:**  
+Function sona ererken context ile ilişkili kaynakların serbest bırakılmasını garanti etmek için kullanılır.
+
+```go
+defer cancel()
+```
+
+---
+
+## 15. Context bir goroutine'e nasıl gönderilir?
+
+**Cevap:**
+
+```go
+go worker(ctx)
+```
+
+Worker context'i parameter olarak alır:
+
+```go
+func worker(ctx context.Context)
+```
+
+---
+
+## 16. Context bir goroutine'i doğrudan öldürür mü?
+
+**Cevap:**  
+Hayır.
+
+Context iptal sinyali verir. Goroutine bu sinyali `ctx.Done()` ile dinleyip kendisi `return` ederek sona erer.
+
+```text
+cancel()
+   ↓
+ctx.Done()
+   ↓
+return
+   ↓
+goroutine biter
+```
+
+---
+
+## 17. Context Propagation nedir?
+
+**Cevap:**  
+Context'in function'lar arasında aşağı doğru aktarılmasıdır.
+
+```text
+main
+ ↓ ctx
+service
+ ↓ ctx
+repository
+```
+
+---
+
+## 18. Context Propagation backend'de neden önemlidir?
+
+**Cevap:**  
+Bir request'in cancellation veya timeout bilgisinin handler'dan service ve repository gibi alt katmanlara taşınmasını sağlar.
+
+```text
+HTTP Request
+     ↓
+Handler
+     ↓ ctx
+Service
+     ↓ ctx
+Repository
+     ↓
+Database
+```
+
+---
+
+## 19. Aşağıdaki kodda `ctx` ve `context.Context` nedir?
+
+```go
+func worker(ctx context.Context)
+```
+
+**Cevap:**
+
+```text
+ctx
+→ Parameter adı
+
+context
+→ Package
+
+Context
+→ Package içerisindeki interface/type
+
+context.Context
+→ Parameter'ın tipi
+```
+
+---
+
+## 20. Context'in temel akışı nedir?
+
+**Cevap:**
+
+```text
+Context oluştur
+      ↓
+İşleme gönder
+      ↓
+İşlem çalışır
+      ↓
+Cancel / Timeout / Deadline
+      ↓
+ctx.Done()
+      ↓
+return
+      ↓
+İşlem sona erer
+```

@@ -534,32 +534,30 @@ CalculateSquare(6)
 
 ## Aşama 16 — Context
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
-- `context` package
 - `context.Context`
 - `context.Background()`
 - Cancellation
 - `context.WithCancel()`
-- Timeout
-- `context.WithTimeout()`
-- Deadline
-- `context.WithDeadline()`
+- `cancel()`
 - `ctx.Done()`
 - `ctx.Err()`
+- `context.WithTimeout()`
+- Timeout
+- `context.WithDeadline()`
+- Deadline
+- `defer cancel()`
+- Context + Goroutine
 - Context Propagation
-- Request Lifecycle
-- Goroutine + Context
-- Context ne zaman kullanılmalı?
----
-
+- Request Lifecycle temel mantığı
 # Go Backend
 
-## Aşama 16 — HTTP
+## Aşama 17 — HTTP
 
-**Durum:** ⏳ Bekliyor
+**Durum:** 🔄 Güncel Aşama
 
 Öğrenilecek konular:
 

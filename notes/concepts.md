@@ -2378,3 +2378,242 @@ V → Value tipi
 Generics'in temel amacı:
 
 > Aynı algoritmayı veya veri yapısını farklı tipler için tekrar kod yazmadan, type-safe şekilde kullanabilmektir.
+
+# Aşama 16 — Context
+
+## Context
+
+Context, bir işlemin yaşam döngüsünü yönetmek için kullanılır.
+
+Temel kullanım alanları:
+
+```text
+Cancellation → İşlemi iptal et
+Timeout      → Belirli süre sonra durdur
+Deadline     → Belirli zamana kadar çalıştır
+Propagation  → Context'i alt işlemlere aktar
+```
+
+---
+
+## context.Context
+
+`context.Context`, `context` package içerisindeki bir interface'tir.
+
+```go
+func worker(ctx context.Context)
+```
+
+Burada:
+
+```text
+ctx              → Parameter adı
+context          → Package
+Context          → Type / Interface
+context.Context  → Parameter'ın tipi
+```
+
+---
+
+## context.Background()
+
+Başlangıç context'i oluşturur.
+
+```go
+ctx := context.Background()
+```
+
+Bu context başlangıçta cancellation, timeout veya deadline içermez.
+
+---
+
+## context.WithCancel()
+
+Manuel iptal edilebilir context oluşturur.
+
+```go
+ctx, cancel := context.WithCancel(ctx)
+```
+
+```text
+ctx    → Yeni context
+cancel → İptal function'ı
+```
+
+İptal:
+
+```go
+cancel()
+```
+
+---
+
+## ctx.Done()
+
+Context'in sona erdiğini bildiren channel'dır.
+
+```go
+case <-ctx.Done():
+	return
+```
+
+Mantık:
+
+```text
+cancel()
+   ↓
+ctx.Done()
+   ↓
+return
+```
+
+---
+
+## ctx.Err()
+
+Context'in neden sona erdiğini gösterir.
+
+```go
+ctx.Err()
+```
+
+Olası sonuçlar:
+
+```text
+context canceled
+context deadline exceeded
+```
+
+---
+
+## context.WithTimeout()
+
+Belirli süre sonra otomatik sona eren context oluşturur.
+
+```go
+ctx, cancel := context.WithTimeout(
+	context.Background(),
+	3*time.Second,
+)
+
+defer cancel()
+```
+
+```text
+Başla
+ ↓
+3 saniye
+ ↓
+Timeout
+ ↓
+ctx.Done()
+```
+
+---
+
+## context.WithDeadline()
+
+Belirli bir zamana kadar çalışan context oluşturur.
+
+```go
+deadline := time.Now().Add(5 * time.Second)
+
+ctx, cancel := context.WithDeadline(
+	context.Background(),
+	deadline,
+)
+```
+
+Fark:
+
+```text
+WithTimeout
+→ "3 saniye çalış"
+
+WithDeadline
+→ "Şu zamana kadar çalış"
+```
+
+---
+
+## Context + Goroutine
+
+Context bir goroutine'e gönderilebilir.
+
+```go
+go worker(ctx)
+```
+
+Worker:
+
+```go
+func worker(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			return
+
+		default:
+			fmt.Println("Working...")
+		}
+	}
+}
+```
+
+Context iptal edildiğinde worker `return` ile sona erebilir.
+
+---
+
+## Context Propagation
+
+Context'in function'lar arasında aşağı doğru aktarılmasıdır.
+
+```go
+func service(ctx context.Context) {
+	repository(ctx)
+}
+```
+
+Akış:
+
+```text
+main
+ ↓ ctx
+service
+ ↓ ctx
+repository
+```
+
+Backend'de:
+
+```text
+HTTP Request
+     ↓
+Handler
+     ↓ ctx
+Service
+     ↓ ctx
+Repository
+     ↓
+Database
+```
+
+---
+
+## Temel Context Akışı
+
+```text
+Context oluştur
+      ↓
+Alt işleme gönder
+      ↓
+İşlem çalışıyor
+      ↓
+Cancel / Timeout / Deadline
+      ↓
+ctx.Done()
+      ↓
+return
+      ↓
+İşlem sona erer
+```

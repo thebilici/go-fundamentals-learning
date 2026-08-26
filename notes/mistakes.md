@@ -1242,3 +1242,122 @@ olarak değiştirilmişse çağrı da değiştirilmelidir.
 ```go
 score, exists := GetValue(students, "Fatih")
 ```
+
+# Aşama 16 — Context Mistakes
+
+## 1. `context.Context` Bir Değer Sanmak
+
+Karıştırılan yapı:
+
+```go
+func worker(ctx context.Context)
+```
+
+Burada:
+
+```text
+ctx              → Parameter adı
+context.Context  → Parameter'ın tipi
+```
+
+`context.Context`, `context` package içerisindeki bir interface/type'tır.
+
+---
+
+## 2. Goroutine Çalışırken Main'in Beklediğini Düşünmek
+
+```go
+go worker(ctx)
+
+time.Sleep(2 * time.Second)
+```
+
+`go worker(ctx)` ayrı bir goroutine başlatır.
+
+Main, `worker` function'ının bitmesini beklemeden sonraki satıra geçer.
+
+```text
+main                    worker goroutine
+ ↓                            ↓
+go worker(ctx) ───────────→ worker()
+ ↓                            ↓
+Sleep(2s)                  çalışıyor...
+```
+
+---
+
+## 3. `cancel()` Goroutine'i Doğrudan Durduruyor Sanmak
+
+```go
+cancel()
+```
+
+Goroutine'i zorla kapatmaz.
+
+Akış:
+
+```text
+cancel()
+   ↓
+Context iptal edilir
+   ↓
+ctx.Done() sinyal verir
+   ↓
+Worker sinyali görür
+   ↓
+return
+   ↓
+Goroutine biter
+```
+
+---
+
+## 4. Örnekteki `Sleep`lerin Amacını Karıştırmak
+
+```go
+time.Sleep(2 * time.Second)
+cancel()
+```
+
+İlk `Sleep`, worker'ın bir süre çalışmasını görüp daha sonra `cancel()` çağırmak için kullanıldı.
+
+```go
+cancel()
+time.Sleep(1 * time.Second)
+```
+
+İkinci `Sleep`, örnek içerisinde goroutine'in cancellation sinyaline tepki verdiğini gözlemlemek için kullanıldı.
+
+Gerçek uygulamalarda goroutine senkronizasyonu için `Sleep` kullanmak doğru yaklaşım değildir.
+
+---
+
+## 5. Timeout Sonucunu Manuel Cancellation ile Karıştırmak
+
+Manuel:
+
+```go
+cancel()
+```
+
+sonrasında:
+
+```text
+context canceled
+```
+
+Timeout dolduğunda:
+
+```text
+context deadline exceeded
+```
+
+alınır.
+
+Bunu kontrol etmek için:
+
+```go
+ctx.Err()
+```
+
+kullanılabilir.

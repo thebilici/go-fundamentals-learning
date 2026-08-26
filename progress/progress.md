@@ -1,7 +1,7 @@
 # Go Backend Learning — Progress
 
-**Son Güncelleme:** 2026-08-25  
-**Güncel Aşama:** Aşama 16 — Context
+**Son Güncelleme:** 2026-08-26  
+**Güncel Aşama:** Aşama 17 — HTTP
 
 ---
 
@@ -38,9 +38,11 @@ Channels                    ✅
         ↓
 Generics                    ✅
         ↓
-Context                     ← GÜNCEL
+Context                     ✅
         ↓
-HTTP
+HTTP                        ← GÜNCEL
+        ↓
+REST API
         ↓
 REST API
         ↓
@@ -112,6 +114,52 @@ Load Testing
 - Generic Slice
 - Generic Map
 - Type Inference
+
+### Aşama 16 — Context ✅
+
+- `context.Context`
+- `context.Background()`
+- Cancellation
+- `context.WithCancel()`
+- `cancel()`
+- `ctx.Done()`
+- `ctx.Err()`
+- `context.WithTimeout()`
+- `context.WithDeadline()`
+- `defer cancel()`
+- Context + Goroutine
+- Context Propagation
+
+## Güncel Aşama
+
+### Aşama 17 — HTTP 🔄
+
+Sıradaki konular:
+
+```text
+HTTP nedir?
+        ↓
+Client / Server
+        ↓
+Request / Response
+        ↓
+HTTP Methods
+        ↓
+Status Codes
+        ↓
+Headers
+        ↓
+Body
+        ↓
+Go net/http
+        ↓
+HTTP Server
+        ↓
+Handler
+        ↓
+Routing
+        ↓
+Endpoint
 
 ### Generics Pratiği
 

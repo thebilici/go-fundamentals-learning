@@ -5,8 +5,6 @@ import (
 	mathpkg "github.com/thebilici/go-backend-learning/exercises/basics/packages-final/mathutil"
 )	
 
-
-
 func main() {
 	sum := mathpkg.Add(5, 6)
 	fmt.Println(sum)

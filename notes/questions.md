@@ -1247,3 +1247,199 @@ yapısı generic olarak nasıl ifade edilebilir?
 41. Aynı işlemi yalnızca tek bir veri tipi üzerinde yapıyorsak Generics kullanmak mantıklı mıdır?
 
 42. Generics'in temel amacını kendi cümlelerinle açıkla.
+
+# Aşama 16 — Context Review Questions
+
+## Temel Kavramlar
+
+1. Context nedir ve hangi amaçlarla kullanılır?
+
+2. Cancellation nedir?
+
+3. Timeout nedir?
+
+4. Deadline nedir?
+
+5. Timeout ile Deadline arasındaki fark nedir?
+
+---
+
+## context.Context
+
+6. `context.Context` nedir?
+
+7. Aşağıdaki function'da `ctx` neyi temsil eder?
+
+```go
+func worker(ctx context.Context)
+```
+
+8. Aynı function'da `context.Context` neyi temsil eder?
+
+9. `context` burada neden yazılmıştır?
+
+10. `Context` neden büyük harfle başlamaktadır?
+
+---
+
+## Background
+
+11. `context.Background()` ne işe yarar?
+
+12. Aşağıdaki kodda `ctx` hangi tiptedir?
+
+```go
+ctx := context.Background()
+```
+
+13. `context.Background()` başlangıçta timeout veya cancellation içerir mi?
+
+---
+
+## Cancellation
+
+14. `context.WithCancel()` ne işe yarar?
+
+15. Aşağıdaki kod hangi iki değeri döndürür?
+
+```go
+ctx, cancel := context.WithCancel(ctx)
+```
+
+16. `cancel()` ne yapar?
+
+17. `cancel()` bir goroutine'i doğrudan öldürür mü?
+
+18. Goroutine cancellation sinyalini nasıl öğrenir?
+
+---
+
+## ctx.Done()
+
+19. `ctx.Done()` nedir?
+
+20. `ctx.Done()` neden `select` içerisinde kullanılabilir?
+
+21. Aşağıdaki kod neyi kontrol eder?
+
+```go
+case <-ctx.Done():
+	return
+```
+
+22. Context iptal edildiğinde neden `return` kullanıyoruz?
+
+---
+
+## ctx.Err()
+
+23. `ctx.Err()` ne işe yarar?
+
+24. Manuel cancellation sonrasında `ctx.Err()` genellikle ne döndürür?
+
+25. Timeout sonrasında `ctx.Err()` genellikle ne döndürür?
+
+---
+
+## Timeout
+
+26. `context.WithTimeout()` ne işe yarar?
+
+27. Aşağıdaki context ne kadar süre sonra timeout olur?
+
+```go
+ctx, cancel := context.WithTimeout(
+	context.Background(),
+	3*time.Second,
+)
+```
+
+28. `WithTimeout()` kullanırken neden genellikle `defer cancel()` yazılır?
+
+---
+
+## Deadline
+
+29. `context.WithDeadline()` ne işe yarar?
+
+30. Aşağıdaki kod ne anlama gelir?
+
+```go
+deadline := time.Now().Add(5 * time.Second)
+```
+
+31. `WithTimeout()` ile `WithDeadline()` arasındaki temel fark nedir?
+
+---
+
+## Context + Goroutine
+
+32. Aşağıdaki iki çağrı arasındaki fark nedir?
+
+```go
+worker(ctx)
+```
+
+ve:
+
+```go
+go worker(ctx)
+```
+
+33. `go worker(ctx)` çağrıldığında main goroutine worker'ın bitmesini bekler mi?
+
+34. Context kullanarak sonsuz döngüde çalışan bir goroutine nasıl kontrollü şekilde durdurulabilir?
+
+35. `cancel()` çağrıldıktan sonra worker neden kendiliğinden anında yok olmaz?
+
+---
+
+## Context Propagation
+
+36. Context Propagation nedir?
+
+37. Aşağıdaki akışta neden aynı `ctx` aşağı doğru gönderilir?
+
+```text
+main
+ ↓ ctx
+service
+ ↓ ctx
+repository
+```
+
+38. Backend uygulamasında context hangi katmanlar arasında taşınabilir?
+
+39. HTTP request iptal edilirse context propagation neden faydalıdır?
+
+---
+
+## Kod Okuma
+
+40. Aşağıdaki kodu kendi cümlelerinle açıkla:
+
+```go
+func worker(ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Println(ctx.Err())
+			return
+
+		default:
+			fmt.Println("Processing...")
+			time.Sleep(500 * time.Millisecond)
+		}
+	}
+}
+```
+
+41. Yukarıdaki kodda `for` neden sonsuz döngüdür?
+
+42. Sonsuz döngüden nasıl çıkılmaktadır?
+
+43. Context henüz sona ermediyse `select` içerisindeki hangi bölüm çalışır?
+
+44. Context sona erdiğinde hangi bölüm çalışır?
+
+45. Context'in temel amacını kendi cümlelerinle açıkla.
