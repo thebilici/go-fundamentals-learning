@@ -2,7 +2,9 @@
 
 Go programlama dilini temelden başlayarak backend ve cloud-native geliştirme seviyesine kadar öğrenmek amacıyla oluşturulmuş uygulamalı bir öğrenme reposudur.
 
-Bu reponun amacı yalnızca Go syntax'ını öğrenmek değil; Go'nun veri yapıları, type sistemi, error handling yaklaşımı, concurrency modeli ve backend geliştirme mantığını uygulayarak öğrenmektir.
+Bu reponun amacı yalnızca Go syntax'ını öğrenmek değil; Go'nun type sistemi, veri yapıları, error handling yaklaşımı, concurrency modeli, context yapısı ve backend geliştirme mantığını uygulayarak öğrenmektir.
+
+Öğrenilen konular ilerleyen aşamalarda gerçek bir Go backend projesinde birleştirilerek Docker, Kubernetes, observability ve load testing seviyesine taşınacaktır.
 
 ---
 
@@ -37,6 +39,12 @@ Packages & Modules
       ↓
 Concurrency
       ↓
+Channels
+      ↓
+Generics
+      ↓
+Context
+      ↓
 HTTP
       ↓
 REST API
@@ -46,6 +54,10 @@ Backend Mimarisi
 Database
       ↓
 Testing
+      ↓
+Configuration
+      ↓
+Logging
       ↓
 Docker
       ↓
@@ -68,9 +80,12 @@ go-backend-learning/
 ├── README.md
 │
 ├── sessions/
+│
 ├── exercises/
+│
 ├── project/
-│   └── service-a/
+│   ├── service-a/
+│   └── service-b/
 │
 ├── notes/
 │   ├── concepts.md
@@ -87,19 +102,59 @@ go-backend-learning/
 
 Yeni Go kavramlarını öğrenirken oluşturulan küçük örnekleri ve deneyleri içerir.
 
-Her aşamada konu önce burada öğrenilir ve test edilir.
+Her aşamada konu önce burada öğrenilir ve temel çalışma mantığı anlaşılır.
 
 ### `exercises/`
 
 Öğrenilen konuların bağımsız olarak uygulanması için hazırlanan alıştırmaları içerir.
 
-Amaç konuyu örnekten kopyalamadan tekrar uygulayabilmektir.
+Amaç örnek kodu doğrudan kopyalamadan, öğrenilen kavramları yeniden uygulayabilmektir.
 
 ### `project/`
 
-Öğrenilen Go kavramlarının gerçek bir backend uygulamasında birleştirileceği ana proje alanıdır.
+Öğrenilen Go ve backend kavramlarının gerçek bir cloud-native uygulamada birleştirileceği ana proje alanıdır.
 
-İlerleyen aşamalarda HTTP, REST API, database, testing, Docker ve Kubernetes konuları burada uygulanacaktır.
+Proje ilerleyen aşamalarda iki servisli bir yapıya dönüşecektir:
+
+```text
+Client
+  ↓
+Service A
+  ↓
+Service B
+```
+
+Bu proje üzerinde aşamalı olarak:
+
+```text
+Go HTTP Server
+      ↓
+REST API
+      ↓
+Backend Mimarisi
+      ↓
+Servisler Arası İletişim
+      ↓
+Database
+      ↓
+Testing
+      ↓
+Configuration & Logging
+      ↓
+Docker
+      ↓
+Docker Compose
+      ↓
+Load Testing
+      ↓
+Kubernetes
+      ↓
+Metrics
+      ↓
+Horizontal Pod Autoscaler
+```
+
+konuları uygulanacaktır.
 
 ### `notes/`
 
@@ -138,11 +193,13 @@ Kodu Çalıştır ve İncele
       ↓
 Bağımsız Exercise Yap
       ↓
+Ana Projede Uygula
+      ↓
 Notları Güncelle
       ↓
 Progress'i Güncelle
       ↓
-Commit Et
+Commit & Push
 ```
 
 Temel amaç kod ezberlemek değil, yazılan kodun neden ve nasıl çalıştığını anlamaktır.
@@ -163,7 +220,12 @@ Methods                     ✅
 Pointers                    ✅
 Interfaces                  ✅
 Error Handling              ✅
-Packages & Modules          🔄
+Packages & Modules          ✅
+Concurrency                 ✅
+Channels                    ✅
+Generics                    ✅
+Context                     ✅
+HTTP                        🔄
 ```
 
 Bu aşamalarda temel olarak:
@@ -178,6 +240,18 @@ Bu aşamalarda temel olarak:
 - Pointers ve pointer receiver
 - Interfaces ve polymorphism
 - Error handling, propagation ve wrapping
+- Custom packages ve modules
+- Goroutines ve concurrency
+- WaitGroup ve Mutex
+- Channels ve goroutine iletişimi
+- Generic functions ve generic types
+- Type parameters ve constraints
+- `any` ve `comparable`
+- Generic structs ve maps
+- `context.Context`
+- Cancellation
+- Timeout ve deadline
+- Context propagation
 
 konuları uygulamalı olarak öğrenildi.
 
@@ -185,33 +259,113 @@ konuları uygulamalı olarak öğrenildi.
 
 ## Güncel Aşama
 
-**Aşama 12 — Packages & Modules**
+**Aşama 17 — HTTP**
 
-Bu aşamada Go projelerinin birden fazla package'a nasıl ayrıldığı ve package'lerin birbirleriyle nasıl çalıştığı öğrenilecektir.
+Bu aşamada HTTP'nin temel çalışma mantığı ve Go'nun `net/http` package'ı öğrenilmektedir.
 
-Özellikle:
+Şu ana kadar:
 
 ```text
-Module
+HTTP
   ↓
-Packages
+Client / Server
   ↓
-Go Files
+Request / Response
+  ↓
+HTTP Methods
+  ↓
+Status Codes
+  ↓
+Headers
+  ↓
+Body
+  ↓
+net/http
+  ↓
+HTTP Server
+  ↓
+Handler
 ```
 
-ilişkisi üzerinde durulacaktır.
+konularına giriş yapıldı.
 
-Öğrenilecek temel konular:
+Go ile ilk HTTP server oluşturuldu:
 
-- Custom package oluşturma
-- `package` kullanımı
-- `import`
-- Exported / Unexported identifiers
-- Package path
-- Module path
-- `go.mod`
-- Package ve Module farkı
-- Package'ler arası kullanım
+```text
+Client
+   │
+   │ GET /hello
+   ▼
+Go HTTP Server :8080
+   │
+   ▼
+Handler
+   │
+   ▼
+HTTP Response
+   │
+   ▼
+Client
+```
+
+Bu aşamada devamında routing, birden fazla endpoint ve request/response işlemleri uygulanacaktır.
+
+---
+
+## Ana Proje
+
+HTTP aşamasından itibaren öğrenilen backend konuları yalnızca küçük örneklerde bırakılmayacak, `project/` altında gerçek projeye uygulanacaktır.
+
+Hedef mimari:
+
+```text
+                    Client
+                      │
+                      ▼
+                  Service A
+                  Go Backend
+                      │
+                      │ HTTP
+                      ▼
+                  Service B
+                  Go Backend
+```
+
+İlerleyen aşamalarda:
+
+```text
+                     Client
+                       │
+                       ▼
+                   Service A
+                       │
+                       ▼
+                   Service B
+                       │
+                       ▼
+                    Database
+
+                       +
+                       
+                 Docker Compose
+
+                       +
+
+                      k6
+                 Load Testing
+
+                       +
+
+                  Kubernetes
+                       │
+              ┌────────┴────────┐
+              │                 │
+           Metrics            HPA
+```
+
+yapısına ulaşılması hedeflenmektedir.
+
+Load testing aşamasında CPU yükü oluşturabilen endpoint'ler üzerinden k6 ile stres testi yapılacak ve Kubernetes ortamında resource kullanımı ile horizontal scaling davranışı gözlemlenecektir.
 
 ---
 
@@ -248,7 +402,31 @@ Testing
 +
 Docker
 +
+Docker Compose
++
 Kubernetes
++
+Observability
++
+Load Testing
 ```
 
-konularını birlikte kullanabilen ve yazdığı kodun arkasındaki mantığı anlayan bir backend geliştirme temeline sahip olmaktır.
+konularını birlikte kullanabilen ve oluşturduğu sistemin:
+
+```text
+Kod
+ ↓
+HTTP
+ ↓
+Backend
+ ↓
+Container
+ ↓
+Orchestration
+ ↓
+Metrics
+ ↓
+Scaling
+```
+
+zincirinin nasıl çalıştığını anlayan sağlam bir backend ve cloud-native geliştirme temeline sahip olmaktır.
