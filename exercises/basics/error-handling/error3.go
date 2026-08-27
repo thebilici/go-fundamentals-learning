@@ -18,7 +18,8 @@ func main(){
 	{Name: "Mouse", Stock: 5, Price: 750},
 	{Name: "Monitor", Stock: 2, Price: 6000},
 }
-totalPrice, err := SellProduct(products, "Mouse", 3)
+
+totalPrice, err := ProccessOrder(products,"Mouse",3)
 	if err != nil {
 		fmt.Println("Error:", err)
 	} else {
@@ -42,4 +43,14 @@ func SellProduct(products []Product, name string, quantity int)(float64,error){
 		}
 	}
 	return 0, errors.New("Product not found")
+}
+
+func ProccessOrder(products []Product,name string,quantity int)(float64,error){
+	
+	totalPrice,err:=SellProduct(products,name,quantity)
+
+	if err!=nil{
+		return 0,fmt.Errorf("order processing failed: %w", err)
+	}
+	return totalPrice,nil
 }
