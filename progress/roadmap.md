@@ -1,7 +1,8 @@
-# Go Backend Learning Roadmap
+# Go Backend Learning — Roadmap
 
-**Son Güncelleme:** 2026-08-25  
-**Güncel Aşama:** Aşama 14 — Generics
+**Son Güncelleme:** 2026-08-27  
+**Durum:** ✅ Tamamlandı  
+**Tamamlanan Aşama:** 17 / 17
 
 ---
 
@@ -34,34 +35,18 @@ Packages & Modules          ✅
         ↓
 Concurrency                 ✅
         ↓
+Channels                    ✅
+        ↓
 Generics                    ✅
         ↓
-Context                     ← GÜNCEL
+Context                     ✅
         ↓
-HTTP
+HTTP                        ✅
         ↓
-REST API
-        ↓
-Backend Mimarisi
-        ↓
-Database
-        ↓
-Testing
-        ↓
-Configuration
-        ↓
-Logging
-        ↓
-Docker
-        ↓
-Docker Compose
-        ↓
-Kubernetes
-        ↓
-Observability
-        ↓
-Load Testing
+Go Fundamentals Complete    ✅
 ```
+
+Bu roadmap ile Go'nun temel dil özellikleri, veri yapıları, error handling yaklaşımı, concurrency modeli ve temel HTTP kullanımı uygulamalı olarak tamamlandı.
 
 ---
 
@@ -88,6 +73,16 @@ Load Testing
 - Temel Go program yapısı
 - `go.mod` ile ilk tanışma
 
+Temel çalışma modeli:
+
+```text
+Go Source Code
+      ↓
+Compiler
+      ↓
+Executable
+```
+
 ---
 
 ## Aşama 2 — Variables & Data Types
@@ -113,6 +108,8 @@ Load Testing
 - `strconv.Atoi()`
 - `strconv.Itoa()`
 
+Bu aşamada Go'nun statically typed yapısı ve değişkenlerin type'larla ilişkisi öğrenildi.
+
 ---
 
 ## Aşama 3 — Control Flow
@@ -133,6 +130,8 @@ Load Testing
 - `range`
 - Slice üzerinde `range`
 
+Programın çalışma akışını koşullara ve döngülere göre kontrol etme mantığı uygulandı.
+
 ---
 
 ## Aşama 4 — Functions
@@ -151,14 +150,29 @@ Load Testing
 - Function Scope
 - Return type
 - Birden fazla değer döndürme
+- Function'ları birlikte kullanma
 
 Örnek:
 
 ```go
 func getUser() (string, int) {
-	return "Fatih", 22
+    return "Fatih", 22
 }
 ```
+
+Temel çalışma modeli:
+
+```text
+Input
+  ↓
+Function
+  ↓
+Processing
+  ↓
+Return Value
+```
+
+Function'ların yalnızca kod tekrarını azaltmak için değil, farklı sorumlulukları birbirinden ayırmak için kullanılabileceği uygulandı.
 
 ---
 
@@ -181,6 +195,18 @@ func getUser() (string, int) {
 - `[start:end]`
 - `range`
 - Slice üzerinde iteration
+- Slice filtering
+- Yeni slice oluşturma
+
+Temel filtering pattern'i:
+
+```go
+for _, value := range values {
+    if condition {
+        result = append(result, value)
+    }
+}
+```
 
 ---
 
@@ -193,6 +219,7 @@ func getUser() (string, int) {
 - Map
 - Key / Value
 - Map oluşturma
+- `make`
 - Eleman okuma
 - Eleman ekleme
 - Eleman güncelleme
@@ -201,6 +228,15 @@ func getUser() (string, int) {
 - `delete()`
 - `len()`
 - `range`
+- Map filtering
+
+Temel lookup pattern'i:
+
+```go
+value, ok := data[key]
+```
+
+Bu yapı ile bir key'in map içerisinde bulunup bulunmadığının kontrol edilmesi uygulandı.
 
 ---
 
@@ -212,6 +248,7 @@ func getUser() (string, int) {
 
 - Struct
 - Field
+- Custom Type
 - Struct tanımlama
 - Struct oluşturma
 - Field erişimi
@@ -219,6 +256,9 @@ func getUser() (string, int) {
 - Struct + Function
 - Slice of Structs
 - `range` ile Struct dolaşma
+- Struct filtering
+- Struct searching
+- Zero value
 - Exported Fields
 - Unexported Fields
 
@@ -226,11 +266,14 @@ func getUser() (string, int) {
 
 ```go
 type User struct {
-	Name     string
-	Age      int
-	IsActive bool
+    ID       int
+    Name     string
+    Age      int
+    IsActive bool
 }
 ```
+
+Birden fazla ilişkili veriyi tek bir type altında modelleme ve struct collection'ları üzerinde işlem yapma mantığı uygulandı.
 
 ---
 
@@ -248,14 +291,17 @@ type User struct {
 - Method Return Values
 - Struct + Method
 - Receiver üzerinden field erişimi
+- Pointer Receiver'a giriş
 
 Örnek:
 
 ```go
 func (u User) GetName() string {
-	return u.Name
+    return u.Name
 }
 ```
+
+Method sayesinde davranışların ilgili type'a bağlanması öğrenildi.
 
 ---
 
@@ -274,15 +320,27 @@ func (u User) GetName() string {
 - Pointer + Function
 - Pointer Receiver
 - Value Receiver vs Pointer Receiver
-- Struct değerlerini pointer ile değiştirme
+- Struct state'ini pointer ile değiştirme
 
 Örnek:
 
 ```go
 func updateAge(u *User) {
-	u.Age = 25
+    u.Age = 25
 }
 ```
+
+Temel fark:
+
+```text
+Value Receiver
+→ değer üzerinde çalışır
+
+Pointer Receiver
+→ gerçek state üzerinde değişiklik yapabilir
+```
+
+Pointer kullanımının özellikle state değiştiren method'larda neden gerekli olduğu uygulandı.
 
 ---
 
@@ -294,6 +352,7 @@ func updateAge(u *User) {
 
 - Interface
 - Method Signature
+- Method Set
 - Implicit Implementation
 - Interface Parameter
 - Interface Variable
@@ -307,17 +366,40 @@ func updateAge(u *User) {
 
 ```go
 type Notifier interface {
-	send() string
+    Send() string
+    GetType() string
 }
 ```
 
+Temel ilişki:
+
+```text
+Notifier
+├── Send()
+└── GetType()
+       ↑
+       │
+ ┌─────┴─────┐
+ │           │
+Email       SMS
+```
+
+Bir type'ın interface'i kullanabilmesi için interface içerisinde tanımlanan method set'ini sağlaması gerektiği öğrenildi.
+
 Uygulanan örnekler:
 
-- `EmailNotifier`
-- `SMSNotifier`
 - `Greeter`
 - `User`
 - `Admin`
+- `Notifier`
+- `EmailNotifier`
+- `SMSNotifier`
+- `PaymentMethod`
+- `CreditCard`
+- `CashPayment`
+- `Exporter`
+- `JSONExporter`
+- `CSVExporter`
 
 ---
 
@@ -346,8 +428,34 @@ Temel pattern:
 result, err := operation()
 
 if err != nil {
-	return err
+    return err
 }
+```
+
+Başarılı işlem:
+
+```text
+value, nil
+```
+
+Başarısız işlem:
+
+```text
+zero/default value, error
+```
+
+Error propagation:
+
+```text
+Alt Function
+     ↓
+   error
+     ↓
+Üst Function
+     ↓
+   error
+     ↓
+   main
 ```
 
 Error wrapping:
@@ -355,6 +463,8 @@ Error wrapping:
 ```go
 return fmt.Errorf("operation failed: %w", err)
 ```
+
+Böylece bir error'ın kaybedilmeden üst katmana ek context ile taşınması uygulandı.
 
 ---
 
@@ -385,7 +495,10 @@ Temel ilişki:
 
 ```text
 Module
-└── Package
+│
+├── main package
+│
+└── custom package
     ├── file.go
     └── file.go
 ```
@@ -394,9 +507,9 @@ Import path:
 
 ```text
 Module Path
-+
+     +
 Package Path
-=
+     =
 Import Path
 ```
 
@@ -411,7 +524,7 @@ Yapılan pratikler:
 - `Add()`
 - `Multiply()`
 - `IsPositive()`
-- Import alias (`mathpkg`)
+- Import alias
 
 ---
 
@@ -434,33 +547,20 @@ Yapılan pratikler:
 - `Add()`
 - `Done()`
 - `Wait()`
-- Channel
-- Channel Send
-- Channel Receive
-- Unbuffered Channel
-- Buffered Channel
-- `len()`
-- `cap()`
-- Goroutine'ler arası iletişim
-- Channel ile sonuç döndürme
-- Birden fazla goroutine'in aynı channel'a veri göndermesi
-- `close()`
-- Channel üzerinde `range`
-- WaitGroup + Channel pattern
-- Deadlock
 - Race Condition
 - Race Detector
+- Shared State
 - `sync.Mutex`
 - `Lock()`
 - `Unlock()`
 
-### Temel Goroutine
+Temel Goroutine:
 
 ```go
 go task()
 ```
 
-### WaitGroup
+WaitGroup:
 
 ```text
 Add()
@@ -472,7 +572,43 @@ Done()
 Wait()
 ```
 
-### Channel
+Temel concurrency modeli:
+
+```text
+Main Goroutine
+     │
+     ├── Goroutine 1
+     ├── Goroutine 2
+     └── Goroutine 3
+```
+
+Birden fazla işin concurrent şekilde çalıştırılması ve shared state üzerinde oluşabilecek race condition problemlerinin kontrol edilmesi uygulandı.
+
+---
+
+## Aşama 14 — Channels
+
+**Durum:** ✅ Tamamlandı
+
+Öğrenilen konular:
+
+- Channel
+- Channel Send
+- Channel Receive
+- `make(chan T)`
+- Unbuffered Channel
+- Buffered Channel
+- `len()`
+- `cap()`
+- Goroutine'ler arası iletişim
+- Channel ile sonuç döndürme
+- Birden fazla goroutine'in aynı channel'a veri göndermesi
+- `close()`
+- Channel üzerinde `range`
+- WaitGroup + Channel
+- Deadlock temel mantığı
+
+Temel kullanım:
 
 ```go
 ch <- value
@@ -480,33 +616,35 @@ ch <- value
 value := <-ch
 ```
 
-### Concurrency Pattern
+Temel iletişim modeli:
+
+```text
+Goroutine A
+     │
+     │ data
+     ▼
+   Channel
+     │
+     │ data
+     ▼
+Goroutine B
+```
+
+WaitGroup + Channel pattern:
 
 ```text
 Worker 1 ──┐
 Worker 2 ──┼──→ Channel ──→ Receiver
 Worker 3 ──┘
      │
-     ↓
-  WaitGroup
+     ▼
+ WaitGroup
      │
-     ↓
+     ▼
  close(ch)
 ```
 
-Yapılan final exercise:
-
-```text
-CalculateSquare(2)
-CalculateSquare(4)
-CalculateSquare(6)
-        ↓
-    Goroutines
-        ↓
- results channel
-        ↓
-      main
-```
+Bu aşamada goroutine oluşturmanın yanında goroutine'ler arasında güvenli veri iletişimi kurma mantığı öğrenildi.
 
 ---
 
@@ -516,7 +654,7 @@ CalculateSquare(6)
 
 Öğrenilen konular:
 
-- Generics nedir?
+- Generics
 - Type Parameters
 - Type Arguments
 - Type Constraints
@@ -530,6 +668,46 @@ CalculateSquare(6)
 - Custom Constraints
 - Type Inference
 - `K` / `V` mantığı
+
+Yapılan pratikler:
+
+```text
+GetFirst[T any]
+        ↓
+Generic Slice
+
+Contains[T comparable]
+        ↓
+Generic karşılaştırma
+
+Response[T any]
+        ↓
+Generic Struct
+
+Number Constraint
+        ↓
+Generic Sum
+
+GetValue[K comparable, V any]
+        ↓
+Generic Map
+```
+
+Örnek:
+
+```go
+func GetValue[K comparable, V any](data map[K]V, key K) (V, bool)
+```
+
+Burada:
+
+```text
+K → Key tipi
+V → Value tipi
+```
+
+mantığı uygulandı.
+
 ---
 
 ## Aşama 16 — Context
@@ -545,21 +723,40 @@ CalculateSquare(6)
 - `cancel()`
 - `ctx.Done()`
 - `ctx.Err()`
-- `context.WithTimeout()`
 - Timeout
-- `context.WithDeadline()`
+- `context.WithTimeout()`
 - Deadline
+- `context.WithDeadline()`
 - `defer cancel()`
 - Context + Goroutine
 - Context Propagation
 - Request Lifecycle temel mantığı
-# Go Backend
+
+Temel lifecycle:
+
+```text
+Parent Context
+      ↓
+Child Operation
+      ↓
+Goroutine
+      ↓
+ctx.Done()
+      ↓
+Cancellation / Timeout
+```
+
+Context'in uzun süren veya birbirine bağlı işlemlerin lifecycle'ını kontrol etmek için nasıl kullanılabileceği öğrenildi.
+
+---
+
+# Go ve HTTP
 
 ## Aşama 17 — HTTP
 
-**Durum:** 🔄 Güncel Aşama
+**Durum:** ✅ Tamamlandı
 
-Öğrenilecek konular:
+Öğrenilen konular:
 
 - HTTP nedir?
 - Client
@@ -585,517 +782,233 @@ CalculateSquare(6)
 - `http.HandlerFunc`
 - `http.ResponseWriter`
 - `*http.Request`
-- Routing
+- Temel Routing
 - Endpoint
-- Query Parameters
-- Path mantığı
 
-İlk hedef:
+Temel HTTP akışı:
 
 ```text
 Client
-   ↓
-HTTP Request
-   ↓
+   │
+   │ HTTP Request
+   ▼
 Go HTTP Server
-   ↓
+   │
+   ▼
 Handler
-   ↓
+   │
+   │ Request işle
+   ▼
 HTTP Response
-   ↓
+   │
+   ▼
 Client
 ```
 
+Bu aşamanın amacı kapsamlı bir REST API geliştirmek değil, HTTP'nin temel çalışma mantığını ve Go ile temel bir HTTP server oluşturmayı öğrenmekti.
+
+Daha kapsamlı HTTP ve REST API kullanımı gerçek backend projesinde uygulanacaktır.
+
 ---
 
-## Aşama 17 — REST API
+# Pekiştirme Süreci
 
-**Durum:** ⏳ Bekliyor
+Temel Go konuları tamamlandıktan sonra önemli konular bağımsız exercise'larla tekrar edildi.
 
-Öğrenilecek konular:
-
-- REST nedir?
-- Resource mantığı
-- Endpoint tasarımı
-- HTTP Methods
-- GET
-- POST
-- PUT
-- PATCH
-- DELETE
-- HTTP Status Codes
-- JSON
-- `encoding/json`
-- JSON Encode
-- JSON Decode
-- Struct Tags
-- Request Body
-- Response Body
-- URL Parameters
-- Query Parameters
-- Validation
-- Error Response
-- API Response yapısı
-- CRUD endpoint'leri
-
-Örnek hedef:
+Pekiştirilen ana konular:
 
 ```text
-GET    /users
-GET    /users/{id}
-POST   /users
-PUT    /users/{id}
-DELETE /users/{id}
+Functions
+    ↓
+Slices
+    ↓
+Maps
+    ↓
+Structs
+    ↓
+Methods
+    ↓
+Pointer Receivers
+    ↓
+Interfaces
+    ↓
+Error Handling
 ```
 
+Yapılan exercise'larda farklı problem alanları kullanıldı:
+
+- Maaş hesaplama
+- Stok filtreleme
+- Sıcaklık dönüşümü
+- Sipariş yönetimi
+- Kullanıcı yönetimi
+- Banka hesabı
+- Ürün ve stok yönetimi
+- Payment sistemi
+- Notification sistemi
+- Exporter sistemi
+- Ürün satışı
+
+Bu çalışmalar sırasında özellikle:
+
+- Function parameters
+- Multiple return values
+- Slice filtering
+- `append`
+- Map lookup
+- `value, ok`
+- Struct modelling
+- Slice of structs
+- Struct filtering
+- Struct searching
+- Value receiver
+- Pointer receiver
+- Interface implementation
+- Polymorphism
+- `(value, error)`
+- `errors.New()`
+- `fmt.Errorf()`
+- Error propagation
+- Error wrapping
+- `%w`
+
+konuları tekrar uygulandı.
+
 ---
 
-## Aşama 18 — Backend Mimarisi
+# Roadmap Son Durumu
 
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Go backend proje organizasyonu
-- `cmd`
-- `internal`
-- `config`
-- `handler`
-- `service`
-- `repository`
-- `model`
-- Handler Layer
-- Service Layer
-- Repository Layer
-- Separation of Concerns
-- Dependency Management
-- Dependency Injection temel mantığı
-- Interface tabanlı dependency
-- Application bootstrap
-- Server başlangıç yapısı
-
-Hedef mimari:
+Planlanan 17 aşamanın tamamı tamamlandı.
 
 ```text
-Client
-  ↓
-Handler
-  ↓
-Service
-  ↓
-Repository
-  ↓
+17 / 17 Aşama
+
+████████████████████ 100%
+
+Go Fundamentals Complete ✅
+```
+
+Bu repo kapsamında:
+
+```text
+Go Syntax
+      +
+Core Language Features
+      +
+Data Structures
+      +
+Functions
+      +
+Structs
+      +
+Methods
+      +
+Pointers
+      +
+Interfaces
+      +
+Error Handling
+      +
+Packages & Modules
+      +
+Concurrency
+      +
+Channels
+      +
+Generics
+      +
+Context
+      +
+HTTP Basics
+```
+
+konuları uygulamalı olarak çalışıldı.
+
+---
+
+# Repo Sınırı
+
+Bu roadmap'in kapsamı burada tamamlanmaktadır.
+
+Aşağıdaki konular bu reponun roadmap'inin bir parçası değildir:
+
+```text
+REST API Development
+Backend Architecture
 Database
-```
-
----
-
-## Aşama 19 — Database
-
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Relational Database mantığı
-- SQL temelleri
-- PostgreSQL
-- Table
-- Row
-- Primary Key
-- Foreign Key
-- Database Connection
-- Go database bağlantısı
-- `database/sql`
-- Driver mantığı
-- CRUD
-- SELECT
-- INSERT
-- UPDATE
-- DELETE
-- Parameterized Queries
-- Repository Pattern
-- Context ile database işlemleri
-- Transactions
-- Connection Pool
-- Connection Management
-- Database error handling
-
-Hedef:
-
-```text
-HTTP Request
-     ↓
-Handler
-     ↓
-Service
-     ↓
-Repository
-     ↓
-PostgreSQL
-```
-
----
-
-## Aşama 20 — Testing
-
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Test neden yazılır?
-- `testing` package
-- `_test.go`
-- `go test`
-- Unit Testing
-- Test function
-- Table-Driven Tests
-- Test Cases
-- HTTP Tests
-- `httptest`
-- Handler Testing
-- Service Testing
-- Interface ile dependency değiştirme
-- Mocking temel mantığı
-- Integration Tests
-- Error case testleri
-- Test coverage
-
-Komutlar:
-
-```bash
-go test ./...
-go test -v ./...
-```
-
----
-
-# Application Configuration & Operations
-
-## Aşama 21 — Configuration
-
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Configuration nedir?
-- Environment Variables
-- `os.Getenv()`
-- Configuration Struct
-- `.env` mantığı
-- Port configuration
-- Database configuration
-- Development environment
-- Production environment
-- Secret değerleri koddan ayırma
-- Default values
-- Configuration validation
-
-Temel hedef:
-
-```text
-Environment Variables
-        ↓
-Config
-        ↓
-Application
-```
-
----
-
-## Aşama 22 — Logging
-
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Logging nedir?
-- Logging neden gereklidir?
-- Standard logging
-- Structured Logging
-- Log Levels
-- Debug
-- Info
-- Warn
-- Error
-- Request Logging
-- Application Logging
-- Error Logging
-- Contextual log bilgileri
-- Production logging mantığı
-
----
-
-# Containerization
-
-## Aşama 23 — Docker
-
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Container nedir?
-- Docker nedir?
-- Image
-- Container
-- Dockerfile
-- `FROM`
-- `WORKDIR`
-- `COPY`
-- `RUN`
-- `EXPOSE`
-- `CMD`
-- Go uygulamasını build etme
-- Docker image oluşturma
-- Container çalıştırma
-- Port Mapping
-- Environment Variables
-- Multi-stage Builds
-- Küçük production image oluşturma
-
-Hedef:
-
-```text
-Go Source Code
-      ↓
-Docker Build
-      ↓
-Docker Image
-      ↓
-Container
-      ↓
-HTTP Server
-```
-
----
-
-## Aşama 24 — Docker Compose
-
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Docker Compose nedir?
-- `compose.yaml`
-- Services
-- Build Context
-- Ports
-- Environment Variables
-- `env_file`
-- Docker Networks
-- Service Name DNS
-- Birden fazla servis
-- Health Checks
-- Service Dependencies
-- `depends_on`
-- Backend + Database ortamı
-- Container'lar arası iletişim
-
-Hedef:
-
-```text
-Client
-  ↓
-Go Backend Container
-  ↓
-PostgreSQL Container
-```
-
----
-
-# Kubernetes & Cloud-Native
-
-## Aşama 25 — Kubernetes
-
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Kubernetes nedir?
-- Cluster
-- Node
-- Pod
-- Deployment
-- Replica
-- Service
-- ClusterIP
-- ConfigMap
-- Environment Variables
-- Container Image
-- `kubectl`
-- Kubernetes YAML
-- Readiness Probe
-- Liveness Probe
-- Resource Requests
-- Resource Limits
-- Rolling Update
-- Rollout
-- Scaling
-- Pod lifecycle
-- Service discovery
-
-Temel mimari:
-
-```text
-Client
-   ↓
-Service
-   ↓
-Deployment
-   ↓
-Pods
-```
-
----
-
-## Aşama 26 — Observability
-
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Observability nedir?
-- Metrics
-- Logs
-- Application Metrics
-- Infrastructure Metrics
-- CPU Metrics
-- Memory Metrics
-- Prometheus temel mantığı
-- Metrics endpoint
-- Kubernetes Metrics Server
-- `kubectl top`
-- Resource kullanımı
-- Horizontal Pod Autoscaler
-- HPA
-- CPU based scaling
-- Monitoring temel mantığı
-
-Hedef akış:
-
-```text
-Application
-     ↓
+Testing
+Application Configuration
+Structured Logging
+Service-to-Service Communication
+Docker
+Docker Compose
+Load Testing
+Kubernetes
 Metrics
-     ↓
-Monitoring
-     ↓
-Scaling Decision
-     ↓
-HPA
-     ↓
-Replica Count
+Horizontal Pod Autoscaler
+Observability
 ```
+
+Bu konular bağımsız örnekler şeklinde bu repoya eklenmek yerine gerçek bir Go backend ve cloud-native projesi içerisinde öğrenilecektir.
 
 ---
 
-## Aşama 27 — Load Testing
+# Sonraki Yol
 
-**Durum:** ⏳ Bekliyor
-
-Öğrenilecek konular:
-
-- Load Testing nedir?
-- Load Test neden yapılır?
-- k6
-- Virtual Users
-- VU
-- Iteration
-- Request Rate
-- Throughput
-- Latency
-- Average
-- Median
-- P95
-- P99 temel mantığı
-- Error Rate
-- Checks
-- Thresholds
-- Stages
-- Ramp-up
-- Ramp-down
-- Stress Testing
-- Performans analizi
-- Kubernetes altında load testing
-- HPA davranışını yük altında gözlemleme
-
-Hedef:
+Bu repo ile kazanılan Go temelleri bundan sonra gerçek bir proje içerisinde kullanılacaktır.
 
 ```text
-k6
- ↓
-HTTP Load
- ↓
-Go Backend
- ↓
-CPU / Memory Usage
- ↓
-Metrics
- ↓
-HPA
- ↓
-Replica Scaling
+go-backend-learning
+        │
+        ▼
+Go Fundamentals Complete ✅
+        │
+        ▼
+Gerçek Go Backend / Cloud-Native Projesi
+        │
+        ├── REST API
+        │
+        ├── Backend Architecture
+        │
+        ├── Database
+        │
+        ├── Testing
+        │
+        ├── Configuration
+        │
+        ├── Logging
+        │
+        ├── Service-to-Service Communication
+        │
+        ├── Concurrency'nin Gerçek Kullanımı
+        │
+        ├── Context'in Gerçek Kullanımı
+        │
+        ├── Docker
+        │
+        ├── Docker Compose
+        │
+        ├── Load Testing
+        │
+        ├── Kubernetes
+        │
+        ├── Metrics
+        │
+        ├── HPA
+        │
+        └── Observability
+        │
+        ▼
+Production-Oriented Go Backend Temeli
 ```
 
----
-
-# Nihai Hedef
-
-Roadmap tamamlandığında aşağıdaki yapıyı sıfırdan anlayarak oluşturabilecek seviyeye gelmek:
-
-```text
-                        Client
-                          │
-                          │ HTTP
-                          ▼
-                   ┌─────────────┐
-                   │ Go Backend  │
-                   └─────────────┘
-                          │
-                    Handler Layer
-                          │
-                     Service Layer
-                          │
-                   Repository Layer
-                          │
-                          ▼
-                    ┌──────────┐
-                    │PostgreSQL│
-                    └──────────┘
-
-                          │
-                          ▼
-
-                    Docker Image
-                          │
-                          ▼
-                     Containers
-                          │
-                          ▼
-                     Kubernetes
-                          │
-                ┌─────────┴─────────┐
-                ▼                   ▼
-              Pod 1               Pod 2
-                │                   │
-                └─────────┬─────────┘
-                          │
-                       Service
-                          │
-                          ▼
-                       Metrics
-                          │
-                          ▼
-                         HPA
-                          ▲
-                          │
-                      k6 Load Test
-```
+Buradaki amaç artık yeni Go syntax'ı öğrenmek değil, bu roadmap boyunca öğrenilen kavramların gerçek bir sistem içerisinde neden ve nerede kullanıldığını görmek olacaktır.
 
 ---
 
 # Öğrenme Prensibi
 
-Her aşamada aşağıdaki döngü takip edilir:
+Bu roadmap boyunca her aşamada temel olarak aşağıdaki döngü takip edildi:
 
 ```text
 Kavram
@@ -1104,11 +1017,11 @@ Neden kullanılır?
   ↓
 Küçük örnek
   ↓
-Satır satır inceleme
+Kodu inceleme
   ↓
 Exercise
   ↓
-Gerçek backend kullanımına bağlama
+Önceki konularla birleştirme
   ↓
 Concepts
   ↓
@@ -1118,13 +1031,43 @@ Questions
   ↓
 Mistakes
   ↓
-Progress güncelle
+Progress güncelleme
   ↓
 Commit
 ```
 
-Amaç yalnızca çalışan kod yazmak değildir.
+Amaç yalnızca çalışan kod yazmak değildi.
 
 Amaç:
 
-> **Kodun neden çalıştığını, hangi problemi çözdüğünü ve gerçek bir backend sisteminde nerede kullanılacağını anlayabilmek.**
+> **Kodun neden çalıştığını, hangi problemi çözdüğünü ve daha büyük bir Go uygulamasında nerede kullanılabileceğini anlayabilmek.**
+
+---
+
+# Final
+
+```text
+GO BACKEND LEARNING ROADMAP
+
+Aşama 01  Go Basics             ✅
+Aşama 02  Variables & Types     ✅
+Aşama 03  Control Flow          ✅
+Aşama 04  Functions             ✅
+Aşama 05  Arrays & Slices       ✅
+Aşama 06  Maps                  ✅
+Aşama 07  Structs               ✅
+Aşama 08  Methods               ✅
+Aşama 09  Pointers              ✅
+Aşama 10  Interfaces            ✅
+Aşama 11  Error Handling        ✅
+Aşama 12  Packages & Modules    ✅
+Aşama 13  Concurrency           ✅
+Aşama 14  Channels              ✅
+Aşama 15  Generics              ✅
+Aşama 16  Context               ✅
+Aşama 17  HTTP                  ✅
+
+17 / 17 COMPLETE
+
+Go Fundamentals Complete ✅
+```
